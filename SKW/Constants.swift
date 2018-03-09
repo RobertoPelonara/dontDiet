@@ -16,15 +16,10 @@ enum PhysicsMask {
 }
 
 enum AnimationSpeeds {
-    
     static let bodyMaxSpeed: CGFloat = 0.045
     static let legsMaxSpeed: CGFloat = 0.07
-    
     static let bodyMinSpeedScale: CGFloat = 0.64
     static let legsMinSpeedScale: CGFloat = 0.7
-    
-    
-    
 }
 
 enum Z {

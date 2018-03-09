@@ -37,8 +37,6 @@ class Player: SKSpriteNode {
     var motionManager = CMMotionManager()
     
     
-    
-    
     init() {
         self.textureIdle = GameManager.shared.allTextures.filter { $0.description.contains("body") }
         self.textureWalkBody = GameManager.shared.allTextures.filter { $0.description.contains("body") }
@@ -161,60 +159,20 @@ class Player: SKSpriteNode {
     
 
     func update(deltaTime: TimeInterval) {
-        // Calculate Distance
-        //        let distance = fabs(destination.x - position.x)
-        //
-        //        // Change Orientation
-        //        let orientation: CGFloat = destination.x > position.x ? 1.0 : -1.0
-        //        self.xScale = fabs(self.xScale)
-        //
-        //        let trueOrientation = fabs(destination.x) - fabs(position.x)
-        //
-        //        print(destination.x)
-        //        print(position.x)
-        //        print(orientation)
-        //
-        //
-        //        if fabs(trueOrientation) >= 0.001{
-        //            print("Orientation > 1")
-        //            (legRNode?.action(forKey: "runAnim"))?.speed = 3
-        //            (legLNode?.action(forKey: "runAnim"))?.speed = 3
-        //            self.action(forKey: "runAnim")?.speed = 3
-        //
-        //        }
-        //        else{
-        //            (legRNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-        //            (legLNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-        //            self.action(forKey: "runAnim")?.speed = AnimationSpeeds.bodyMinSpeedScale
-        //
-        //        }
-        //
-        //        let deltaMove = velocity * CGFloat(deltaTime)
-        //        if (distance > deltaMove) {
-        //            position.x += (orientation) * deltaMove
-        //        } else if distance > 0.1 {
-        //            position.x = destination.x
-        //            self.animate(type: "idle")
-        //        }
         guard let xDeviceRotation = self.motionManager.deviceMotion?.attitude.quaternion.x else {return}
+        
         let orientation: CGFloat = xDeviceRotation >= 0 ? -1.0 : 1.0
-        let deltaMove = velocity * CGFloat(sqrt(fabs(xDeviceRotation ))) * CGFloat(deltaTime)
-        if fabs(xDeviceRotation) > 0.015 && fabs(xDeviceRotation) < 0.5 {
+        let deltaMove = velocity * CGFloat(sqrt(fabs(xDeviceRotation) - 0.015)) * CGFloat(deltaTime)
+        let deltaAnim: CGFloat = CGFloat(0.5625 / ((xDeviceRotation + 1) * (xDeviceRotation + 1)))
+        print("delta move: \(deltaMove)\ndelta anime: \(deltaAnim)")
+        
+        if fabs(xDeviceRotation) >= 0.015 && fabs(xDeviceRotation) <= 0.5 {
             position.x += orientation * deltaMove
-            if orientation == 1 {
-                (legRNode?.action(forKey: "runAnim"))?.speed = 3
-                (legLNode?.action(forKey: "runAnim"))?.speed = 3
-                self.action(forKey: "runAnim")?.speed = 3
-            } else {
-                (legRNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-                (legLNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-                self.action(forKey: "runAnim")?.speed = AnimationSpeeds.bodyMinSpeedScale
-            }
-        } else {
-            (legRNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-            (legLNode?.action(forKey: "runAnim"))?.speed = AnimationSpeeds.legsMinSpeedScale
-            self.action(forKey: "runAnim")?.speed = AnimationSpeeds.bodyMinSpeedScale
+            (legRNode?.action(forKey: "runAnim"))?.speed = deltaAnim
+            (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim
+            self.action(forKey: "runAnim")?.speed = deltaAnim
         }
+        
     }
     
     func animate(type: String) {
