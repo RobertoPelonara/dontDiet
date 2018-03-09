@@ -9,6 +9,7 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
+    
   // Actors
   var perna = Player()
   var hud = HUD()
@@ -48,6 +49,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     debugPrint(PhysicsMask.player | PhysicsMask.bullet)
     // Player
     perna.setup(view: self.view!)
+    let range = SKRange(lowerLimit: 0.0 + SpriteSize.player.width / 2, upperLimit: perna.limit! - SpriteSize.player.width / 2)
+    let stattFerm = [SKConstraint.positionX(range)]
+    perna.constraints = stattFerm
     addChild(perna)
 
     // HUD
@@ -61,15 +65,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 
     // Gestures
-    let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeJump))
-    swipeUp.direction = UISwipeGestureRecognizerDirection.up
-    self.view?.addGestureRecognizer(swipeUp)
+
   }
 
-  @objc func swipeJump() {
-    debugPrint("swipeup")
-    perna.jump()
-  }
+  
 
   func touchDown(atPoint pos: CGPoint) {
 
@@ -85,7 +84,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       return
     }
 
-    perna.setDestination(destination: pos)
+    
   }
 
   func touchMoved(toPoint pos: CGPoint) {
