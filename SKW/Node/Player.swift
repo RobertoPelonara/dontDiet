@@ -198,7 +198,7 @@ class Player: SKSpriteNode {
         //        }
         guard let xDeviceRotation = self.motionManager.deviceMotion?.attitude.quaternion.x else {return}
         let orientation: CGFloat = xDeviceRotation >= 0 ? -1.0 : 1.0
-        let deltaMove = velocity * CGFloat(sqrt(fabs(xDeviceRotation))) * CGFloat(deltaTime)
+        let deltaMove = velocity * CGFloat(sqrt(fabs(xDeviceRotation ))) * CGFloat(deltaTime)
         if fabs(xDeviceRotation) > 0.015 && fabs(xDeviceRotation) < 0.5 {
             position.x += orientation * deltaMove
             if orientation == 1 {
