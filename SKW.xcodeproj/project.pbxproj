@@ -28,6 +28,10 @@
 		5FB36C19203E1BE000AD3F10 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FB36C18203E1BE000AD3F10 /* GameViewController.swift */; };
 		5FB36C1E203E1BE000AD3F10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FB36C1D203E1BE000AD3F10 /* Assets.xcassets */; };
 		5FB36C21203E1BE000AD3F10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FB36C1F203E1BE000AD3F10 /* LaunchScreen.storyboard */; };
+		E36E5F9420554363007D057D /* Fork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F9320554363007D057D /* Fork.swift */; };
+		E36E5F96205543E1007D057D /* Donut.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F95205543E1007D057D /* Donut.swift */; };
+		E36E5F98205548D0007D057D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F97205548D0007D057D /* Utility.swift */; };
+		E36E5F9A2055B651007D057D /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F992055B651007D057D /* Vector2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,10 @@
 		5FB36C1D203E1BE000AD3F10 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FB36C20203E1BE000AD3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FB36C22203E1BE000AD3F10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E36E5F9320554363007D057D /* Fork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fork.swift; sourceTree = "<group>"; };
+		E36E5F95205543E1007D057D /* Donut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Donut.swift; sourceTree = "<group>"; };
+		E36E5F97205548D0007D057D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		E36E5F992055B651007D057D /* Vector2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +95,8 @@
 				5F995B122047F26400B4FDC8 /* Player.swift */,
 				5F7AA914204ABC480029E5AA /* Enemy.swift */,
 				5F7AA90E20484BF60029E5AA /* Background.swift */,
+				E36E5F9320554363007D057D /* Fork.swift */,
+				E36E5F95205543E1007D057D /* Donut.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -140,6 +150,8 @@
 				5FB36C1D203E1BE000AD3F10 /* Assets.xcassets */,
 				5F3935CA204CA59600AEC461 /* Sprites.atlas */,
 				5FB36C22203E1BE000AD3F10 /* Info.plist */,
+				E36E5F97205548D0007D057D /* Utility.swift */,
+				E36E5F992055B651007D057D /* Vector2.swift */,
 			);
 			path = SKW;
 			sourceTree = "<group>";
@@ -223,6 +235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E36E5F98205548D0007D057D /* Utility.swift in Sources */,
 				5F995B132047F26400B4FDC8 /* Player.swift in Sources */,
 				5F7AA9112048A1040029E5AA /* GameManager.swift in Sources */,
 				5F995B152048015B00B4FDC8 /* HUD.swift in Sources */,
@@ -233,7 +246,10 @@
 				5F995B1C2048353A00B4FDC8 /* MenuScene.swift in Sources */,
 				5F7AA90D20484ACE0029E5AA /* Constants.swift in Sources */,
 				5FB36C19203E1BE000AD3F10 /* GameViewController.swift in Sources */,
+				E36E5F96205543E1007D057D /* Donut.swift in Sources */,
 				5FB36C11203E1BE000AD3F10 /* AppDelegate.swift in Sources */,
+				E36E5F9A2055B651007D057D /* Vector2.swift in Sources */,
+				E36E5F9420554363007D057D /* Fork.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +380,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F27C7JQD27;
+				DEVELOPMENT_TEAM = 8V8B595TM4;
 				INFOPLIST_FILE = SKW/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.narax.dontDiet;
@@ -381,7 +397,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F27C7JQD27;
+				DEVELOPMENT_TEAM = 8V8B595TM4;
 				INFOPLIST_FILE = SKW/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.narax.dontDiet;

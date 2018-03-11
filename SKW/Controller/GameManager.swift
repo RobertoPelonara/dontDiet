@@ -17,6 +17,13 @@ class GameManager {
 
   // Textures
   var allTextures: [SKTexture] = []
+    var allDonutsTextures: [SKTexture] = []
 
+  // Donuts
+    var spawnedDonuts: [Donut] = []
+    
+    
+    //Physics
+    let gravity = CGPoint (x: 0, y: -10)
 }
 

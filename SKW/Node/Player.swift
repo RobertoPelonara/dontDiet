@@ -20,10 +20,12 @@ class Player: SKSpriteNode {
     var limit: CGFloat?
   
     
+    //Physics
+    var hitBox: CGRect = CGRect()
+    
     var legRNode: SKSpriteNode?
     var legLNode: SKSpriteNode?
     
-    var textureJump: [SKTexture] = []
     var textureFire: [SKTexture] = []
     
     // Manual Movement
@@ -42,7 +44,6 @@ class Player: SKSpriteNode {
         self.textureWalkBody = GameManager.shared.allTextures.filter { $0.description.contains("body") }
         self.textureWalkLegL = GameManager.shared.allTextures.filter { $0.description.contains("legL") }
         self.textureWalkLegR = GameManager.shared.allTextures.filter { $0.description.contains("legR") }
-        self.textureJump = GameManager.shared.allTextures.filter { $0.description.contains("jump") }
         self.textureFire = GameManager.shared.allTextures.filter { $0.description.contains("fire") }
         
         
@@ -79,49 +80,16 @@ class Player: SKSpriteNode {
         destination = position
         self.limit = view.frame.width //the boundaries of the scene
         // Physics
-        self.physicsBody = SKPhysicsBody(rectangleOf: self.size)
-        //    self.physicsBody = SKPhysicsBody(texture: self.texture!, size: self.size)
-        self.physicsBody?.mass = 4.0
-        self.physicsBody!.isDynamic = true
-        self.physicsBody!.affectedByGravity = false
-        self.physicsBody!.categoryBitMask = PhysicsMask.player
-        self.physicsBody!.contactTestBitMask = PhysicsMask.mushroom
-        self.physicsBody!.collisionBitMask = 0
-        self.physicsBody!.restitution = 0.4
+        hitBox = CGRect(origin: position, size: size)
         
         self.animate(type: "idle")
     }
     
     func fire() {
         
-        let bullet = SKSpriteNode(color: SKColor.green, size: SpriteSize.bullet)
-        bullet.name = "bullet"
+        //SPAWN THE FORK FROM THE GAME MANAGER
+    
         
-        // Physics
-        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.frame.size)
-        bullet.physicsBody!.isDynamic = true
-        bullet.physicsBody!.affectedByGravity = false
-        bullet.physicsBody!.categoryBitMask = PhysicsMask.bullet
-        bullet.physicsBody!.contactTestBitMask = PhysicsMask.enemy
-        bullet.physicsBody!.collisionBitMask = 0
-        
-        // Positioning
-        bullet.position = CGPoint(x: position.x, y: position.y + frame.size.height / 2 + bullet.frame.size.height / 2)
-        let bulletDestination = CGPoint(x: position.x,
-                                        y: (parent?.frame.size.height)! + bullet.frame.size.height)
-        
-        // Animation
-        let bulletAction = SKAction.sequence([
-            SKAction.move(to: bulletDestination, duration: 0.6),
-            SKAction.wait(forDuration: 0.2),
-            SKAction.removeFromParent(),
-            ])
-        bullet.run(bulletAction)
-        
-        self.run(SKAction.playSoundFileNamed("fire.m4a", waitForCompletion: false))
-        
-        // Add to Scene
-        parent?.addChild(bullet)
     }
     
     func eat(mushroom: SKNode) {
@@ -159,10 +127,15 @@ class Player: SKSpriteNode {
     
 
     func update(deltaTime: TimeInterval) {
-        guard let xDeviceRotation = self.motionManager.deviceMotion?.attitude.quaternion.x else {return}
+        guard var xDeviceRotation = self.motionManager.deviceMotion?.attitude.quaternion.x else {return}
+        let deviceOrientation: CGFloat = (UIDevice.current.orientation == .landscapeLeft) ?  -1.0: 1.0
         
-        let orientation: CGFloat = xDeviceRotation >= 0 ? -1.0 : 1.0
-        let deltaMove = velocity * CGFloat(sqrt(fabs(xDeviceRotation) - 0.015)) * CGFloat(deltaTime)
+       
+        
+        let orientation: CGFloat = xDeviceRotation >= 0 ? -1.0 * deviceOrientation : 1.0 * deviceOrientation
+        let deltaMove = (velocity * CGFloat(sqrt(fabs(xDeviceRotation) - 0.015)) * CGFloat(deltaTime))
+        
+        //        UN FAVORE PLIS: QUANDO METTETE NUMERI A CASO FATE UN COMMENTO CHE SPIEGA CHE FATE
         let deltaAnim: CGFloat = CGFloat(0.5625 / ((xDeviceRotation + 1) * (xDeviceRotation + 1) * (xDeviceRotation + 1)))
         print("delta move: \(deltaMove)\ndelta anime: \(deltaAnim)")
         
@@ -182,8 +155,6 @@ class Player: SKSpriteNode {
             textureType = textureIdle
         case "walk":
             textureType = textureWalkBody
-        case "jump":
-            textureType = textureJump
         case "fire":
             textureType = textureFire
         default:

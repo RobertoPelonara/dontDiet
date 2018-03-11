@@ -38,6 +38,12 @@ class GameViewController: UIViewController {
       GameManager.shared.allTextures = textureNames.map {
         return playerAtlas.textureNamed($0)
       }
+        
+        GameManager.shared.allDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("Donut")
+        }
+    
+        print(GameManager.shared.allDonutsTextures)
 
       // Show Screen
       view.presentScene(scene)

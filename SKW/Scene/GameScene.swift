@@ -20,14 +20,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   var deltaTime: TimeInterval = 0
 
   // Special
-
+    var donut: Donut? = nil
 
   // Gesture
   var deltaX: CGFloat = 0
   var deltaY: CGFloat = 0
   let triggerDistance: CGFloat = 20
   var initialTouch: CGPoint = CGPoint.zero
-
+    
+    
 
   // Before the Scene
   override func sceneDidLoad() {
@@ -53,6 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let stattFerm = [SKConstraint.positionX(range)]
     perna.constraints = stattFerm
     addChild(perna)
+    
+    
+    donut = Donut()
+    addChild(donut!)
+    donut!.position = perna.position
 
     // HUD
     hud.setup(size: size)
@@ -158,7 +164,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lastTime = currentTime
 
     perna.update(deltaTime: deltaTime)
-
+    
+    
 //    checkSimpleCollision()
 
   }
