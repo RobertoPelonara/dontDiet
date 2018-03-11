@@ -11,7 +11,7 @@ class MenuScene: SKScene {
 
   override func didMove(to view: SKView) {
 
-    debugPrint("view: \(view.frame)")
+    //debugPrint("view: \(view.frame)")
     backgroundColor = .white
 
     let bg = SKSpriteNode(color: .yellow, size: CGSize(width: 100, height: 100))
