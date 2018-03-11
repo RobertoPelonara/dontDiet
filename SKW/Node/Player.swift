@@ -139,7 +139,7 @@ class Player: SKSpriteNode {
         let deltaAnim: CGFloat = CGFloat(0.5625 / ((xDeviceRotation + 1) * (xDeviceRotation + 1) * (xDeviceRotation + 1)))
         print("delta move: \(deltaMove)\ndelta anime: \(deltaAnim)")
         
-        if fabs(xDeviceRotation) >= 0.015 && fabs(xDeviceRotation) <= 0.5 {
+        if fabs(yDeviceGravity) >= 0.030 && fabs(yDeviceGravity) <= 0.87 {
             position.x += orientation * deltaMove
             (legRNode?.action(forKey: "runAnim"))?.speed = deltaAnim
             (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim

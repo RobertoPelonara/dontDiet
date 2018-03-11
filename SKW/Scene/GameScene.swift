@@ -45,9 +45,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     background.position = CGPoint(x: size.width / 2, y: size.height / 2)
     background.zPosition = Z.background
     addChild(background)
-    debugPrint(PhysicsMask.player)
-    debugPrint(PhysicsMask.bullet)
-    debugPrint(PhysicsMask.player | PhysicsMask.bullet)
+//    debugPrint(PhysicsMask.player)
+//    debugPrint(PhysicsMask.bullet)
+//    debugPrint(PhysicsMask.player | PhysicsMask.bullet)
     // Player
     perna.setup(view: self.view!)
     let range = SKRange(lowerLimit: 0.0 + SpriteSize.player.width / 2, upperLimit: perna.limit! - SpriteSize.player.width / 2)
