@@ -128,15 +128,16 @@ class Player: SKSpriteNode {
 
     func update(deltaTime: TimeInterval) {
         guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
-        let deviceOrientation: CGFloat = yDeviceGravity <= 0  ?  1.0: -1.0
-        
-       
+        let deviceOrientation: CGFloat = UIDevice.current.orientation == UIDeviceOrientation.landscapeRight ? 1 : -1
+        print(deviceOrientation)
         
         let orientation: CGFloat = yDeviceGravity >= 0 ? 1.0  : -1.0
-        let deltaMove = (velocity * CGFloat(sqrt(fabs(yDeviceGravity) - 0.030)) * CGFloat(deltaTime))
+        let deltaMove = (velocity * CGFloat(sqrt(fabs(yDeviceGravity) - 0.030)) * CGFloat(deltaTime)) * deviceOrientation
         
-        //        UN FAVORE PLIS: QUANDO METTETE NUMERI A CASO FATE UN COMMENTO CHE SPIEGA CHE FATE
-        let deltaAnim: CGFloat = CGFloat(0.5625 / ((-yDeviceGravity + 1) * (-yDeviceGravity + 1) * (-yDeviceGravity + 1)))
+        /*
+        "deltaAnim" è il coefficiente che ogni frame attribuiamo alla velocità delle animazioni del personaggio per renderla proporzionale al deltaMove. C'è bisogno di sapere se il device è orientato in landscape right o left altrimenti ruotando il device l'animazione rallenta/si velocizza "al contrario", e tutti i calcoli son stati fatti per restituire valori MAI uguali o minori di 0 (altrimenti l'animazione si ferma del tutto) nè maggiori di 3 (valore oltre il quale l'animazione pure si ferma), e la logica dietro quel "0.5625" è quella della proporzionaliotà inversa per permettere alla velocità di cambiare inversamente a seconda dell'orientation del device.
+        */
+        let deltaAnim: CGFloat = deviceOrientation == 1 ? CGFloat(0.5625 / ((-yDeviceGravity + 1) * (-yDeviceGravity + 1) * (-yDeviceGravity + 1))) : CGFloat(((-yDeviceGravity + 1) * (-yDeviceGravity + 1) * (-yDeviceGravity + 1)))
         print("delta move: \(deltaMove)\ndelta anime: \(deltaAnim)")
         
         if fabs(yDeviceGravity) >= 0.030 && fabs(yDeviceGravity) <= 0.87 {
