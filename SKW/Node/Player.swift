@@ -30,7 +30,7 @@ class Player: SKSpriteNode {
     
     // Manual Movement
     var destination = CGPoint()
-    let velocity: CGFloat = 1600
+    let velocity: CGFloat = 1300
     
     // States
     var shooting = false
