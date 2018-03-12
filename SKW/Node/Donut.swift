@@ -25,7 +25,11 @@ class Donut: SKSpriteNode {
     
     func update() {
         
-        let gravityVector = GameManager.shared.gravity
+        let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
+        var positionAsVector = Vector2(x: position.x, y: position.y)
+        
+        // Si aggiunge la gravità
+        positionAsVector += gravityVector
         
     
         
