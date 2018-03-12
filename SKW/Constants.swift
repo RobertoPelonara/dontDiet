@@ -46,3 +46,9 @@ enum Scores {
   static let bonus = 10
   static let malus = -10
 }
+
+enum DeviceGravity {
+    static let min: Double = 0.030
+}
+
+
