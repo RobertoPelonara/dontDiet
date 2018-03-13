@@ -45,7 +45,7 @@ class Donut: SKSpriteNode {
         var positionAsVector = Vector2(x: position.x, y: position.y)
 
         // Si aggiunge la gravità
-        positionAsVector += gravityVector
+       // positionAsVector += gravityVector
         if positionAsVector.y <= GameManager.shared.groundY {
             positionAsVector.reflect(vector: Vector2(x: 0,y: 60))
 

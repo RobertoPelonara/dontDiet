@@ -36,7 +36,7 @@ func rectInCircle (rect: Rect, circle: Circle) -> Bool {
     let deltaX = circle.x - nearestX
     let deltaY = circle.y - nearestY
     
-    return (pow(deltaX,1) + pow(deltaY, 1) <= (pow(circle.r, 1)))
+    return (pow(deltaX,2) + pow(deltaY, 2) < (pow(circle.r, 2)))
 
 }
 
