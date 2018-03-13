@@ -12,7 +12,8 @@ class Donut: SKSpriteNode {
     
     var hitBox: Circle?
     var debugHitBox: SKShapeNode?
-    var xParameter: CGFloat = 3
+    var xParameter: CGFloat = 5
+    let reflectParameter: CGFloat = 100
     
     var debug = true
     var currForce = Vector2(x: 0, y: 0)
@@ -23,9 +24,15 @@ class Donut: SKSpriteNode {
         super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
     }
     
-    func setup () {
+    func setup (player: Player) {
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
+        let randomX = Int(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
+        
+        let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
+        xParameter = xParameter * z
+        
+        self.position = CGPoint(x: CGFloat(randomX), y: (gameScene?.frame.height)! + hitBox!.r)
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
@@ -45,24 +52,13 @@ class Donut: SKSpriteNode {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
-        if position.x < (hitBox?.r)! || position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -xParameter}
+        if position.x < (hitBox?.r)! {xParameter = abs(xParameter)} else if position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter))}
         
         positionAsVector += currForce
         currForce += gravityVector
 
-        if positionAsVector.y <= GameManager.shared.groundY {
-            print(currForce)
-
-            var reflectVector = Vector2(x: currForce.x, y: currForce.y)
-            reflectVector.reflect(vector: Vector2(x: 0.001,y: 1))
-         
-            currForce += reflectVector
-            currForce += gravityVector
-
-//            currForce.normalize()
-            print(currForce)
-
-        }
+        if positionAsVector.y <= GameManager.shared.groundY {currForce.y = reflectParameter}
+        
         position = CGPoint(x: (positionAsVector.x + xParameter), y: positionAsVector.y)
         updateHitBox()
         

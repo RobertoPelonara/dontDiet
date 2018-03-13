@@ -59,16 +59,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var prevX:CGFloat = 30
     var increment:CGFloat = 40
-    for i in 0...0 {
-        var donut = Donut()
-        donut.gameScene = self
-        donut.setup()
-        donut.position = CGPoint(x: perna.position.x , y: perna.position.y + 200)
-        prevX += increment
-        GameManager.shared.spawnedDonuts.append(donut)
-        addChild(donut)
-        donut.gameScene = self
-    }
+//    for i in 0...0 {
+//        var donut = Donut()
+//        donut.gameScene = self
+//        donut.setup(player: perna)
+//        prevX += increment
+//        GameManager.shared.spawnedDonuts.append(donut)
+//        addChild(donut)
+//        donut.gameScene = self
+//    }
 
     // HUD
     hud.setup(size: size)
@@ -86,22 +85,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   
 
-  func touchDown(atPoint pos: CGPoint) {
-
-    // Gesture Start Detect
-    initialTouch = pos
-    deltaX = 0
-    deltaY = 0
-
-    let touchedNode = self.atPoint(pos)
-    if touchedNode.name == "buttonFire" {
-      let button = touchedNode as? SKSpriteNode
-      button?.texture = SKTexture(imageNamed: "buttonFire-pressed")
-      return
+    func touchDown(atPoint pos: CGPoint) {
+        
+        // Gesture Start Detect
+        
+//        var prevX:CGFloat = 30
+//        let increment:CGFloat = 40
+        
+        let donut = Donut()
+        donut.gameScene = self
+        donut.setup(player: perna)
+//        prevX += increment
+        GameManager.shared.spawnedDonuts.append(donut)
+        addChild(donut)
+        
+        //    initialTouch = pos
+        //    deltaX = 0
+        //    deltaY = 0
+        //
+        //    let touchedNode = self.atPoint(pos)
+        //    if touchedNode.name == "buttonFire" {
+        //      let button = touchedNode as? SKSpriteNode
+        //      button?.texture = SKTexture(imageNamed: "buttonFire-pressed")
+        //      return
+        //    }
+        
+        
     }
-
-    
-  }
 
   func touchMoved(toPoint pos: CGPoint) {
     // Delta Saving
