@@ -19,6 +19,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   var lastTime: TimeInterval = 0
   var deltaTime: TimeInterval = 0
 
+    
   // Special
     var donut: Donut? = nil
     var debugHitBox: SKSpriteNode?
@@ -49,12 +50,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    debugPrint(PhysicsMask.bullet)
 //    debugPrint(PhysicsMask.player | PhysicsMask.bullet)
     // Player
+    
     perna.gameScene = self
-
     perna.setup(view: self.view!)
-    let range = SKRange(lowerLimit: 0.0 + SpriteSize.player.width / 2, upperLimit: perna.limit! - SpriteSize.player.width / 2)
-    let stattFerm = [SKConstraint.positionX(range)]
-    perna.constraints = stattFerm
+    
     addChild(perna)
     
     //var prevX:CGFloat = 30

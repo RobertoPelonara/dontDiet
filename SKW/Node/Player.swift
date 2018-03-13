@@ -40,6 +40,10 @@ class Player: SKSpriteNode {
     
     var motionManager = CMMotionManager()
     
+    //constraints for player
+    var rangeUpperLimit: CGFloat?
+    var rangeLowerLimit: CGFloat?
+    
     
     
     private var debug = true
@@ -83,9 +87,15 @@ class Player: SKSpriteNode {
     func setup(view: SKView) {
         self.position = CGPoint(x: view.frame.midX, y: self.size.height)
         destination = position
-        self.limit = view.frame.width //the boundaries of the scene
+        self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
+        self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene
         // Physics
         hitBox = Rect(x: position.x, y: position.y, height: SpriteSize.player.height, width: SpriteSize.player.width)
+        
+        let range = SKRange(lowerLimit: rangeLowerLimit!, upperLimit: rangeUpperLimit!)
+        let stattFerm = [SKConstraint.positionX(range)]
+        self.constraints = stattFerm
+        
         if debug{
             debugHitBox = SKSpriteNode(color: UIColor.blue, size: CGSize(width: SpriteSize.player.width, height: SpriteSize.player.height))
             debugHitBox?.position = position
