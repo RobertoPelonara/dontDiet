@@ -13,7 +13,7 @@ class Donut: SKSpriteNode {
     var hitBox: Circle?
     var debugHitBox: SKShapeNode?
     var xParameter: CGFloat = 5
-    let reflectParameter: CGFloat = 100
+    let reflectParameter: CGFloat = 14
     
     var debug = true
     var currForce = Vector2(x: 0, y: 0)
