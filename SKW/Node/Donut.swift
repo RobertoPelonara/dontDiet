@@ -87,7 +87,7 @@ class Donut: SKSpriteNode {
 
         if positionAsVector.y <= GameManager.shared.groundY {
             currForce.y = reflectParameter!
-            positionAsVector.y = GameManager.shared.groundY 
+            positionAsVector.y = GameManager.shared.groundY
         }
         
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
