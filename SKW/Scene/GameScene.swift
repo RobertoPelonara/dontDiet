@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
   // Special
     var donut: Donut? = nil
-
+    var debugHitBox: SKSpriteNode?
   // Gesture
   var deltaX: CGFloat = 0
   var deltaY: CGFloat = 0
@@ -49,16 +49,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //    debugPrint(PhysicsMask.bullet)
 //    debugPrint(PhysicsMask.player | PhysicsMask.bullet)
     // Player
+    perna.gameScene = self
+
     perna.setup(view: self.view!)
     let range = SKRange(lowerLimit: 0.0 + SpriteSize.player.width / 2, upperLimit: perna.limit! - SpriteSize.player.width / 2)
     let stattFerm = [SKConstraint.positionX(range)]
     perna.constraints = stattFerm
     addChild(perna)
     
-    
-    donut = Donut()
-    addChild(donut!)
-    donut!.position = perna.position
+    var prevX:CGFloat = 30
+    var increment:CGFloat = 40
+    for i in 0...0 {
+        var donut = Donut()
+        donut.gameScene = self
+        donut.setup()
+        donut.position = CGPoint(x: perna.position.x, y: self.size.height)
+        prevX += increment
+        GameManager.shared.spawnedDonuts.append(donut)
+        addChild(donut)
+        donut.gameScene = self
+    }
 
     // HUD
     hud.setup(size: size)
@@ -162,10 +172,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     // Set last frame time to current time
     lastTime = currentTime
-
+    
+    for donut in GameManager.shared.spawnedDonuts {
+        donut.update()
+    }
     perna.update(deltaTime: deltaTime)
-    
-    
+    debugHitBox?.position.x = perna.hitBox!.x
+    debugHitBox?.position.y = perna.hitBox!.y
 //    checkSimpleCollision()
 
   }

@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-class CGCircle {
+struct Circle {
     var x: CGFloat
     var y: CGFloat
     var r: CGFloat
@@ -21,23 +21,23 @@ class CGCircle {
     }
 }
 
-func rectInCircle (rect: CGRect, circle: CGCircle) -> Bool {
-    var circleDistance = CGPoint()
+struct Rect {
+    var x: CGFloat
+    var y: CGFloat
+    var height: CGFloat
+    var width: CGFloat
     
-    circleDistance.x = fabs(circle.x - rect.midX)
-    circleDistance.y = fabs(circle.y - rect.midY)
+}
+
+func rectInCircle (rect: Rect, circle: Circle) -> Bool {
     
-    // Considerare di usare >= per la tangenza
-    if (circleDistance.x > (rect.width/2 + circle.r)) { return false }
-    if (circleDistance.y > (rect.height/2 + circle.r)) { return false }
+    let nearestX = max(rect.x, min(circle.x, rect.x + rect.width/2))
+    let nearestY = max(rect.y, min(circle.y, rect.x + rect.height/2))
+    let deltaX = circle.x - nearestX
+    let deltaY = circle.y - nearestY
     
-    if (circleDistance.x <= (rect.width/2)) { return true }
-    if (circleDistance.y <= (rect.height/2)) { return true }
-    
-    let cornerDistance_sq = pow(circleDistance.x - rect.width/2, 2) +
-        pow(circleDistance.y - rect.height/2, 2);
-    
-    return (cornerDistance_sq <= pow(circle.r, 2));
+    return (pow(deltaX,1) + pow(deltaY, 1) <= (pow(circle.r, 1)))
+
 }
 
 

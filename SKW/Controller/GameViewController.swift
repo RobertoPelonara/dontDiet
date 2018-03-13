@@ -43,7 +43,6 @@ class GameViewController: UIViewController {
             return texture.description.contains("Donut")
         }
     
-        print(GameManager.shared.allDonutsTextures)
 
       // Show Screen
       view.presentScene(scene)

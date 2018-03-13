@@ -19,9 +19,11 @@ class Player: SKSpriteNode {
     //stuff
     var limit: CGFloat?
   
+    var gameScene: SKScene?
     
     //Physics
-    var hitBox: CGRect = CGRect()
+    var hitBox: Rect?
+    var debugHitBox: SKSpriteNode?
     
     var legRNode: SKSpriteNode?
     var legLNode: SKSpriteNode?
@@ -38,6 +40,9 @@ class Player: SKSpriteNode {
     
     var motionManager = CMMotionManager()
     
+    
+    
+    private var debug = true
     
     init() {
         self.textureIdle = GameManager.shared.allTextures.filter { $0.description.contains("body") }
@@ -80,8 +85,14 @@ class Player: SKSpriteNode {
         destination = position
         self.limit = view.frame.width //the boundaries of the scene
         // Physics
-        hitBox = CGRect(origin: position, size: size)
-        
+        hitBox = Rect(x: position.x, y: position.y, height: SpriteSize.player.height, width: SpriteSize.player.width)
+        if debug{
+            debugHitBox = SKSpriteNode(color: UIColor.blue, size: CGSize(width: SpriteSize.player.width, height: SpriteSize.player.height))
+            debugHitBox?.position = position
+            debugHitBox?.zPosition = Z.HUD
+            gameScene!.addChild(debugHitBox!)
+           
+        }
         self.animate(type: "idle")
     }
     
@@ -127,23 +138,65 @@ class Player: SKSpriteNode {
     
 
     func update(deltaTime: TimeInterval) {
-        guard let xDeviceRotation = self.motionManager.deviceMotion?.attitude.quaternion.x,
-            let yDeviceGravity = self.motionManager.deviceMotion?.gravity.y else {return}
-        //print("ROTATION:: \(xDeviceRotation) \nGRAVITY: \(yDeviceGravity)")
+        updateMoveAndAnim(deltaTime)
+        updateHitBox()
+        checkCollisionWithDonuts()
+        
+        
+        
+        
+    }
+    
+    func updateHitBox () {
+        
+        hitBox!.x = position.x
+        hitBox!.y = position.y
+        debugHitBox?.position.x = hitBox!.x
+        debugHitBox?.position.y = hitBox!.y
+
+        print(debugHitBox?.position)
+    }
+    
+    func checkCollisionWithDonuts () {
+        for donut in GameManager.shared.spawnedDonuts {
+            if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
+                print("COLLISIONE MOTHERFUCKA")
+                
+            }
+        }
+    }
+    
+    
+    
+    
+    func updateMoveAndAnim (_ deltaTime: TimeInterval){
+        guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
+        let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
+        
         let orientation: CGFloat = yDeviceGravity >= 0 ? 1.0 : -1.0
-        let deltaMove = velocity * CGFloat(sqrt(fabs(yDeviceGravity) - 0.030)) * CGFloat(deltaTime)
-        let deltaAnim: CGFloat = CGFloat(0.5625 / ((-yDeviceGravity + 1) * (-yDeviceGravity + 1) * (-yDeviceGravity + 1)))
-        print("delta anim : \(deltaAnim)")
-        //print("delta move: \(deltaMove)\ndelta anime: \(deltaAnim)")
+        let deltaMove = velocity * CGFloat(pow((fabs(yDeviceGravity) - 0.030), 1/1.5)) * CGFloat(deltaTime) * deviceOrientation
         
+        /*
+         "deltaAnim" è il coefficiente che ogni frame attribuiamo alla velocità delle animazioni del personaggio per renderla proporzionale al deltaMove. C'è bisogno di sapere se il device è orientato in landscape right o left altrimenti ruotando il device l'animazione rallenta/si velocizza "al contrario", e tutti i calcoli son stati fatti per restituire valori MAI uguali o minori di 0 (altrimenti l'animazione si ferma del tutto). La logica dietro l'if/else sta nel permettere alla velocità di cambiare inversamente a seconda dell'orientation del device.
+         
+         speedingFunc e slowingFunc ce le siam trovate matematicamente (geogebra)
+         */
         
-        if fabs(yDeviceGravity) >= 0.030 && fabs(yDeviceGravity) <= 0.87 {
+        if fabs(yDeviceGravity) >= DeviceGravity.min {
+            
+            let speedingFunc = deviceOrientation == 1 ? CGFloat(0.8 + 2.2 * yDeviceGravity - pow(yDeviceGravity, 2)) : CGFloat(0.8 - 2.2 * yDeviceGravity - pow(yDeviceGravity, 2))
+            let slowingFunc = deviceOrientation == 1 ? CGFloat(0.8 + yDeviceGravity  + 0.5 * pow(yDeviceGravity, 2)) : CGFloat(0.8 - yDeviceGravity + 0.5 * pow(yDeviceGravity, 2))
+            
+            let deltaAnim: CGFloat = CGFloat(yDeviceGravity) * deviceOrientation >= 0 ? speedingFunc : slowingFunc
+            
+            //            print("orientation: \(deviceOrientation)")
+            //            print("delta anim: \(deltaAnim)")
+            //            print("gravity: \(yDeviceGravity)\n")
             position.x += orientation * deltaMove
             (legRNode?.action(forKey: "runAnim"))?.speed = deltaAnim
             (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim
             self.action(forKey: "runAnim")?.speed = deltaAnim
         }
-        
     }
     
     func animate(type: String) {
