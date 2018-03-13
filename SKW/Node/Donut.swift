@@ -12,10 +12,16 @@ class Donut: SKSpriteNode {
     
     var hitBox: Circle?
     var debugHitBox: SKShapeNode?
-    var xParameter: CGFloat = 5
-    let reflectParameter: CGFloat = 14
+    var xParameter: CGFloat?
+    var reflectParameter: CGFloat?
     
-    var debug = true
+    enum DonutType {
+        case big
+        case medium
+        case small
+    }
+    
+    var debug = false
     var currForce = Vector2(x: 0, y: 0)
     
     var gameScene: SKScene?
@@ -24,9 +30,9 @@ class Donut: SKSpriteNode {
         super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
     }
     
-    func setup () {
+    func setup (_ size: DonutType) {
         
-        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
+        if size == .big {bigDonutSetup()}
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
@@ -38,16 +44,28 @@ class Donut: SKSpriteNode {
         
     }
     
-    func randomSpawnPosition() {
+    func bigDonutSetup() {
+        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
+        
+        //setto il reflect per la ciambella
+        reflectParameter = 14
+        
+        //setto il parametro di spostamento orizzontale
+        xParameter = 5
+        
+        self.randomPositionSpawn()
+    }
+    
+    func randomPositionSpawn() {
         //random punto sull'x da cui spawnare
-        let randomX = Int(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
+        let randomX = CGFloat(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
         
         //randomizzo la direzione (+/- xParameter) da cui inizierà a rimbalzare una volta spawnata
         let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
-        xParameter = xParameter * z
+        xParameter = xParameter! * z
         
-        //applico posizione di partenza random sull'x ma al di sopra dello schermo
-        self.position = CGPoint(x: CGFloat(randomX), y: (gameScene?.frame.height)! + hitBox!.r)
+        //applico posizione random al di fuori dello schermo
+        self.position = CGPoint(x: randomX, y: (gameScene?.frame.height)! + hitBox!.r)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,14 +76,14 @@ class Donut: SKSpriteNode {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
-        if position.x < (hitBox?.r)! {xParameter = abs(xParameter)} else if position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter))}
+        if position.x < (hitBox?.r)! {xParameter = abs(xParameter!)} else if position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter!))}
         
         positionAsVector += currForce
         currForce += gravityVector
 
-        if positionAsVector.y <= GameManager.shared.groundY {currForce.y = reflectParameter}
+        if positionAsVector.y <= GameManager.shared.groundY {currForce.y = reflectParameter!}
         
-        position = CGPoint(x: (positionAsVector.x + xParameter), y: positionAsVector.y)
+        position = CGPoint(x: (positionAsVector.x + xParameter!), y: positionAsVector.y)
         updateHitBox()
         
     }
