@@ -57,8 +57,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     perna.constraints = stattFerm
     addChild(perna)
     
-    var prevX:CGFloat = 30
-    var increment:CGFloat = 40
+    //var prevX:CGFloat = 30
+    //var increment:CGFloat = 40
 //    for i in 0...0 {
 //        var donut = Donut()
 //        donut.gameScene = self
@@ -95,6 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let donut = Donut()
         donut.gameScene = self
         donut.setup(player: perna)
+        donut.randomSpawnPosition()
 //        prevX += increment
         GameManager.shared.spawnedDonuts.append(donut)
         addChild(donut)

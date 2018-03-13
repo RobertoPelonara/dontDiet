@@ -27,12 +27,6 @@ class Donut: SKSpriteNode {
     func setup (player: Player) {
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
-        let randomX = Int(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
-        
-        let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
-        xParameter = xParameter * z
-        
-        self.position = CGPoint(x: CGFloat(randomX), y: (gameScene?.frame.height)! + hitBox!.r)
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
@@ -42,6 +36,18 @@ class Donut: SKSpriteNode {
             
         }
         
+    }
+    
+    func randomSpawnPosition() {
+        //random punto sull'x da cui spawnare
+        let randomX = Int(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
+        
+        //randomizzo la direzione (+/- xParameter) da cui inizierà a rimbalzare una volta spawnata
+        let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
+        xParameter = xParameter * z
+        
+        //applico posizione di partenza random sull'x ma al di sopra dello schermo
+        self.position = CGPoint(x: CGFloat(randomX), y: (gameScene?.frame.height)! + hitBox!.r)
     }
     
     required init?(coder aDecoder: NSCoder) {
