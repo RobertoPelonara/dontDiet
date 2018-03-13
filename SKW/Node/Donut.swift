@@ -12,6 +12,7 @@ class Donut: SKSpriteNode {
     
     var hitBox: Circle?
     var debugHitBox: SKShapeNode?
+    var xParameter: CGFloat = 3
     
     var debug = true
     var currForce = Vector2(x: 0, y: 0)
@@ -44,6 +45,7 @@ class Donut: SKSpriteNode {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
+        if position.x < (hitBox?.r)! || position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -xParameter}
         
         positionAsVector += currForce
         currForce += gravityVector
@@ -61,7 +63,7 @@ class Donut: SKSpriteNode {
             print(currForce)
 
         }
-        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
+        position = CGPoint(x: (positionAsVector.x + xParameter), y: positionAsVector.y)
         updateHitBox()
         
     }
