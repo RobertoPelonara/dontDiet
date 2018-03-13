@@ -53,10 +53,10 @@ class Donut: SKSpriteNode {
         //setto il parametro di spostamento orizzontale
         xParameter = 5
         
-        self.randomPositionSpawn()
+        self.position = self.randomPositionSpawn()
     }
     
-    func randomPositionSpawn() {
+    func randomPositionSpawn() -> CGPoint {
         //random punto sull'x da cui spawnare
         let randomX = CGFloat(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
         
@@ -64,8 +64,8 @@ class Donut: SKSpriteNode {
         let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
         xParameter = xParameter! * z
         
-        //applico posizione random al di fuori dello schermo
-        self.position = CGPoint(x: randomX, y: (gameScene?.frame.height)! + hitBox!.r)
+        //ritorno posizione random al di fuori dello schermo
+        return CGPoint(x: randomX, y: (gameScene?.frame.height)! + hitBox!.r)
     }
     
     required init?(coder aDecoder: NSCoder) {
