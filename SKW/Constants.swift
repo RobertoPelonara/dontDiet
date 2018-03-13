@@ -54,7 +54,7 @@ enum DeviceGravity {
 enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
-        static let big: CGFloat = 14
+        static let big: CGFloat = 15.2
         static let medium: CGFloat = 0
         static let small: CGFloat = 0
     }
