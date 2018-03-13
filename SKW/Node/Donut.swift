@@ -26,13 +26,13 @@ class Donut: SKSpriteNode {
     
     var gameScene: SKScene?
     init() {
-        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allDonutsTextures.count - 1)))
+        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allDonutsTextures.count)))
         super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
     }
     
-    func setup (_ size: DonutType) {
+    func setup (_ type: DonutType) {
         
-        if size == .big {bigDonutSetup()}
+        if type == .big {bigDonutSetup()}
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
