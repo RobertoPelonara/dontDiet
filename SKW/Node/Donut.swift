@@ -14,6 +14,7 @@ class Donut: SKSpriteNode {
     var debugHitBox: SKShapeNode?
     
     var debug = true
+    var currForce = Vector2(x: 0, y: 0)
     
     var gameScene: SKScene?
     init() {
@@ -43,11 +44,21 @@ class Donut: SKSpriteNode {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
+        
+        positionAsVector += currForce
+        currForce += gravityVector
 
-        // Si aggiunge la gravità
-       // positionAsVector += gravityVector
         if positionAsVector.y <= GameManager.shared.groundY {
-            positionAsVector.reflect(vector: Vector2(x: 0,y: 60))
+            print(currForce)
+
+            var reflectVector = Vector2(x: currForce.x, y: currForce.y)
+            reflectVector.reflect(vector: Vector2(x: 0.001,y: 1))
+         
+            currForce += reflectVector
+            currForce += gravityVector
+
+//            currForce.normalize()
+            print(currForce)
 
         }
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)

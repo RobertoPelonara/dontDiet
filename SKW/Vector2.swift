@@ -52,10 +52,10 @@ struct Vector2 {
     
     mutating func reflect (vector: Vector2)  {
         
-//        let n = normalized()
-//        let dotProduct = self.dot(v: vector.normalized())
-//
-//        self = vector * (vector.normalized() * (dotProduct)) * CGFloat(-2)
+        let n = normalized()
+        let dotProduct = self.dot(v: vector.normalized())
+
+        self = vector * (vector.normalized() * (dotProduct)) * CGFloat(-2)
         
         //r=v−2(v⋅n)n
         // Vect2 = Vect1 - 2 * WallN * (WallN DOT Vect1)

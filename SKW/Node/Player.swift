@@ -154,7 +154,6 @@ class Player: SKSpriteNode {
         debugHitBox?.position.x = hitBox!.x
         debugHitBox?.position.y = hitBox!.y
 
-        print(debugHitBox?.position)
     }
     
     func checkCollisionWithDonuts () {

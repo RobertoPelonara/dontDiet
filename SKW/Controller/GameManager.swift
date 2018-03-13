@@ -24,7 +24,7 @@ class GameManager {
     
     
     //Physics
-    let gravity = CGPoint (x: 0, y: -10)
+    let gravity = CGPoint (x: 0, y: -2)
     let groundY = CGFloat(100)
 }
 

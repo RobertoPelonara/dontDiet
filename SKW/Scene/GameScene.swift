@@ -63,7 +63,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var donut = Donut()
         donut.gameScene = self
         donut.setup()
-        donut.position = CGPoint(x: perna.position.x + 100, y: perna.position.y)
+        donut.position = CGPoint(x: perna.position.x , y: perna.position.y + 200)
         prevX += increment
         GameManager.shared.spawnedDonuts.append(donut)
         addChild(donut)
