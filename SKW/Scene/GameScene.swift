@@ -184,8 +184,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     lastTime = currentTime
     
     for donut in GameManager.shared.spawnedDonuts {
-        donut.update()
+        donut.update(deltaTime: deltaTime)
     }
+    
     perna.update(deltaTime: deltaTime)
     debugHitBox?.position.x = perna.hitBox!.x
     debugHitBox?.position.y = perna.hitBox!.y

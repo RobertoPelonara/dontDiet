@@ -15,6 +15,9 @@ class Donut: SKSpriteNode {
     var xParameter: CGFloat?
     var reflectParameter: CGFloat?
     
+    //costante per il deltaTime: tarato sui 60fps, quindi avrà valore 60 (velocity * deltaTime = 1)
+    let velocity: CGFloat = 60
+    
     enum DonutType {
         case big
         case medium
@@ -72,21 +75,23 @@ class Donut: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update() {
+    func update(deltaTime: TimeInterval) {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
         if position.x < (hitBox?.r)! {xParameter = abs(xParameter!)} else if position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter!))}
         
-        positionAsVector += currForce
-        currForce += gravityVector
+        currForce.y += gravityVector.y * velocity * CGFloat(deltaTime)
+        positionAsVector.y += currForce.y
+        positionAsVector.x = positionAsVector.x + (xParameter! * velocity * CGFloat(deltaTime))
 
         if positionAsVector.y <= GameManager.shared.groundY {currForce.y = reflectParameter!}
         
-        position = CGPoint(x: (positionAsVector.x + xParameter!), y: positionAsVector.y)
+        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         updateHitBox()
         
     }
+    
     func updateHitBox () {
         hitBox!.x = position.x
         hitBox!.y = position.y
