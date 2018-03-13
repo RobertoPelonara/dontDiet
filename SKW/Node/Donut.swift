@@ -52,7 +52,7 @@ class Donut: SKSpriteNode {
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
         //setto il reflect per la ciambella
-        reflectParameter = 14
+        reflectParameter = 15.2
         
         //setto il parametro di spostamento orizzontale
         xParameter = 5
