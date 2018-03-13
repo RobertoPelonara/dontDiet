@@ -94,7 +94,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let donut = Donut()
         donut.gameScene = self
-        donut.setup(player: perna)
+        donut.setup()
         donut.randomSpawnPosition()
 //        prevX += increment
         GameManager.shared.spawnedDonuts.append(donut)

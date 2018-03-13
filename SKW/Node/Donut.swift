@@ -24,7 +24,7 @@ class Donut: SKSpriteNode {
         super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
     }
     
-    func setup (player: Player) {
+    func setup () {
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
