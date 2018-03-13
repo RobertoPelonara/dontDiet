@@ -23,7 +23,7 @@ class Donut: SKSpriteNode {
     
     func setup () {
         
-        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width)
+        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)

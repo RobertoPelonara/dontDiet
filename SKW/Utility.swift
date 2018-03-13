@@ -31,12 +31,19 @@ struct Rect {
 
 func rectInCircle (rect: Rect, circle: Circle) -> Bool {
     
-    let nearestX = max(rect.x, min(circle.x, rect.x + rect.width/2))
-    let nearestY = max(rect.y, min(circle.y, rect.x + rect.height/2))
-    let deltaX = circle.x - nearestX
-    let deltaY = circle.y - nearestY
+    let circleDistanceX = abs(circle.x - rect.x)
+    let circleDistanceY = abs(circle.y - rect.y)
     
-    return (pow(deltaX,2) + pow(deltaY, 2) < (pow(circle.r, 2)))
+    if (circleDistanceX > (rect.width/2 + circle.r)) { return false }
+    if (circleDistanceY > (rect.height/2 + circle.r)) { return false }
+    
+    if (circleDistanceX <= (rect.width/2)) { return true }
+    if (circleDistanceY <= (rect.height/2)) { return true }
+    
+    let cornerDistance_sq = pow((circleDistanceX - rect.width/2), 2) +
+        pow((circleDistanceY - rect.height/2), 2)
+    
+    return (cornerDistance_sq <= pow(circle.r, 2))
 
 }
 
