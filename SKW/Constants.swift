@@ -51,4 +51,19 @@ enum DeviceGravity {
     static let min: Double = 0.030
 }
 
+enum DonutConstants {
+    //modulo di rimbalzo
+    enum Reflect {
+        static let big: CGFloat = 14
+        static let medium: CGFloat = 0
+        static let small: CGFloat = 0
+    }
+    //velocità sull'asse X
+    enum XMovement {
+        static let big: CGFloat = 5
+        static let medium: CGFloat = 0
+        static let small: CGFloat = 0
+    }
+}
+
 
