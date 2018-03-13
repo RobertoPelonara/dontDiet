@@ -82,10 +82,13 @@ class Donut: SKSpriteNode {
         if position.x < (hitBox?.r)! {xParameter = abs(xParameter!)} else if position.x > ((super.scene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter!))}
         
         currForce.y += gravityVector.y * velocity * CGFloat(deltaTime)
-        positionAsVector.y += currForce.y
+        positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
         positionAsVector.x = positionAsVector.x + (xParameter! * velocity * CGFloat(deltaTime))
 
-        if positionAsVector.y <= GameManager.shared.groundY {currForce.y = reflectParameter!}
+        if positionAsVector.y <= GameManager.shared.groundY {
+            currForce.y = reflectParameter!
+            positionAsVector.y = GameManager.shared.groundY 
+        }
         
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         updateHitBox()
