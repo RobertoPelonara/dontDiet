@@ -31,7 +31,7 @@ class Fork: SKSpriteNode {
         
         self.position = position
         //self.position.y -= 200
-        self.position.y -= SpriteSize.fork.height/2 + SpriteSize.player.height - 5
+        self.position.y -= SpriteSize.fork.height/2 - SpriteSize.player.height/2
         hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: 10)
         
         if debug {
@@ -42,9 +42,12 @@ class Fork: SKSpriteNode {
         }
         
     }
-    func update(deltaTime:TimeInterval) {
-        
-        
+    func update(deltaTime:TimeInterval, playerPosition position:CGPoint) {
+//        if self.position.y <= position.y + SpriteSize.player.height/2 {
+//            self.zPosition = Z.background - 1
+//        } else {
+//            self.zPosition = Z.sprites - 1
+//        }
         updateMovement(deltaTime: deltaTime)
         
         updateHitBox()
@@ -55,9 +58,10 @@ class Fork: SKSpriteNode {
     }
     
     func updateMovement(deltaTime:TimeInterval){
+        
         if self.position.y + SpriteSize.fork.height/2 >= (gameScene?.frame.height)! {
             self.removeFromParent()
-            
+           //RIMUOVERE QUESTA FORCHETTA DALL'ARRAY COMM CAZZ S FA?
         } else {
             
             let deltaMove = velocity * CGFloat(deltaTime)

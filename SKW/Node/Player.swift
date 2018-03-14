@@ -169,7 +169,7 @@ class Player: SKSpriteNode {
     func checkCollisionWithDonuts () {
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
-                print("COLLISIONE MOTHERFUCKA")
+                //print("COLLISIONE MOTHERFUCKA")
                 
             }
         }

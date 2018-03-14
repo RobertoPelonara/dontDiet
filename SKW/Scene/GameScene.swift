@@ -13,7 +13,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   // Actors
   var perna = Player()
   var hud = HUD()
-  var fork = Fork()
   let enemies = (rows: 3, cols: 12)
 
   // Update Timer
@@ -56,10 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     perna.setup(view: self.view!)
     addChild(perna)
     
-    fork.gameScene = self
-    fork.setup(playerPosition: perna.position)
-    GameManager.shared.spawnedForks.append(fork)
-    addChild(fork)
+    
     
     
     //var prevX:CGFloat = 30
@@ -150,7 +146,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // With atPoint
     let touchedNode = self.atPoint(pos)
     if touchedNode.name == "buttonFire" {
-      perna.fire()
+      throwFork()
+      print(GameManager.shared.spawnedForks)
       return
     }
 
@@ -193,7 +190,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     for fork in GameManager.shared.spawnedForks {
-        fork.update(deltaTime: deltaTime)
+        fork.update(deltaTime: deltaTime,playerPosition:perna.position)
     }
     
     perna.update(deltaTime: deltaTime)
@@ -271,6 +268,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
   }
+    
+    func throwFork(){
+        
+        let fork = Fork()
+        fork.gameScene = self
+        fork.setup(playerPosition: perna.position)
+        GameManager.shared.spawnedForks.append(fork)
+        addChild(fork)
+    }
+    
+    
 
   // Check EndGame
   func checkTimer() {
