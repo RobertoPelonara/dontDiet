@@ -130,14 +130,14 @@ class Donut: SKSpriteNode {
             donut1.position.x -= SpriteSize.donutMid.width/2
             donut2.position.x += SpriteSize.donutMid.width/2
             
-            donut1.currForce.y = self.currForce.y
-            donut2.currForce.y = self.currForce.y
+            donut1.currForce.y = DonutConstants.startingForce.medium
+            donut2.currForce.y = DonutConstants.startingForce.medium
             
             donut1.xParameter = -DonutConstants.XMovement.medium
             donut2.xParameter = DonutConstants.XMovement.medium
             
-            donut1.setScale(0.7)
-            donut2.setScale(0.7)
+            donut1.setScale(DonutConstants.scale.medium)
+            donut2.setScale(DonutConstants.scale.medium)
             
             donut1.setup(.medium)
             donut2.setup(.medium)

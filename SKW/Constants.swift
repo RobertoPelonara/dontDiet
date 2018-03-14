@@ -40,7 +40,7 @@ enum SpriteSize {
     static let fork = CGSize(width: 15, height: 777)
     
     static let donutBig = CGSize(width: 60, height: 60)
-    static let donutMid = CGSize(width: 30, height: 30)
+    static let donutMid = CGSize(width: 45, height: 45)
     static let donutSmall = CGSize(width: 15, height: 15)
     
 }
@@ -58,7 +58,7 @@ enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
         static let big: CGFloat = 15.2
-        static let medium: CGFloat = 8
+        static let medium: CGFloat = 12
         static let small: CGFloat = 0
     }
     //velocità sull'asse X
@@ -66,6 +66,12 @@ enum DonutConstants {
         static let big: CGFloat = 5
         static let medium: CGFloat = 4
         static let small: CGFloat = 0
+    }
+    enum startingForce {
+        static let medium: CGFloat = 5
+    }
+    enum scale {
+        static let medium: CGFloat = 0.75
     }
 }
 
