@@ -14,31 +14,46 @@ class MenuScene: SKScene {
     //debugPrint("view: \(view.frame)")
     backgroundColor = .white
 
-    let bg = SKSpriteNode(color: .yellow, size: CGSize(width: 100, height: 100))
-    bg.position = CGPoint(x: size.width / 2, y: size.height / 1.5)
-    bg.zPosition = Z.background
-    addChild(bg)
+    let background = SKSpriteNode(imageNamed: "background")
+    background.position = CGPoint(x: size.width/2 , y: size.height/2)
+    background.zPosition = Z.background
+    addChild(background)
 
     let gameLabel = SKLabelNode(fontNamed: "Courier")
-    gameLabel.fontSize = 40
+    gameLabel.fontSize = 80
     gameLabel.fontColor = .red
-    gameLabel.text = "UnNamed"
+    gameLabel.text = "Don't Diet"
     gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
     addChild(gameLabel)
 
     let buttonStart = SKSpriteNode(imageNamed: "buttonStart-normal")
     buttonStart.name = "buttonStart"
-    buttonStart.position = CGPoint(x: size.width / 2, y: size.height / 2.8)
+    buttonStart.position = CGPoint(x: size.width / 2, y: size.height / 2)
     buttonStart.size = SpriteSize.button
     buttonStart.zPosition = Z.HUD
     addChild(buttonStart)
+    
+    let idle = Player()
+    idle.position = CGPoint(x: size.width/2 , y:size.height/6)
+    idle.zPosition = Z.player
+    idle.size = SpriteSize.player
+    idle.setup(view: self.view!)
+    addChild(idle)
+    
+    let positionBase = idle.position.x
+    let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
+    let position2 = CGPoint(x: idle.position.x + 50, y: idle.position.y)
+    let action1 = SKAction.moveTo(x: position1.x, duration: 1.5)
+    let action2 = SKAction.moveTo(x: positionBase, duration: 1.5)
+    let action3 = SKAction.moveTo(x: position2.x, duration: 1.5)
+    let action4 = SKAction.moveTo(x: positionBase, duration: 1.5)
 
-    let perna = SKSpriteNode(imageNamed: "perna")
-    perna.position = CGPoint(x: size.width / 2, y: size.height / 6)
-    perna.setScale(1.5)
-    perna.texture?.filteringMode = .nearest
-    perna.zPosition = Z.player
-    addChild(perna)
+    let sequence = SKAction.sequence([action1,action2,action3, action4])
+    idle.run(SKAction.repeatForever(sequence))
+    
+    
+    
+    
   }
 
   func touchDown(atPoint pos: CGPoint) {
@@ -63,7 +78,7 @@ class MenuScene: SKScene {
       self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
       let scene = GameScene(size: size)
       scene.scaleMode = scaleMode
-      let transitionType = SKTransition.flipHorizontal(withDuration: 0.5)
+      let transitionType = SKTransition.crossFade(withDuration: 1)
       view?.presentScene(scene, transition: transitionType)
     }
 
