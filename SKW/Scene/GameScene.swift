@@ -116,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let fork = GameManager.shared.getFork()
             fork.gameScene = self
             fork.setup(playerPosition: perna.position)
-            GameManager.shared.spawnedForks2.append(fork)
+            GameManager.shared.spawnedForks.append(fork)
             addChild(fork)
             
         } else {return}
