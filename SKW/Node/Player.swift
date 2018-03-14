@@ -85,7 +85,9 @@ class Player: SKSpriteNode {
         self.texture?.filteringMode = .nearest
     }
     
-    func setup(view: SKView) {
+    func setup(view: SKView, gameScene:SKScene) {
+        
+        self.gameScene = gameScene
         self.position = CGPoint(x: view.frame.midX, y: self.size.height)
         self.zPosition = Z.player
         destination = position
@@ -102,10 +104,12 @@ class Player: SKSpriteNode {
             debugHitBox = SKSpriteNode(color: UIColor.blue, size: CGSize(width: SpriteSize.player.width, height: SpriteSize.player.height))
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
-            gameScene!.addChild(debugHitBox!)
+            gameScene.addChild(debugHitBox!)
            
         }
         self.animate(type: "idle")
+        
+        gameScene.addChild(self)
     }
     
     func update(deltaTime: TimeInterval) {

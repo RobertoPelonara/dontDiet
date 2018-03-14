@@ -42,16 +42,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        backgroundColor = .black
         
+        backgroundColor = .black
         let background = SKSpriteNode(imageNamed: "background")
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = Z.background
         addChild(background)
         
-        perna.gameScene = self
-        perna.setup(view: self.view!)
-        addChild(perna)
+        
+        perna.setup(view: self.view!,gameScene:self)
         
     }
     
@@ -99,10 +98,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if spawnInterval <= 0 {
             let donut = GameManager.shared.getDonut()
-            donut.gameScene = self
-            donut.setup(.big)
+            
+            donut.setup(.big,gameScene: self)
 
-            addChild(donut)
             
             spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
 //            spawnInterval = 0.2

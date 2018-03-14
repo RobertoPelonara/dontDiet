@@ -37,8 +37,8 @@ class MenuScene: SKScene {
     idle.position = CGPoint(x: size.width/2 , y:size.height/6)
     idle.zPosition = Z.player
     idle.size = SpriteSize.player
-    idle.setup(view: self.view!)
-    addChild(idle)
+    idle.setup(view: view,gameScene: self)
+    
     
     let positionBase = idle.position.x
     let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
