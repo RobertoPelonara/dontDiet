@@ -107,54 +107,11 @@ class Player: SKSpriteNode {
         self.animate(type: "idle")
     }
     
-    func fire() {
-        
-        //SPAWN THE FORK FROM THE GAME MANAGER
-    
-        
-    }
-    
-    func eat(mushroom: SKNode) {
-        let hud = parent?.childNode(withName: "HUD") as? HUD
-        
-        // Invalidate Collision
-        mushroom.physicsBody?.categoryBitMask = 0
-        mushroom.physicsBody?.contactTestBitMask = 0
-        mushroom.physicsBody?.collisionBitMask = 0
-        
-        if mushroom.name == "mushroom-good" {
-            hud?.score = Scores.bonus // Increase Score
-            let mushroomAction = SKAction.sequence([
-                SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false),
-                SKAction.rotate(byAngle: .pi / 2, duration: 0.5),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.removeFromParent()
-                ])
-            mushroom.run(mushroomAction)
-        } else {
-            hud?.score = Scores.malus // Decrease Score
-            let mushroomAction = SKAction.sequence([
-                SKAction.playSoundFileNamed("bad.m4a", waitForCompletion: false),
-                SKAction.scale(by: 0.3, duration: 0.3),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.removeFromParent()
-                ])
-            mushroom.run(mushroomAction)
-        }
-    }
-    
-    func fireBeam() {
-        
-    }
-    
-
     func update(deltaTime: TimeInterval) {
+        
         updateMoveAndAnim(deltaTime)
         updateHitBox()
         checkCollisionWithDonuts()
-        
-        
-        
         
     }
     
@@ -168,6 +125,7 @@ class Player: SKSpriteNode {
     }
     
     func checkCollisionWithDonuts () {
+        
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
                 //print("COLLISIONE MOTHERFUCKA")
@@ -176,10 +134,8 @@ class Player: SKSpriteNode {
         }
     }
     
-    
-    
-    
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
+        
         guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
         let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
         

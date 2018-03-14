@@ -14,6 +14,8 @@ class Fork: SKSpriteNode {
     var debugHitBox: SKSpriteNode?
     var gameScene: SKScene?
     let velocity:CGFloat = 240
+    var isInGame = false
+    var indexInArray: Int?
     private var debug = false
     
     init() {
@@ -28,6 +30,7 @@ class Fork: SKSpriteNode {
     }
     
     func setup(playerPosition position:CGPoint){
+        self.isInGame = true
         
         self.position = position
         self.zPosition = Z.fork
@@ -36,21 +39,16 @@ class Fork: SKSpriteNode {
         hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: 10)
         
         if debug {
-            debugHitBox = SKSpriteNode(color: UIColor.black, size: CGSize(width: 10, height: SpriteSize.fork.height))
+            debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 8, height: SpriteSize.fork.height))
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
             gameScene!.addChild(debugHitBox!)
         }
         
     }
-    func update(deltaTime:TimeInterval, playerPosition position:CGPoint) {
-//        if self.position.y <= position.y + SpriteSize.player.height/2 {
-//            self.zPosition = Z.background - 1
-//        } else {
-//            self.zPosition = Z.sprites - 1
-//        }
-        updateMovement(deltaTime: deltaTime)
+    func update(deltaTime:TimeInterval) {
         
+        updateMovement(deltaTime: deltaTime)
         updateHitBox()
     }
     
@@ -62,6 +60,7 @@ class Fork: SKSpriteNode {
         
         if self.position.y + SpriteSize.fork.height/2 >= (gameScene?.frame.height)! {
             self.removeFromParent()
+            if debug {debugHitBox?.removeFromParent()}
            //RIMUOVERE QUESTA FORCHETTA DALL'ARRAY COMM CAZZ S FA?
         } else {
             
