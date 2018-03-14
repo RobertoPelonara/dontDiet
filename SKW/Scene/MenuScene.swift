@@ -78,7 +78,7 @@ class MenuScene: SKScene {
       self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
       let scene = GameScene(size: size)
       scene.scaleMode = scaleMode
-      let transitionType = SKTransition.flipHorizontal(withDuration: 0.5)
+      let transitionType = SKTransition.crossFade(withDuration: 1)
       view?.presentScene(scene, transition: transitionType)
     }
 
