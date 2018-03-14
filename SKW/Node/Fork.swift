@@ -79,6 +79,8 @@ class Fork: SKSpriteNode {
         }
         
         GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
+        if self.debug {self.debugHitBox?.removeFromParent()}
+
     }
     
     func updateMovement(deltaTime:TimeInterval){

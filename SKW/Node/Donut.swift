@@ -141,53 +141,50 @@ class Donut: SKSpriteNode {
     }
     
     func forkHit (fork: Fork) {
+        if debug {debugHitBox?.removeFromParent()}
         
         self.removeFromParent()
         let index = GameManager.shared.spawnedDonuts.index(of: self)
 
         GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
 
+        var type1: DonutType?
+        var type2: DonutType?
         //Behaviours of hits
         switch self.type! {
         case .big:
             
-            let donut1 = GameManager.shared.getDonut()
-            let donut2 = GameManager.shared.getDonut()
-            
-            donut1.setup(.mediumLeft, gameScene: self.gameScene!, spawnPosition: self.position)
-            donut2.setup(.mediumRight, gameScene: self.gameScene!, spawnPosition: self.position)
+            type1 = .mediumLeft
+            type2 = .mediumRight
             
         case .mediumRight:
             
-            let donut1 = GameManager.shared.getDonut()
-            let donut2 = GameManager.shared.getDonut()
+            type1 = .smallLeft
+            type2 = .smallRight
             
-            donut1.setup(.smallLeft, gameScene: self.gameScene!, spawnPosition: self.position)
-            donut2.setup(.smallRight, gameScene: self.gameScene!, spawnPosition: self.position)
-            print("mediumright")
+            
             
         case .mediumLeft:
             
-            let donut1 = GameManager.shared.getDonut()
-            let donut2 = GameManager.shared.getDonut()
-            
-            donut1.setup(.smallLeft, gameScene: self.gameScene!, spawnPosition: self.position)
-            donut2.setup(.smallRight, gameScene: self.gameScene!, spawnPosition: self.position)
-            print("mediumleft")
+            type1 = .smallLeft
+            type2 = .smallRight
             
         case .smallLeft:
-            
-            print("small")
+            return
         
         case .smallRight:
-            
-            print("small")
+            return
 
         }
+        
+        let donut1 = GameManager.shared.getDonut()
+        let donut2 = GameManager.shared.getDonut()
+        
+        donut1.setup(type1!, gameScene: self.gameScene!, spawnPosition: self.position)
+        donut2.setup(type2!, gameScene: self.gameScene!, spawnPosition: self.position)
        
 //        DEBUG
-        if debug {debugHitBox?.removeFromParent()}
-        if fork.debug {fork.debugHitBox?.removeFromParent()}
+      
     }
     
     
