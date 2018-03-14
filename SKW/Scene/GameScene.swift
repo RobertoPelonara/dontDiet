@@ -76,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set last frame time to current time
         lastTime = currentTime
         
+        print(GameManager.shared.spawnedDonuts.count)
         for donut in GameManager.shared.spawnedDonuts {
             donut.update(deltaTime: deltaTime)
         }
@@ -99,7 +100,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let donut = Donut()
             donut.gameScene = self
             donut.setup(.big)
-            GameManager.shared.spawnedDonuts.append(donut)
+
             addChild(donut)
             
             spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
