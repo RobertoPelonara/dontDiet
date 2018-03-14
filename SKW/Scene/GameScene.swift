@@ -56,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let _ = touches.first else {return}
-        throwFork()
+        perna.throwFork()
         
     }
     
@@ -107,20 +107,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            print(spawnInterval)
         }
     
-    }
-    
-    func throwFork(){
-        
-        let maximumForks = perna.hasPowerUp ? 2 : 1
-        
-        if GameManager.shared.spawnedForks.count < maximumForks {
-            
-            let fork = GameManager.shared.getFork()
-            fork.setup(playerPosition: perna.position,gameScene: self)
-
-            
-        } else {return}
-        
     }
     
 }

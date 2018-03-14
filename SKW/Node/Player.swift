@@ -112,6 +112,20 @@ class Player: SKSpriteNode {
         gameScene.addChild(self)
     }
     
+    func throwFork(){
+        
+        let maximumForks = self.hasPowerUp ? 2 : 1
+        
+        if GameManager.shared.spawnedForks.count < maximumForks {
+            
+            let fork = GameManager.shared.getFork()
+            fork.setup(playerPosition: self.position,gameScene: self.gameScene!)
+            
+            
+        } else {return}
+        
+    }
+    
     func update(deltaTime: TimeInterval) {
         
         updateMoveAndAnim(deltaTime)
