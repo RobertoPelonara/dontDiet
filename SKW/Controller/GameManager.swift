@@ -36,7 +36,7 @@ class GameManager {
     
     func initializeDonuts(){
         
-        for i in 0...40 {
+        for i in 0...39 {
             
             let donut = Donut()
             //donut.isInGame = false
@@ -48,7 +48,7 @@ class GameManager {
     
     func initializeForks() {
         
-        for i in 0...5 {
+        for i in 0...4 {
             
             let fork = Fork()
             //fork.isInGame = false

@@ -16,7 +16,7 @@ class Fork: SKSpriteNode {
     let velocity:CGFloat = 240
 //    var isInGame = false
     var indexInArray: Int?
-    private var debug = false
+    var debug = false
     
     init() {
         
@@ -55,11 +55,17 @@ class Fork: SKSpriteNode {
         
         updateMovement(deltaTime: deltaTime)
         updateHitBox()
+        checkCollision()
     }
     
     func checkCollision () {
         
-        
+        for donut in GameManager.shared.spawnedDonuts {
+            if rectInCircle(rect: self.hitBox!, circle: donut.hitBox!){
+                donut.forkHit(fork: self)
+                
+            }
+        }
         
     }
     

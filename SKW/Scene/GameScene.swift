@@ -76,7 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Set last frame time to current time
         lastTime = currentTime
         
-        print(GameManager.shared.spawnedDonuts.count)
+//        print(GameManager.shared.spawnedDonuts.count)
         for donut in GameManager.shared.spawnedDonuts {
             donut.update(deltaTime: deltaTime)
         }
@@ -90,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         debugHitBox?.position.y = perna.hitBox!.y
         //    checkSimpleCollision()
         
+        print("spawned donuts: \(GameManager.shared.spawnedDonuts.count) - spawned forks: \(GameManager.shared.spawnedForks.count)\navailable donuts: \(GameManager.shared.availableDonuts.count) - available forks: \(GameManager.shared.availableForks.count)")
     }
     
     func spawnDonut(deltaTime: TimeInterval) {
@@ -97,14 +98,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnInterval -= deltaTime
         
         if spawnInterval <= 0 {
-            let donut = Donut()
+            let donut = GameManager.shared.getDonut()
             donut.gameScene = self
             donut.setup(.big)
 
             addChild(donut)
             
             spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
-            print(spawnInterval)
+//            print(spawnInterval)
         }
     
     }
@@ -118,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let fork = GameManager.shared.getFork()
             fork.gameScene = self
             fork.setup(playerPosition: perna.position)
-            print(GameManager.shared.spawnedForks)
+//            print(GameManager.shared.spawnedForks)
             addChild(fork)
             
         } else {return}

@@ -99,6 +99,24 @@ class Donut: SKSpriteNode {
         
     }
     
+    func forkHit (fork: Fork) {
+        self.removeFromParent()
+        fork.removeFromParent()
+        
+        guard let index = GameManager.shared.spawnedDonuts.index(of: self) else {print ("no donut found in spawned!"); return}
+        guard let indexFork = GameManager.shared.spawnedForks.index(of: fork) else {print ("no fork found in spawned!"); return}
+        
+        GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index))
+        GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
+        
+//        self.removeFromParent()
+//        let index = GameManager.shared.spawnedForks.index(of: self)
+//        GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index!))
+        
+        if debug {debugHitBox?.removeFromParent()}
+        if fork.debug {fork.debugHitBox?.removeFromParent()}
+    }
+    
     func updateHitBox () {
         hitBox!.x = position.x
         hitBox!.y = position.y
