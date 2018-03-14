@@ -104,8 +104,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             addChild(donut)
             
-//            spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
-            spawnInterval = 0.2
+            spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
+//            spawnInterval = 0.2
 //            print(spawnInterval)
         }
     

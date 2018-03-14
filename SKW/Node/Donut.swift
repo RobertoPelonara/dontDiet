@@ -55,6 +55,7 @@ class Donut: SKSpriteNode {
     
     func bigDonutSetup() {
         type = .big
+        self.setScale(1)
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
