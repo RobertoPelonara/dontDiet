@@ -37,7 +37,7 @@ class MenuScene: SKScene {
     perna.position = CGPoint(x: size.width / 2, y: size.height / 6)
     perna.setScale(1.5)
     perna.texture?.filteringMode = .nearest
-    perna.zPosition = Z.sprites
+    perna.zPosition = Z.player
     addChild(perna)
   }
 

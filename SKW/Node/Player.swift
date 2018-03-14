@@ -40,9 +40,13 @@ class Player: SKSpriteNode {
     
     var motionManager = CMMotionManager()
     
+    //constraints for player
+    var rangeUpperLimit: CGFloat?
+    var rangeLowerLimit: CGFloat?
     
     
-    private var debug = true
+    
+    private var debug = false
     
     init() {
         self.textureIdle = GameManager.shared.allTextures.filter { $0.description.contains("body") }
@@ -82,10 +86,17 @@ class Player: SKSpriteNode {
     
     func setup(view: SKView) {
         self.position = CGPoint(x: view.frame.midX, y: self.size.height)
+        self.zPosition = Z.player
         destination = position
-        self.limit = view.frame.width //the boundaries of the scene
+        self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
+        self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene
         // Physics
         hitBox = Rect(x: position.x, y: position.y, height: SpriteSize.player.height, width: SpriteSize.player.width)
+        
+        let range = SKRange(lowerLimit: rangeLowerLimit!, upperLimit: rangeUpperLimit!)
+        let stattFerm = [SKConstraint.positionX(range)]
+        self.constraints = stattFerm
+        
         if debug{
             debugHitBox = SKSpriteNode(color: UIColor.blue, size: CGSize(width: SpriteSize.player.width, height: SpriteSize.player.height))
             debugHitBox?.position = position
@@ -96,54 +107,11 @@ class Player: SKSpriteNode {
         self.animate(type: "idle")
     }
     
-    func fire() {
-        
-        //SPAWN THE FORK FROM THE GAME MANAGER
-    
-        
-    }
-    
-    func eat(mushroom: SKNode) {
-        let hud = parent?.childNode(withName: "HUD") as? HUD
-        
-        // Invalidate Collision
-        mushroom.physicsBody?.categoryBitMask = 0
-        mushroom.physicsBody?.contactTestBitMask = 0
-        mushroom.physicsBody?.collisionBitMask = 0
-        
-        if mushroom.name == "mushroom-good" {
-            hud?.score = Scores.bonus // Increase Score
-            let mushroomAction = SKAction.sequence([
-                SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false),
-                SKAction.rotate(byAngle: .pi / 2, duration: 0.5),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.removeFromParent()
-                ])
-            mushroom.run(mushroomAction)
-        } else {
-            hud?.score = Scores.malus // Decrease Score
-            let mushroomAction = SKAction.sequence([
-                SKAction.playSoundFileNamed("bad.m4a", waitForCompletion: false),
-                SKAction.scale(by: 0.3, duration: 0.3),
-                SKAction.wait(forDuration: 1.0),
-                SKAction.removeFromParent()
-                ])
-            mushroom.run(mushroomAction)
-        }
-    }
-    
-    func fireBeam() {
-        
-    }
-    
-
     func update(deltaTime: TimeInterval) {
+        
         updateMoveAndAnim(deltaTime)
         updateHitBox()
         checkCollisionWithDonuts()
-        
-        
-        
         
     }
     
@@ -157,18 +125,17 @@ class Player: SKSpriteNode {
     }
     
     func checkCollisionWithDonuts () {
+        
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
-                print("COLLISIONE MOTHERFUCKA")
+                //print("COLLISIONE MOTHERFUCKA")
                 
             }
         }
     }
     
-    
-    
-    
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
+        
         guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
         let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
         

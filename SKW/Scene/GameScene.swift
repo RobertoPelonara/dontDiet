@@ -89,22 +89,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func touchDown(atPoint pos: CGPoint) {
         
-        // Gesture Start Detect
+    }
+    
+    override func didMove(to view: SKView) {
+        backgroundColor = .black
+        
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background.zPosition = Z.background
+        addChild(background)
         
         //        var prevX:CGFloat = 30
         //        let increment:CGFloat = 40
         
-        //    initialTouch = pos
-        //    deltaX = 0
-        //    deltaY = 0
-        //
-        //    let touchedNode = self.atPoint(pos)
-        //    if touchedNode.name == "buttonFire" {
-        //      let button = touchedNode as? SKSpriteNode
-        //      button?.texture = SKTexture(imageNamed: "buttonFire-pressed")
-        //      return
-        //    }
+        // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
+        if lastTime <= 0 { lastTime = currentTime }
         
+        // Update delta time
+        deltaTime = currentTime - lastTime
+        // debugPrint("\(deltaTime * 1000) milliseconds")
+        
+        // Set last frame time to current time
+        lastTime = currentTime
+        
+        for donut in GameManager.shared.spawnedDonuts {
+            donut.update(deltaTime: deltaTime)
+        }
+        
+        for fork in GameManager.shared.spawnedForks {
+            fork.update(deltaTime: deltaTime)
+        }
+        
+        perna.update(deltaTime: deltaTime)
+        debugHitBox?.position.x = perna.hitBox!.x
+        debugHitBox?.position.y = perna.hitBox!.y
+        //    checkSimpleCollision()
         
     }
     
