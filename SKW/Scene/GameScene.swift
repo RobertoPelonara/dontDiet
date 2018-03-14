@@ -21,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Donut spawn Timer
     var lastDonutTime: TimeInterval = 0
     var timeFromLastDonut: TimeInterval = 0
-    var spawnInterval: TimeInterval = 0
+    var spawnInterval: TimeInterval = 2
     
     // Special
     var donut: Donut? = nil
@@ -58,11 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let _ = touches.first else {return}
         throwFork()
-        let donut = Donut()
-        donut.gameScene = self
-        donut.setup(.big)
-        GameManager.shared.spawnedDonuts.append(donut)
-        addChild(donut)
+        
     }
     
     // MARK: Render Loop
@@ -71,12 +67,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
         if lastTime <= 0 { lastTime = currentTime }
         
-        // Random spawn
-        spawnEnemies(initTime: currentTime)
-        
         // Update delta time
         deltaTime = currentTime - lastTime
-        // debugPrint("\(deltaTime * 1000) milliseconds")
+        
+        // Random spawn
+        spawnEnemies(deltaTime: deltaTime)
         
         // Set last frame time to current time
         lastTime = currentTime
@@ -96,25 +91,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func spawnEnemies(initTime: TimeInterval) {
-        if spawnInterval == 0 {
-            spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
-            print(spawnInterval)
-        }
+    func spawnEnemies(deltaTime: TimeInterval) {
         
-        if lastDonutTime <= 0 { lastDonutTime = initTime; timeFromLastDonut = initTime } else {timeFromLastDonut = initTime - lastDonutTime}
+        spawnInterval -= deltaTime
         
-        if timeFromLastDonut > spawnInterval {
-            spawnInterval = 0
-            
+        if spawnInterval <= 0 {
             let donut = Donut()
             donut.gameScene = self
             donut.setup(.big)
             GameManager.shared.spawnedDonuts.append(donut)
             addChild(donut)
             
-            lastDonutTime = initTime
+            spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
+            print(spawnInterval)
         }
+    
     }
     
     func throwFork(){
