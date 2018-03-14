@@ -46,7 +46,7 @@ class Player: SKSpriteNode {
     
     
     
-    private var debug = true
+    private var debug = false
     
     init() {
         self.textureIdle = GameManager.shared.allTextures.filter { $0.description.contains("body") }
@@ -86,6 +86,7 @@ class Player: SKSpriteNode {
     
     func setup(view: SKView) {
         self.position = CGPoint(x: view.frame.midX, y: self.size.height)
+        self.zPosition = Z.player
         destination = position
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
         self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene

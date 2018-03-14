@@ -30,6 +30,7 @@ class Fork: SKSpriteNode {
     func setup(playerPosition position:CGPoint){
         
         self.position = position
+        self.zPosition = Z.fork
         //self.position.y -= 200
         self.position.y -= SpriteSize.fork.height/2 - SpriteSize.player.height/2
         hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: 10)
