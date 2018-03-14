@@ -16,8 +16,6 @@ class GameManager {
     var monstersKills: Int = 0
     var timerCounter: Int = 30
     
-    
-    
     // Textures
     var allTextures: [SKTexture] = []
     var allDonutsTextures: [SKTexture] = []

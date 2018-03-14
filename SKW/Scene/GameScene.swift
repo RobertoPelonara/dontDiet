@@ -32,13 +32,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let triggerDistance: CGFloat = 20
     var initialTouch: CGPoint = CGPoint.zero
     
-    
-    
     // Before the Scene
     override func sceneDidLoad() {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx:0, dy: -9.8)
         
+        HUD.shared.setup(size: self.size)
+        self.addChild(HUD.shared)
     }
     
     override func didMove(to view: SKView) {

@@ -124,7 +124,12 @@ class Donut: SKSpriteNode {
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
-        if position.x < (hitBox?.r)! {xParameter = abs(xParameter!)} else if position.x > ((gameScene?.frame.width)! - (hitBox?.r)!) {xParameter = -(abs(xParameter!))}
+        if position.x < (hitBox?.r)! {
+            xParameter = abs(xParameter!)
+        } else if position.x > ((gameScene?.frame.width)! - (hitBox?.r)!) {
+            xParameter = -(abs(xParameter!))
+        }
+        if self.xParameter! <= 0 {self.zRotation += CGFloat(DonutConstants.zRotation)} else {self.zRotation -= CGFloat(DonutConstants.zRotation)}
         
         currForce.y += gravityVector.y * velocity * CGFloat(deltaTime)
         positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
@@ -170,9 +175,13 @@ class Donut: SKSpriteNode {
             type2 = .smallRight
             
         case .smallLeft:
+            
+            HUD.shared.score = 5
             return
         
         case .smallRight:
+            
+            HUD.shared.score = 5
             return
 
         }

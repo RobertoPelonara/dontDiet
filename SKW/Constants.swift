@@ -75,6 +75,7 @@ enum DonutConstants {
         static let medium: CGFloat = 0.75
         static let small: CGFloat = 0.40
     }
+    static let zRotation = Double.pi / 60
 }
 
 
