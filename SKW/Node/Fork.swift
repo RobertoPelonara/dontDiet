@@ -63,10 +63,22 @@ class Fork: SKSpriteNode {
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: self.hitBox!, circle: donut.hitBox!){
                 donut.forkHit(fork: self)
-                
+                destroyThisFork()
             }
         }
         
+    }
+    
+    func destroyThisFork() {
+        self.removeFromParent()
+        guard let indexFork = GameManager.shared.spawnedForks.index(of: self) else {
+            
+            print ("no fork found in spawned!")
+            return
+            
+        }
+        
+        GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
     }
     
     func updateMovement(deltaTime:TimeInterval){
