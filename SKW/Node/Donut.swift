@@ -15,7 +15,7 @@ class Donut: SKSpriteNode {
     var xParameter: CGFloat?
     var reflectParameter: CGFloat?
     var indexInArray: Int? 
-    var isInGame:Bool = false
+//    var isInGame:Bool = false
     
     //costante per il deltaTime: tarato sui 60fps, quindi avrà valore 60 (velocity * deltaTime = 1)
     let velocity: CGFloat = 60
@@ -37,7 +37,8 @@ class Donut: SKSpriteNode {
     }
     
     func setup (_ type: DonutType) {
-        self.isInGame = true
+        
+        
         
         if type == .big {bigDonutSetup()}
         
@@ -48,6 +49,8 @@ class Donut: SKSpriteNode {
             gameScene!.addChild(debugHitBox!)
             
         }
+        
+        GameManager.shared.spawnedDonuts.append(self)
         
     }
     

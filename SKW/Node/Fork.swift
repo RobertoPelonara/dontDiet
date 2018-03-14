@@ -14,11 +14,12 @@ class Fork: SKSpriteNode {
     var debugHitBox: SKSpriteNode?
     var gameScene: SKScene?
     let velocity:CGFloat = 240
-    var isInGame = false
+//    var isInGame = false
     var indexInArray: Int?
     private var debug = false
     
     init() {
+        
         let forkTexture = GameManager.shared.allTextures.first { (texture) -> Bool in
             return texture.description.contains("Fork")
         }
@@ -30,7 +31,9 @@ class Fork: SKSpriteNode {
     }
     
     func setup(playerPosition position:CGPoint){
-        self.isInGame = true
+//        self.isInGame = true
+        
+        
         
         self.position = position
         self.zPosition = Z.fork
@@ -44,6 +47,8 @@ class Fork: SKSpriteNode {
             debugHitBox?.zPosition = Z.HUD
             gameScene!.addChild(debugHitBox!)
         }
+        
+        GameManager.shared.spawnedForks.append(self)
         
     }
     func update(deltaTime:TimeInterval) {
@@ -60,8 +65,12 @@ class Fork: SKSpriteNode {
         
         if self.position.y + SpriteSize.fork.height/2 >= (gameScene?.frame.height)! {
             self.removeFromParent()
+            let index = GameManager.shared.spawnedForks.index(of: self)
+            GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index!))
+            
+            
             if debug {debugHitBox?.removeFromParent()}
-           //RIMUOVERE QUESTA FORCHETTA DALL'ARRAY COMM CAZZ S FA?
+          
         } else {
             
             let deltaMove = velocity * CGFloat(deltaTime)

@@ -38,10 +38,11 @@ class GameManager {
     
     func initializeDonuts(){
         
-        for _ in 0...40 {
+        for i in 0...40 {
             
             let donut = Donut()
-            donut.isInGame = false
+            //donut.isInGame = false
+            donut.indexInArray = i
             self.availableDonuts.append(donut)
             
         }
@@ -49,41 +50,42 @@ class GameManager {
     
     func initializeForks() {
         
-        for _ in 0...5 {
+        for i in 0...5 {
             
             let fork = Fork()
-            fork.isInGame = false
+            //fork.isInGame = false
+            fork.indexInArray = i
             self.availableForks.append(fork)
         }
     }
     
     func getDonut() -> Donut {
         
-        if let donut = availableDonuts.first(where: {$0.isInGame == false}) {
+        if !self.availableDonuts.isEmpty{
             
+            let donut = self.availableDonuts.removeFirst()
             return donut
+            
             
         } else {
             
             let donut = Donut()
-            donut.isInGame = false
-            self.availableDonuts.append(donut)
             return donut
         }
     }
     
     func getFork() -> Fork {
         
-        if let fork = availableForks.first(where: {$0.isInGame == false}){
+        if !self.availableForks.isEmpty{
             
+            let fork = self.availableForks.removeFirst()
             return fork
+
             
         } else {
             
             let fork = Fork()
-            fork.isInGame = false
-            self.availableForks.append(fork)
-            return fork
+            return fork 
         }
         
     }

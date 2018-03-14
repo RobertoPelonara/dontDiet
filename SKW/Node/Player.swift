@@ -15,6 +15,7 @@ class Player: SKSpriteNode {
     var textureWalkBody: [SKTexture] = []
     var textureWalkLegL: [SKTexture] = []
     var textureWalkLegR: [SKTexture] = []
+    var hasPowerUp = true
     
     //stuff
     var limit: CGFloat?
