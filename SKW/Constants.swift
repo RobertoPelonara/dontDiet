@@ -58,13 +58,13 @@ enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
         static let big: CGFloat = 15.2
-        static let medium: CGFloat = 0
+        static let medium: CGFloat = 8
         static let small: CGFloat = 0
     }
     //velocità sull'asse X
     enum XMovement {
         static let big: CGFloat = 5
-        static let medium: CGFloat = 0
+        static let medium: CGFloat = 4
         static let small: CGFloat = 0
     }
 }

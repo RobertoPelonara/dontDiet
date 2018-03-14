@@ -76,7 +76,6 @@ class Fork: SKSpriteNode {
             let index = GameManager.shared.spawnedForks.index(of: self)
             GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index!))
             
-            
             if debug {debugHitBox?.removeFromParent()}
           
         } else {

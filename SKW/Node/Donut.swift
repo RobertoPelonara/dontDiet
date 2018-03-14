@@ -14,7 +14,8 @@ class Donut: SKSpriteNode {
     var debugHitBox: SKShapeNode?
     var xParameter: CGFloat?
     var reflectParameter: CGFloat?
-    var indexInArray: Int? 
+    var indexInArray: Int?
+    var type: DonutType?
 //    var isInGame:Bool = false
     
     //costante per il deltaTime: tarato sui 60fps, quindi avrà valore 60 (velocity * deltaTime = 1)
@@ -38,16 +39,14 @@ class Donut: SKSpriteNode {
     
     func setup (_ type: DonutType) {
         
-        
-        
         if type == .big {bigDonutSetup()}
+        if type == .medium {mediumDonutSetup()}
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
             gameScene!.addChild(debugHitBox!)
-            
         }
         
         GameManager.shared.spawnedDonuts.append(self)
@@ -55,6 +54,8 @@ class Donut: SKSpriteNode {
     }
     
     func bigDonutSetup() {
+        type = .big
+        
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
         //setto il reflect per la ciambella
@@ -63,6 +64,12 @@ class Donut: SKSpriteNode {
         xParameter = DonutConstants.XMovement.big
         
         self.position = self.randomPositionSpawn()
+    }
+    
+    func mediumDonutSetup() {
+        type = .medium
+        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutMid.width/2)
+        reflectParameter = DonutConstants.Reflect.medium
     }
     
     func randomPositionSpawn() -> CGPoint {
@@ -100,18 +107,43 @@ class Donut: SKSpriteNode {
     }
     
     func forkHit (fork: Fork) {
-        self.removeFromParent()
-        fork.removeFromParent()
         
         guard let index = GameManager.shared.spawnedDonuts.index(of: self) else {print ("no donut found in spawned!"); return}
         guard let indexFork = GameManager.shared.spawnedForks.index(of: fork) else {print ("no fork found in spawned!"); return}
-        
         GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index))
         GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
         
-//        self.removeFromParent()
-//        let index = GameManager.shared.spawnedForks.index(of: self)
-//        GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index!))
+        if self.type == .big {
+            let donut1 = GameManager.shared.getDonut()
+            let donut2 = GameManager.shared.getDonut()
+            
+            donut1.gameScene = self.gameScene
+            donut2.gameScene = self.gameScene
+            
+            donut1.position = self.position
+            donut2.position = self.position
+            
+            donut1.position.x -= SpriteSize.donutMid.width/2
+            donut2.position.x += SpriteSize.donutMid.width/2
+            
+            donut1.currForce.y = 7
+            donut2.currForce.y = 7
+            
+            donut1.xParameter = -DonutConstants.XMovement.medium
+            donut2.xParameter = DonutConstants.XMovement.medium
+            
+            donut1.setScale(0.7)
+            donut2.setScale(0.7)
+            
+            donut1.setup(.medium)
+            donut2.setup(.medium)
+            
+            gameScene?.addChild(donut1)
+            gameScene?.addChild(donut2)
+        }
+        
+        self.removeFromParent()
+        fork.removeFromParent()
         
         if debug {debugHitBox?.removeFromParent()}
         if fork.debug {fork.debugHitBox?.removeFromParent()}
