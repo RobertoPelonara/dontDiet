@@ -47,7 +47,7 @@ class Fork: SKSpriteNode {
             debugHitBox?.zPosition = Z.HUD
             gameScene!.addChild(debugHitBox!)
         }
-        
+
         GameManager.shared.spawnedForks.append(self)
         
     }
@@ -58,6 +58,8 @@ class Fork: SKSpriteNode {
     }
     
     func checkCollision () {
+        
+        
         
     }
     

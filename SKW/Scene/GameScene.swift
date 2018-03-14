@@ -71,7 +71,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         deltaTime = currentTime - lastTime
         
         // Random spawn
-        spawnEnemies(deltaTime: deltaTime)
+        spawnDonut(deltaTime: deltaTime)
         
         // Set last frame time to current time
         lastTime = currentTime
@@ -92,7 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func spawnEnemies(deltaTime: TimeInterval) {
+    func spawnDonut(deltaTime: TimeInterval) {
         
         spawnInterval -= deltaTime
         
@@ -112,12 +112,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func throwFork(){
         
         let maximumForks = perna.hasPowerUp ? 2 : 1
+        
         if GameManager.shared.spawnedForks.count < maximumForks {
             
             let fork = GameManager.shared.getFork()
             fork.gameScene = self
             fork.setup(playerPosition: perna.position)
-            GameManager.shared.spawnedForks.append(fork)
+            print(GameManager.shared.spawnedForks)
             addChild(fork)
             
         } else {return}
