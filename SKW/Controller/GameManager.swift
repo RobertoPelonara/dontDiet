@@ -32,7 +32,7 @@ class GameManager {
     
     //Physics
     let gravity = CGPoint (x: 0, y: -0.4)
-    let groundY = CGFloat(70)
+    let groundY = CGFloat(40)
     
     func initializeDonuts(){
         

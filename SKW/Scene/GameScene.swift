@@ -116,10 +116,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if GameManager.shared.spawnedForks.count < maximumForks {
             
             let fork = GameManager.shared.getFork()
-            fork.gameScene = self
-            fork.setup(playerPosition: perna.position)
-//            print(GameManager.shared.spawnedForks)
-            addChild(fork)
+            fork.setup(playerPosition: perna.position,gameScene: self)
+
             
         } else {return}
         

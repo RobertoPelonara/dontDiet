@@ -30,10 +30,9 @@ class Fork: SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(playerPosition position:CGPoint){
-//        self.isInGame = true
-        
-        
+    func setup(playerPosition position:CGPoint, gameScene: SKScene){
+
+        self.gameScene = gameScene
         
         self.position = position
         self.zPosition = Z.fork
@@ -45,10 +44,11 @@ class Fork: SKSpriteNode {
             debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 8, height: SpriteSize.fork.height))
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
-            gameScene!.addChild(debugHitBox!)
+            gameScene.addChild(debugHitBox!)
         }
 
         GameManager.shared.spawnedForks.append(self)
+        gameScene.addChild(self)
         
     }
     func update(deltaTime:TimeInterval) {

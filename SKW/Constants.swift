@@ -41,7 +41,7 @@ enum SpriteSize {
     
     static let donutBig = CGSize(width: 60, height: 60)
     static let donutMid = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.medium), height: (SpriteSize.donutBig.height * DonutConstants.scale.medium))
-    static let donutSmall = CGSize(width: 15, height: 15)
+    static let donutSmall = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.small), height: (SpriteSize.donutBig.height * DonutConstants.scale.small))
     
 }
 
@@ -59,19 +59,21 @@ enum DonutConstants {
     enum Reflect {
         static let big: CGFloat = 15.2
         static let medium: CGFloat = 12
-        static let small: CGFloat = 0
+        static let small: CGFloat = 9
     }
     //velocità sull'asse X
     enum XMovement {
         static let big: CGFloat = 5
         static let medium: CGFloat = 4
-        static let small: CGFloat = 0
+        static let small: CGFloat = 3
     }
     enum startingForce {
         static let medium: CGFloat = 5
+        static let small: CGFloat = 5
     }
     enum scale {
         static let medium: CGFloat = 0.75
+        static let small: CGFloat = 0.40
     }
 }
 

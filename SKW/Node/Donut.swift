@@ -25,7 +25,8 @@ class Donut: SKSpriteNode {
         case big
         case mediumLeft
         case mediumRight
-        case small
+        case smallLeft
+        case smallRight
     }
     
     var debug = false
@@ -45,6 +46,7 @@ class Donut: SKSpriteNode {
         
         if type == .big {bigDonutSetup()}
         if type == .mediumLeft || type == .mediumRight {mediumDonutSetup(spawnPosition!)}
+        if type == .smallLeft || type == .smallRight {smallDonutSetup(spawnPosition!)}
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
@@ -88,6 +90,22 @@ class Donut: SKSpriteNode {
         self.gameScene?.addChild(self)
     }
     
+    func smallDonutSetup(_ spawnPosition: CGPoint) {
+        self.setScale(DonutConstants.scale.small)
+        
+        self.position = spawnPosition
+        
+        hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutSmall.width/2)
+        
+        reflectParameter = DonutConstants.Reflect.small
+        
+        self.position.x += self.type == .smallLeft ? -SpriteSize.donutSmall.width/2 : SpriteSize.donutSmall.width/2
+        self.currForce.y = DonutConstants.startingForce.small
+        self.xParameter = self.type == .smallLeft ? -DonutConstants.XMovement.small : DonutConstants.XMovement.small
+        
+        self.gameScene?.addChild(self)
+    }
+    
     func randomPositionSpawn() -> CGPoint {
         //random punto sull'x da cui spawnare
         let randomX = CGFloat(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
@@ -112,9 +130,9 @@ class Donut: SKSpriteNode {
         positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
         positionAsVector.x = positionAsVector.x + (xParameter! * velocity * CGFloat(deltaTime))
 
-        if positionAsVector.y <= GameManager.shared.groundY {
+        if positionAsVector.y <= GameManager.shared.groundY + (hitBox?.r)! {
             currForce.y = reflectParameter!
-            positionAsVector.y = GameManager.shared.groundY
+            positionAsVector.y = GameManager.shared.groundY + (hitBox?.r)!
         }
         
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
@@ -140,17 +158,50 @@ class Donut: SKSpriteNode {
         
         GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
         
-        if self.type == .big {
+        //Behaviours of hits
+        switch self.type! {
+        case .big:
+            
             let donut1 = GameManager.shared.getDonut()
             let donut2 = GameManager.shared.getDonut()
             
             donut1.setup(.mediumLeft, gameScene: self.gameScene!, spawnPosition: self.position)
             donut2.setup(.mediumRight, gameScene: self.gameScene!, spawnPosition: self.position)
-        }
+            
+        case .mediumRight:
+            
+            let donut1 = GameManager.shared.getDonut()
+            let donut2 = GameManager.shared.getDonut()
+            
+            donut1.setup(.smallLeft, gameScene: self.gameScene!, spawnPosition: self.position)
+            donut2.setup(.smallRight, gameScene: self.gameScene!, spawnPosition: self.position)
+            print("mediumright")
+            
+        case .mediumLeft:
+            
+            let donut1 = GameManager.shared.getDonut()
+            let donut2 = GameManager.shared.getDonut()
+            
+            donut1.setup(.smallLeft, gameScene: self.gameScene!, spawnPosition: self.position)
+            donut2.setup(.smallRight, gameScene: self.gameScene!, spawnPosition: self.position)
+            print("mediumleft")
+            
+        case .smallLeft:
+            
+            print("small")
         
+        case .smallRight:
+            
+            print("small")
+
+        }
+       
+//        DEBUG
         if debug {debugHitBox?.removeFromParent()}
         if fork.debug {fork.debugHitBox?.removeFromParent()}
     }
+    
+    
     
     func updateHitBox () {
         hitBox!.x = position.x
@@ -161,4 +212,6 @@ class Donut: SKSpriteNode {
             debugHitBox!.position.y = hitBox!.y
         }
     }
+    
+    
 }
