@@ -23,7 +23,8 @@ class Donut: SKSpriteNode {
     
     enum DonutType {
         case big
-        case medium
+        case mediumLeft
+        case mediumRight
         case small
     }
     
@@ -37,16 +38,19 @@ class Donut: SKSpriteNode {
         super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
     }
     
-    func setup (_ type: DonutType) {
+    func setup (_ type: DonutType,gameScene: SKScene) {
+        
+        self.gameScene = gameScene
+        self.type = type
         
         if type == .big {bigDonutSetup()}
-        if type == .medium {mediumDonutSetup()}
+        if type == DonutType.mediumLeft || type == DonutType.mediumRight {mediumDonutSetup()}
         
         if debug{
             debugHitBox = SKShapeNode(circleOfRadius: hitBox!.r)
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
-            gameScene!.addChild(debugHitBox!)
+            gameScene.addChild(debugHitBox!)
         }
         
         GameManager.shared.spawnedDonuts.append(self)
@@ -54,7 +58,6 @@ class Donut: SKSpriteNode {
     }
     
     func bigDonutSetup() {
-        type = .big
         self.setScale(1)
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
@@ -65,10 +68,11 @@ class Donut: SKSpriteNode {
         xParameter = DonutConstants.XMovement.big
         
         self.position = self.randomPositionSpawn()
+        
+        gameScene?.addChild(self)
     }
     
     func mediumDonutSetup() {
-        type = .medium
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutMid.width/2)
         reflectParameter = DonutConstants.Reflect.medium
     }
