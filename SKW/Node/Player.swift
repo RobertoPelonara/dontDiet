@@ -11,10 +11,13 @@ import CoreMotion
 class Player: SKSpriteNode {
     
     // Textures
-    var textureIdle: [SKTexture] = []
-    var textureWalkBody: [SKTexture] = []
+    var textureWalkBodyXS: [SKTexture] = []
+    var textureWalkBodyFat: [SKTexture] = []
+    var textureWalkBodyNormal: [SKTexture] = []
+    var textureWalkBodySlim: [SKTexture] = []
     var textureWalkLegL: [SKTexture] = []
     var textureWalkLegR: [SKTexture] = []
+    var textureThrowFat: [SKTexture] = []
     var hasPowerUp = true
     
     //stuff
@@ -50,14 +53,16 @@ class Player: SKSpriteNode {
     private var debug = false
     
     init() {
-        self.textureIdle = GameManager.shared.allTextures.filter { $0.description.contains("body") }
-        self.textureWalkBody = GameManager.shared.allTextures.filter { $0.description.contains("body") }
+        self.textureWalkBodyFat = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
+        self.textureWalkBodyNormal = GameManager.shared.allTextures.filter { $0.description.contains("run_normal") }
+        self.textureWalkBodySlim = GameManager.shared.allTextures.filter { $0.description.contains("run_slim") }
+        self.textureWalkBodyXS = GameManager.shared.allTextures.filter { $0.description.contains("run_XS") }
         self.textureWalkLegL = GameManager.shared.allTextures.filter { $0.description.contains("legL") }
         self.textureWalkLegR = GameManager.shared.allTextures.filter { $0.description.contains("legR") }
         self.textureFire = GameManager.shared.allTextures.filter { $0.description.contains("fire") }
+        self.textureThrowFat = GameManager.shared.allTextures.filter { $0.description.contains("fat-throw") }
         
-        
-        super.init(texture: textureIdle[0], color: .clear, size: SpriteSize.player)
+        super.init(texture: textureWalkBodyFat[0], color: .clear, size: SpriteSize.player)
         
         legRNode = SKSpriteNode(texture: textureWalkLegR[0], size: SpriteSize.player)
         legLNode = SKSpriteNode(texture: textureWalkLegL[0], size: SpriteSize.player)
@@ -65,8 +70,8 @@ class Player: SKSpriteNode {
         legRNode!.zPosition = self.zPosition + 0.01
         legLNode!.zPosition = self.zPosition - 0.01
         
-        legRNode?.position = CGPoint(x: position.x + 3, y: position.y)
-        legLNode?.position = CGPoint(x: position.x + 3, y: position.y)
+        legRNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
+        legLNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
         
         let animationL = SKAction.animate(with: textureWalkLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: textureWalkLegR, timePerFrame: 0.07)
@@ -77,6 +82,8 @@ class Player: SKSpriteNode {
         motionManager.deviceMotionUpdateInterval = 0.033
         motionManager.startDeviceMotionUpdates()
         
+        legLNode?.setScale(1.3)
+        legRNode?.setScale(1.3)
         
         self.addChild(legRNode!)
         self.addChild(legLNode!)
@@ -87,8 +94,9 @@ class Player: SKSpriteNode {
     
     func setup(view: SKView, gameScene:SKScene) {
         
+        self.setScale(0.75)
         self.gameScene = gameScene
-        self.position = CGPoint(x: view.frame.midX, y: self.size.height)
+        self.position = CGPoint(x: view.frame.midX, y: self.size.height/2 + GameManager.shared.groundY + 8)
         self.zPosition = Z.player
         destination = position
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
@@ -121,6 +129,10 @@ class Player: SKSpriteNode {
             let fork = GameManager.shared.getFork()
             fork.setup(playerPosition: self.position,gameScene: self.gameScene!)
             
+            let animation = SKAction.animate(with: textureThrowFat, timePerFrame: 0.5)
+            let idle = SKAction.repeatForever(SKAction.animate(with: textureWalkBodyFat, timePerFrame: 0.07))
+            let sequence = SKAction.sequence([animation, idle])
+            self.run(sequence)
             
         } else {return}
         
@@ -188,13 +200,13 @@ class Player: SKSpriteNode {
         var textureType: [SKTexture]
         switch type {
         case "idle":
-            textureType = textureIdle
+            textureType = textureWalkBodyFat
         case "walk":
-            textureType = textureWalkBody
+            textureType = textureWalkBodyFat
         case "fire":
             textureType = textureFire
         default:
-            textureType = textureIdle
+            textureType = textureWalkBodyFat
         }
         let animation = SKAction.animate(with: textureType, timePerFrame: 0.07)
         self.run(SKAction.repeatForever(animation), withKey: "runAnim")
