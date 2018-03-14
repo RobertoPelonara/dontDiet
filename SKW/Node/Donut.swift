@@ -52,10 +52,9 @@ class Donut: SKSpriteNode {
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
         //setto il reflect per la ciambella
-        reflectParameter = 15.2
-        
+        reflectParameter = DonutConstants.Reflect.big
         //setto il parametro di spostamento orizzontale
-        xParameter = 5
+        xParameter = DonutConstants.XMovement.big
         
         self.position = self.randomPositionSpawn()
     }
@@ -63,11 +62,9 @@ class Donut: SKSpriteNode {
     func randomPositionSpawn() -> CGPoint {
         //random punto sull'x da cui spawnare
         let randomX = CGFloat(arc4random_uniform(UInt32((gameScene?.frame.width)!)))
-        
-        //randomizzo la direzione (+/- xParameter) da cui inizierà a rimbalzare una volta spawnata
+        //randomizzo la direzione da cui inizierà a rimbalzare una volta spawnata
         let z: CGFloat = arc4random_uniform(2) == 1 ? -1 : 1
         xParameter = xParameter! * z
-        
         //ritorno posizione random al di fuori dello schermo
         return CGPoint(x: randomX, y: (gameScene?.frame.height)! + hitBox!.r)
     }
