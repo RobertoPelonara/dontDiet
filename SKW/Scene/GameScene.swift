@@ -13,6 +13,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   // Actors
   var perna = Player()
   var hud = HUD()
+  var fork = Fork()
   let enemies = (rows: 3, cols: 12)
 
   // Update Timer
@@ -53,8 +54,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     perna.gameScene = self
     perna.setup(view: self.view!)
-    
     addChild(perna)
+    
+    fork.gameScene = self
+    fork.setup(playerPosition: perna.position)
+    addChild(fork)
+    
     
     //var prevX:CGFloat = 30
     //var increment:CGFloat = 40
@@ -73,7 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     addChild(hud)
 
     // Enemies
-    spawnEnemies()
+    //spawnEnemies()
 
     // Start Game
 
