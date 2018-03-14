@@ -22,6 +22,7 @@ class GameManager {
   // Donuts
     var spawnedDonuts: [Donut] = []
     
+    var spawnedForks: [Fork] = []
     
     //Physics
     let gravity = CGPoint (x: 0, y: -0.4)

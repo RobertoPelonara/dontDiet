@@ -58,6 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     fork.gameScene = self
     fork.setup(playerPosition: perna.position)
+    GameManager.shared.spawnedForks.append(fork)
     addChild(fork)
     
     
@@ -189,6 +190,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     for donut in GameManager.shared.spawnedDonuts {
         donut.update(deltaTime: deltaTime)
+    }
+    
+    for fork in GameManager.shared.spawnedForks {
+        fork.update(deltaTime: deltaTime)
     }
     
     perna.update(deltaTime: deltaTime)

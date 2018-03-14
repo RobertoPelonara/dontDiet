@@ -13,7 +13,7 @@ class Fork: SKSpriteNode {
     var hitBox: Rect?
     var debugHitBox: SKSpriteNode?
     var gameScene: SKScene?
-    
+    let velocity:CGFloat = 240
     private var debug = false
     
     init() {
@@ -30,23 +30,50 @@ class Fork: SKSpriteNode {
     func setup(playerPosition position:CGPoint){
         
         self.position = position
-        self.position.y -= 100
+        //self.position.y -= 200
+        self.position.y -= SpriteSize.fork.height/2 + SpriteSize.player.height - 5
         hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: 10)
         
         if debug {
-            debugHitBox = SKSpriteNode(color: UIColor.black, size: CGSize(width: SpriteSize.fork.width, height: SpriteSize.fork.height))
+            debugHitBox = SKSpriteNode(color: UIColor.black, size: CGSize(width: 10, height: SpriteSize.fork.height))
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
             gameScene!.addChild(debugHitBox!)
         }
         
     }
-    func update() {
+    func update(deltaTime:TimeInterval) {
         
+        
+        updateMovement(deltaTime: deltaTime)
+        
+        updateHitBox()
     }
     
     func checkCollision () {
         
+    }
+    
+    func updateMovement(deltaTime:TimeInterval){
+        if self.position.y + SpriteSize.fork.height/2 >= (gameScene?.frame.height)! {
+            self.removeFromParent()
+            
+        } else {
+            
+            let deltaMove = velocity * CGFloat(deltaTime)
+            self.position.y += deltaMove
+            
+        }
+    }
+    
+    func updateHitBox () {
+        hitBox!.x = position.x
+        hitBox!.y = position.y
+        
+        if debug {
+            debugHitBox!.position.x = hitBox!.x
+            debugHitBox!.position.y = hitBox!.y
+        }
     }
     
 }
