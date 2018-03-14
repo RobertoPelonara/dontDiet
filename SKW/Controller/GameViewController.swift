@@ -13,6 +13,7 @@ class GameViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    
     // Create view
     if let view = self.view as! SKView? {
 
@@ -25,25 +26,7 @@ class GameViewController: UIViewController {
       view.showsFPS = true
       view.showsNodeCount = true
       view.showsPhysics = true
-
-      // Load TextureAtlas
-      let playerAtlas = SKTextureAtlas(named: "Sprites")
-
-      // Get the list of texture names, and sort them
-      let textureNames = playerAtlas.textureNames.sorted { (first, second) -> Bool in
-        return first < second
-      }
-
-      // Load all textures
-      GameManager.shared.allTextures = textureNames.map {
-        return playerAtlas.textureNamed($0)
-      }
         
-        GameManager.shared.allDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-            return texture.description.contains("Donut")
-        }
-    
-
       // Show Screen
       view.presentScene(scene)
 
