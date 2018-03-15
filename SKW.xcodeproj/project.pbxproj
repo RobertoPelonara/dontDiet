@@ -13,12 +13,6 @@
 		5F7AA9112048A1040029E5AA /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA9102048A1040029E5AA /* GameManager.swift */; };
 		5F7AA9132048A6DA0029E5AA /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA9122048A6DA0029E5AA /* EndScene.swift */; };
 		5F7AA915204ABC480029E5AA /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA914204ABC480029E5AA /* Enemy.swift */; };
-		5F89506E204D27AD00F07123 /* fire.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F895068204D27AD00F07123 /* fire.m4a */; };
-		5F89506F204D27AD00F07123 /* good.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F895069204D27AD00F07123 /* good.m4a */; };
-		5F895070204D27AD00F07123 /* beam.wav in Resources */ = {isa = PBXBuildFile; fileRef = 5F89506A204D27AD00F07123 /* beam.wav */; };
-		5F895071204D27AD00F07123 /* brick.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F89506B204D27AD00F07123 /* brick.m4a */; };
-		5F895072204D27AD00F07123 /* police.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F89506C204D27AD00F07123 /* police.m4a */; };
-		5F895073204D27AD00F07123 /* bad.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F89506D204D27AD00F07123 /* bad.m4a */; };
 		5F995B132047F26400B4FDC8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F995B122047F26400B4FDC8 /* Player.swift */; };
 		5F995B152048015B00B4FDC8 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F995B142048015B00B4FDC8 /* HUD.swift */; };
 		5F995B1A204834B500B4FDC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F995B19204834B500B4FDC8 /* Main.storyboard */; };
@@ -33,6 +27,9 @@
 		E36E5F96205543E1007D057D /* Donut.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F95205543E1007D057D /* Donut.swift */; };
 		E36E5F98205548D0007D057D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F97205548D0007D057D /* Utility.swift */; };
 		E36E5F9A2055B651007D057D /* Vector2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F992055B651007D057D /* Vector2.swift */; };
+		FEA4A28A205A925000B0379F /* eatBroccoli.wav in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A287205A925000B0379F /* eatBroccoli.wav */; };
+		FEA4A28B205A925000B0379F /* eatDonut.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A288205A925000B0379F /* eatDonut.mp3 */; };
+		FEA4A28C205A925000B0379F /* throwFork.wav in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A289205A925000B0379F /* throwFork.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,12 +39,6 @@
 		5F7AA9102048A1040029E5AA /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		5F7AA9122048A6DA0029E5AA /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
 		5F7AA914204ABC480029E5AA /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
-		5F895068204D27AD00F07123 /* fire.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.m4a; sourceTree = "<group>"; };
-		5F895069204D27AD00F07123 /* good.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = good.m4a; sourceTree = "<group>"; };
-		5F89506A204D27AD00F07123 /* beam.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beam.wav; sourceTree = "<group>"; };
-		5F89506B204D27AD00F07123 /* brick.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = brick.m4a; sourceTree = "<group>"; };
-		5F89506C204D27AD00F07123 /* police.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = police.m4a; sourceTree = "<group>"; };
-		5F89506D204D27AD00F07123 /* bad.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = bad.m4a; sourceTree = "<group>"; };
 		5F995B122047F26400B4FDC8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5F995B142048015B00B4FDC8 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		5F995B19204834B500B4FDC8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -64,6 +55,9 @@
 		E36E5F95205543E1007D057D /* Donut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Donut.swift; sourceTree = "<group>"; };
 		E36E5F97205548D0007D057D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		E36E5F992055B651007D057D /* Vector2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2.swift; sourceTree = "<group>"; };
+		FEA4A287205A925000B0379F /* eatBroccoli.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = eatBroccoli.wav; path = SoundFX/eatBroccoli.wav; sourceTree = SOURCE_ROOT; };
+		FEA4A288205A925000B0379F /* eatDonut.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = eatDonut.mp3; path = SoundFX/eatDonut.mp3; sourceTree = SOURCE_ROOT; };
+		FEA4A289205A925000B0379F /* throwFork.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = throwFork.wav; path = SoundFX/throwFork.wav; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,12 +74,9 @@
 		5F895067204D27AD00F07123 /* SoundFX */ = {
 			isa = PBXGroup;
 			children = (
-				5F895068204D27AD00F07123 /* fire.m4a */,
-				5F895069204D27AD00F07123 /* good.m4a */,
-				5F89506A204D27AD00F07123 /* beam.wav */,
-				5F89506B204D27AD00F07123 /* brick.m4a */,
-				5F89506C204D27AD00F07123 /* police.m4a */,
-				5F89506D204D27AD00F07123 /* bad.m4a */,
+				FEA4A287205A925000B0379F /* eatBroccoli.wav */,
+				FEA4A288205A925000B0379F /* eatDonut.mp3 */,
+				FEA4A289205A925000B0379F /* throwFork.wav */,
 			);
 			path = SoundFX;
 			sourceTree = SOURCE_ROOT;
@@ -226,17 +217,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEA4A28A205A925000B0379F /* eatBroccoli.wav in Resources */,
+				FEA4A28B205A925000B0379F /* eatDonut.mp3 in Resources */,
 				5FB36C1E203E1BE000AD3F10 /* Assets.xcassets in Resources */,
-				5F89506F204D27AD00F07123 /* good.m4a in Resources */,
 				5FB36C21203E1BE000AD3F10 /* LaunchScreen.storyboard in Resources */,
-				5F895070204D27AD00F07123 /* beam.wav in Resources */,
-				5F895073204D27AD00F07123 /* bad.m4a in Resources */,
-				5F895071204D27AD00F07123 /* brick.m4a in Resources */,
 				5F995B1A204834B500B4FDC8 /* Main.storyboard in Resources */,
-				5F89506E204D27AD00F07123 /* fire.m4a in Resources */,
-				5F895072204D27AD00F07123 /* police.m4a in Resources */,
 				76DFCF95205A681F00E6C396 /* Unipix.ttf in Resources */,
 				5F3935CB204CA59600AEC461 /* Sprites.atlas in Resources */,
+				FEA4A28C205A925000B0379F /* throwFork.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
