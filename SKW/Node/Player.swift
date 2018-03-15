@@ -11,14 +11,22 @@ import CoreMotion
 class Player: SKSpriteNode {
     
     // Textures
-    var textureWalkBodyXS: [SKTexture] = []
-    var textureWalkBodyFat: [SKTexture] = []
-    var textureWalkBodyNormal: [SKTexture] = []
-    var textureWalkBodySlim: [SKTexture] = []
+    var textureWalkXS: [SKTexture] = []
+    var textureWalkFat: [SKTexture] = []
+    var textureWalkNormal: [SKTexture] = []
+    var textureWalkSlim: [SKTexture] = []
     var textureWalkLegL: [SKTexture] = []
     var textureWalkLegR: [SKTexture] = []
     var textureThrowFat: [SKTexture] = []
+    var textureThrowNormal: [SKTexture] = []
+    var textureThrowSlim: [SKTexture] = []
+    var textureThrowXS: [SKTexture] = []
     var hasPowerUp = true
+    
+    var fatIdle: SKAction?
+    var normalIdle: SKAction?
+    var slimIdle: SKAction?
+    var xsIdle: SKAction?
     
     //stuff
     var limit: CGFloat?
@@ -41,6 +49,7 @@ class Player: SKSpriteNode {
     // States
     var shooting = false
     var movingForward = false
+    var fatState: FatState = .slim
     
     var motionManager = CMMotionManager()
     
@@ -48,19 +57,33 @@ class Player: SKSpriteNode {
     var rangeUpperLimit: CGFloat?
     var rangeLowerLimit: CGFloat?
     
+    enum FatState {
+        case xs
+        case slim
+        case normal
+        case fat
+    }
+    
     private var debug = false
     
     init() {
-        self.textureWalkBodyFat = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
-        self.textureWalkBodyNormal = GameManager.shared.allTextures.filter { $0.description.contains("run_normal") }
-        self.textureWalkBodySlim = GameManager.shared.allTextures.filter { $0.description.contains("run_slim") }
-        self.textureWalkBodyXS = GameManager.shared.allTextures.filter { $0.description.contains("run_XS") }
+        self.textureWalkFat = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
+        self.textureWalkNormal = GameManager.shared.allTextures.filter { $0.description.contains("run_normal") }
+        self.textureWalkSlim = GameManager.shared.allTextures.filter { $0.description.contains("run_slim") }
+        self.textureWalkXS = GameManager.shared.allTextures.filter { $0.description.contains("run_XS") }
         self.textureWalkLegL = GameManager.shared.allTextures.filter { $0.description.contains("legL") }
         self.textureWalkLegR = GameManager.shared.allTextures.filter { $0.description.contains("legR") }
-        self.textureFire = GameManager.shared.allTextures.filter { $0.description.contains("fire") }
-        self.textureThrowFat = GameManager.shared.allTextures.filter { $0.description.contains("fat-throw") }
+        self.textureThrowFat = GameManager.shared.allTextures.filter { $0.description.contains("fork_fat") }
+        self.textureThrowNormal = GameManager.shared.allTextures.filter { $0.description.contains("fork_normal") }
+        self.textureThrowSlim = GameManager.shared.allTextures.filter { $0.description.contains("fork_slim") }
+        self.textureThrowXS = GameManager.shared.allTextures.filter { $0.description.contains("fork_XS") }
         
-        super.init(texture: textureWalkBodyXS[0], color: .clear, size: SpriteSize.player)
+        self.fatIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkFat, timePerFrame: 0.07))
+        self.normalIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkNormal, timePerFrame: 0.07))
+        self.slimIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkSlim, timePerFrame: 0.07))
+        self.xsIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkXS, timePerFrame: 0.07))
+        
+        super.init(texture: textureWalkXS[0], color: .clear, size: SpriteSize.player)
         
         legRNode = SKSpriteNode(texture: textureWalkLegR[0], size: SpriteSize.player)
         legLNode = SKSpriteNode(texture: textureWalkLegL[0], size: SpriteSize.player)
@@ -113,7 +136,8 @@ class Player: SKSpriteNode {
             gameScene.addChild(debugHitBox!)
            
         }
-        self.animate(type: "idle")
+        
+        self.run(fatIdle!)
         
         gameScene.addChild(self)
     }
@@ -127,10 +151,7 @@ class Player: SKSpriteNode {
             let fork = GameManager.shared.getFork()
             fork.setup(playerPosition: self.position,gameScene: self.gameScene!)
             
-            let animation = SKAction.animate(with: textureThrowFat, timePerFrame: 0.5)
-            let idle = SKAction.repeatForever(SKAction.animate(with: textureWalkBodyXS, timePerFrame: 0.07))
-            let sequence = SKAction.sequence([animation, idle])
-            self.run(sequence)
+            self.run(shootAnimation())
             
         } else {return}
         
@@ -194,20 +215,53 @@ class Player: SKSpriteNode {
         }
     }
     
-    func animate(type: String) {
-        var textureType: [SKTexture]
-        switch type {
-        case "idle":
-            textureType = textureWalkBodyXS
-        case "walk":
-            textureType = textureWalkBodyXS
-        case "fire":
-            textureType = textureFire
-        default:
-            textureType = textureWalkBodyXS
+    func shootAnimation() -> SKAction {
+        
+        var idle: SKAction
+        var textureThrow: [SKTexture]
+        switch self.fatState {
+        case .fat:
+            idle = fatIdle!
+            textureThrow = textureThrowFat
+        case .normal:
+            idle = normalIdle!
+            textureThrow = textureThrowNormal
+        case .slim:
+            idle = slimIdle!
+            textureThrow = textureThrowSlim
+        case .xs:
+            idle = xsIdle!
+            textureThrow = textureThrowXS
         }
-        let animation = SKAction.animate(with: textureType, timePerFrame: 0.07)
-        self.run(SKAction.repeatForever(animation), withKey: "runAnim")
+        
+        let shoot = SKAction.animate(with: textureThrow, timePerFrame: 0.3)
+        
+        return SKAction.sequence([shoot, idle])
+        
+    }
+    
+    func setFatLevel(_ type: FatState) {
+        self.fatState = type
+        
+        switch type {
+        case .fat:
+            self.run(fatIdle!)
+            legRNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
+            legLNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
+        case .normal:
+            self.run(normalIdle!)
+            legRNode?.position = CGPoint(x: position.x + 7, y: position.y - 17)
+            legLNode?.position = CGPoint(x: position.x + 7, y: position.y - 17)
+        case .slim:
+            self.run(slimIdle!)
+            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+        case .xs:
+            self.run(xsIdle!)
+            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+        }
+        
     }
     
     // Swift requires this initializer
