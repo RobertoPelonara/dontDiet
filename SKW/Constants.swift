@@ -31,6 +31,7 @@ enum Z {
 
 enum SpriteSize {
     
+    static let playerHitBox = CGSize(width: 19, height: 48)
     static let player = CGSize(width: 64, height: 64)
     static let enemy = CGSize(width: 30, height: 30)
     static let bullet = CGSize(width: 10, height: 10)
