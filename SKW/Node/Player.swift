@@ -131,15 +131,16 @@ class Player: SKSpriteNode {
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
         self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene
         // Physics
-        hitBox = Rect(x: position.x, y: position.y, height: SpriteSize.player.height, width: SpriteSize.player.width)
+        hitBox = Rect(x: position.x, y: position.y - 5, height: 48, width: 23)
         
         let range = SKRange(lowerLimit: rangeLowerLimit!, upperLimit: rangeUpperLimit!)
         let stattFerm = [SKConstraint.positionX(range)]
         self.constraints = stattFerm
         
         if debug{
-            debugHitBox = SKSpriteNode(color: UIColor.blue, size: CGSize(width: SpriteSize.player.width, height: SpriteSize.player.height))
+            debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 23 , height: 48))
             debugHitBox?.position = position
+            debugHitBox?.position.y -= 5
             debugHitBox?.zPosition = Z.HUD
             gameScene.addChild(debugHitBox!)
             
@@ -176,9 +177,9 @@ class Player: SKSpriteNode {
     func updateHitBox () {
         
         hitBox!.x = position.x
-        hitBox!.y = position.y
+        hitBox!.y = position.y - 5
         debugHitBox?.position.x = hitBox!.x
-        debugHitBox?.position.y = hitBox!.y
+        debugHitBox?.position.y = hitBox!.y - 5
         
     }
     
@@ -201,6 +202,7 @@ class Player: SKSpriteNode {
                     break
                 }
                 if shouldDie{
+
                     GameManager.shared.gameOver()
                     removeFromParent()
                     hitBox = nil
