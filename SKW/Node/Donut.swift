@@ -21,6 +21,9 @@ class Donut: SKSpriteNode {
     //costante per il deltaTime: tarato sui 60fps, quindi avrà valore 60 (velocity * deltaTime = 1)
     let velocity: CGFloat = 60
     
+    //counter per rimbalzi piccole
+    var counter: Int = 0
+    
     enum DonutType {
         case big
         case mediumLeft
@@ -138,10 +141,19 @@ class Donut: SKSpriteNode {
         if positionAsVector.y <= GameManager.shared.groundY + (hitBox?.r)! {
             currForce.y = reflectParameter!
             positionAsVector.y = GameManager.shared.groundY + (hitBox?.r)!
+            if self.type == .smallLeft || self.type == .smallRight {
+                if self.counter < 2 {counter += 1} else {
+                    if debug {debugHitBox?.removeFromParent()}
+                    self.removeFromParent()
+                    let index = GameManager.shared.spawnedDonuts.index(of: self)
+                    hitBox = nil
+                    GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
+                }
+            }
         }
         
-        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         updateHitBox()
+        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         
     }
     
@@ -201,6 +213,7 @@ class Donut: SKSpriteNode {
     
     
     func updateHitBox () {
+        guard let _ = hitBox else{return}
         hitBox!.x = position.x
         hitBox!.y = position.y
         
