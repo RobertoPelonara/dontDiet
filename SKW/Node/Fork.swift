@@ -62,7 +62,7 @@ class Fork: SKSpriteNode {
         
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: self.hitBox!, circle: donut.hitBox!){
-                donut.forkHit(fork: self)
+                donut.hit()
                 destroyThisFork()
             }
         }
