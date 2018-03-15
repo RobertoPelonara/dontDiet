@@ -30,6 +30,7 @@ class EndScene: SKScene {
     scoreLabel.fontSize = 40
     scoreLabel.fontColor = .black
     scoreLabel.text = "You gained \(GameManager.shared.score) calories"
+    print(GameManager.shared.score)
     scoreLabel.position = CGPoint(x: gameLabel.position.x , y: gameLabel.position.y - 100)
     addChild(scoreLabel)
     
@@ -43,7 +44,7 @@ class EndScene: SKScene {
     
     
     
-    let wait = SKAction.wait(forDuration: 6.0)
+    let wait = SKAction.wait(forDuration: 2.0)
     let block = SKAction.run {
       GameManager.shared.gameViewController!.loadScene(GameManager.shared.menuScene!, self)
     }

@@ -23,6 +23,7 @@ class GameManager {
     
     var score: Int{
         get {
+            
             return _score
         }
         set {
@@ -124,6 +125,12 @@ class GameManager {
         let _gameScene = gameScene else {
              return
         }
+        
+        print("GAME OVER")
+        gameScene = nil
+        self.endGameTimer = Date().timeIntervalSince1970
+        totalGameTimer = self.endGameTimer - self.startGameTimer
+        _gameViewController.loadScene(_endScene, _gameScene)
         availableDonuts.removeAll()
         availableForks.removeAll()
         spawnedForks.removeAll()
@@ -131,13 +138,11 @@ class GameManager {
         _timer = FatTimer.maxValue
         _score = 0
         
-        print("GAME OVER")
-        _gameViewController.loadScene(_endScene, _gameScene)
-        gameScene = nil
 
     }
     
     func addScore () {
+        print("SIAMO ENTRATI QUI")
         score += Scores.bonus
     }
     
