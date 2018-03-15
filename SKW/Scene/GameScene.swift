@@ -12,7 +12,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Actors
     var perna = Player()
-    let enemies = (rows: 3, cols: 12)
     
     // Update Timer
     var lastTime: TimeInterval = 0
@@ -32,13 +31,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let triggerDistance: CGFloat = 20
     var initialTouch: CGPoint = CGPoint.zero
     
+    //HUD
+    var hud = HUD()
+    
     // Before the Scene
     override func sceneDidLoad() {
         self.physicsWorld.contactDelegate = self
         self.physicsWorld.gravity = CGVector(dx:0, dy: -9.8)
-        
-        HUD.shared.setup(size: self.size)
-        self.addChild(HUD.shared)
+        GameManager.shared.gameScene = self
+        hud.setup(size: self.size)
+        self.addChild(hud)
     }
     
     override func didMove(to view: SKView) {
@@ -53,6 +55,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         perna.setup(view: self.view!,gameScene:self)
         
     }
+    
+     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let _ = touches.first else {return}
@@ -87,10 +91,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         perna.update(deltaTime: deltaTime)
         debugHitBox?.position.x = perna.hitBox!.x
         debugHitBox?.position.y = perna.hitBox!.y
-        //    checkSimpleCollision()
         
-        print("spawned donuts: \(GameManager.shared.spawnedDonuts.count) - spawned forks: \(GameManager.shared.spawnedForks.count)\navailable donuts: \(GameManager.shared.availableDonuts.count) - available forks: \(GameManager.shared.availableForks.count)")
+        
     }
+    
+    
     
     func spawnDonut(deltaTime: TimeInterval) {
         

@@ -11,7 +11,24 @@ class GameManager {
     
     static let shared = GameManager()
     
-    var score: Int = 0
+    var gameViewController: GameViewController?
+    
+    var gameScene: GameScene?
+    var menuScene: MenuScene?
+    var endScene: EndScene?
+
+    
+    var score: Int{
+        get {
+            return _score
+        }
+        set {
+            _score = newValue
+            gameScene?.hud.score = _score
+        }
+        
+    
+    }
     var appCounted: Bool = false
     var monstersKills: Int = 0
     var timerCounter: Int = 30
@@ -27,10 +44,13 @@ class GameManager {
     var availableDonuts: [Donut] = []
     var availableForks: [Fork] = []
     
+    private var _score: Int = 0
     
     //Physics
     let gravity = CGPoint (x: 0, y: -0.4)
     let groundY = CGFloat(40)
+    
+    
     
     func initializeDonuts(){
         
@@ -86,5 +106,19 @@ class GameManager {
         
     }
     
+    func gameOver () {
+        guard let _gameViewController = gameViewController,
+        let _endScene = endScene,
+        let _gameScene = gameScene else {
+             return
+        }
+        
+        _gameViewController.loadScene(_endScene)
+
+    }
+    
+    func addScore () {
+        score += Scores.bonus
+    }
 }
 

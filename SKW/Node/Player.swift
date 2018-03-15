@@ -157,9 +157,28 @@ class Player: SKSpriteNode {
         
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
-                //print("COLLISIONE MOTHERFUCKA")
+                print("QUALCOSA è ACCADUTO")
+                var shouldDie = false
+                switch donut.type!{
+                case .big:
+                    print("big hit")
+                    shouldDie = true
+                case .mediumLeft:
+                    shouldDie = true
+                case .mediumRight:
+                    shouldDie = true
+                case .smallLeft:
+                    break
+                case .smallRight:
+                    break
+                }
+                if shouldDie{
+                    GameManager.shared.gameOver()
+                    return
+                }
+                GameManager.shared.addScore()
                 
-            }
+        }
         }
     }
     

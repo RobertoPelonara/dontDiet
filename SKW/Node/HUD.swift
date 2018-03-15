@@ -9,7 +9,6 @@ import SpriteKit
 
 class HUD: SKNode {
     
-    static let shared = HUD()
     
     let scoreLabel = SKLabelNode(fontNamed:"Courier")
     let timerLabel = SKLabelNode(fontNamed:"Courier")
@@ -19,7 +18,6 @@ class HUD: SKNode {
             return GameManager.shared.score
         }
         set {
-            GameManager.shared.score += newValue
             scoreLabel.text = "Score: \(GameManager.shared.score)"
         }
     }

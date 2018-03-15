@@ -176,12 +176,12 @@ class Donut: SKSpriteNode {
             
         case .smallLeft:
             
-            HUD.shared.score = 5
+            //HUD.shared.score = 5
             return
         
         case .smallRight:
             
-            HUD.shared.score = 5
+            //HUD.shared.score = 5
             return
 
         }
