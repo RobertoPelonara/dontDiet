@@ -17,7 +17,14 @@ class EndScene: SKScene {
     bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
     bg.zPosition = -1
     addChild(bg)
-
+    
+    let gameLabel = SKLabelNode(fontNamed: "Courier")
+    gameLabel.fontSize = 80
+    gameLabel.fontColor = .red
+    gameLabel.text = "You Diet"
+    gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
+    addChild(gameLabel)
+    
     let wait = SKAction.wait(forDuration: 6.0)
     let block = SKAction.run {
       let scene = MenuScene(size: self.size)
