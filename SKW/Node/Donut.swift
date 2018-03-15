@@ -145,7 +145,7 @@ class Donut: SKSpriteNode {
         
     }
     
-    func forkHit (fork: Fork) {
+    func hit () {
         if debug {debugHitBox?.removeFromParent()}
         
         self.removeFromParent()
@@ -175,12 +175,13 @@ class Donut: SKSpriteNode {
             type2 = .smallRight
             
         case .smallLeft:
-            
+            removeFromParent()
             //HUD.shared.score = 5
             return
         
         case .smallRight:
-            
+            removeFromParent()
+
             //HUD.shared.score = 5
             return
 
