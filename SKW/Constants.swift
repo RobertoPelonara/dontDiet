@@ -39,7 +39,7 @@ enum SpriteSize {
     static let button = CGSize(width: 50, height: 50)
     
     static let fork = CGSize(width: 15, height: 777)
-    
+    static let tapisRoulant = CGSize(width:667,height:36)
     static let donutBig = CGSize(width: 60, height: 60)
     static let donutMid = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.medium), height: (SpriteSize.donutBig.height * DonutConstants.scale.medium))
     static let donutSmall = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.small), height: (SpriteSize.donutBig.height * DonutConstants.scale.small))
