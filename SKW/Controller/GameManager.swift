@@ -21,6 +21,8 @@ class GameManager {
     var endGameTimer: TimeInterval = 0
     var totalGameTimer: TimeInterval = 0
     
+    var deathReason: DeathReason?
+    
     var score: Int{
         get {
             
@@ -119,13 +121,13 @@ class GameManager {
         
     }
     
-    func gameOver () {
+    func gameOver (_ reason : DeathReason) {
         guard let _gameViewController = gameViewController,
         let _endScene = endScene,
         let _gameScene = gameScene else {
              return
         }
-        
+        deathReason = reason
         print("GAME OVER")
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970

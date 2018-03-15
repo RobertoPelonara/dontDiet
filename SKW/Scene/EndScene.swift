@@ -14,15 +14,15 @@ class EndScene: SKScene {
     backgroundColor = .white
 
     let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
-    gameLabel2.fontSize = 82
+    gameLabel2.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
     gameLabel2.fontColor = .black
-    gameLabel2.text = "You Diet"
+    gameLabel2.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
     gameLabel2.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
     addChild(gameLabel2)
     let gameLabel = SKLabelNode(fontNamed: "Unipix")
-    gameLabel.fontSize = 80
+    gameLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 80 : 50
     gameLabel.fontColor = .red
-    gameLabel.text = "You Diet"
+    gameLabel.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
     gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
     addChild(gameLabel)
     

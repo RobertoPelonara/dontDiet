@@ -6,7 +6,7 @@
 //
 
 import SpriteKit
-
+import AVKit
 class MenuScene: SKScene {
     
     var tapisRoulantTextures:[SKTexture] = []
@@ -51,23 +51,25 @@ class MenuScene: SKScene {
     
     GameManager.shared.initializeForks()
     GameManager.shared.initializeDonuts()
-//    let idle = Player()
-//    idle.position = CGPoint(x: size.width/2 , y:size.height/6)
-//    idle.zPosition = Z.player
-//    idle.size = SpriteSize.player
-//    idle.setup(view: view,gameScene: self)
+    let idle = Player()
+    idle.position = CGPoint(x: size.width/2 , y:size.height/6)
+    idle.zPosition = Z.player
+    idle.size = SpriteSize.player
+    idle.setup(view: view,gameScene: self)
+    let backgroundMusic = SKAudioNode(fileNamed: "soundtrack.mp3")
+    backgroundMusic.run(SKAction.play())
+    addChild(backgroundMusic)
     
-    
-//    let positionBase = idle.position.x
-//    let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
-//    let position2 = CGPoint(x: idle.position.x + 50, y: idle.position.y)
-//    let action1 = SKAction.moveTo(x: position1.x, duration: 1.5)
-//    let action2 = SKAction.moveTo(x: positionBase, duration: 1.5)
-//    let action3 = SKAction.moveTo(x: position2.x, duration: 1.5)
-//    let action4 = SKAction.moveTo(x: positionBase, duration: 1.5)
-//
-//    let sequence = SKAction.sequence([action1,action2,action3, action4])
-//    idle.run(SKAction.repeatForever(sequence))
+    let positionBase = idle.position.x
+    let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
+    let position2 = CGPoint(x: idle.position.x + 50, y: idle.position.y)
+    let action1 = SKAction.moveTo(x: position1.x, duration: 1.5)
+    let action2 = SKAction.moveTo(x: positionBase, duration: 1.5)
+    let action3 = SKAction.moveTo(x: position2.x, duration: 1.5)
+    let action4 = SKAction.moveTo(x: positionBase, duration: 1.5)
+
+    let sequence = SKAction.sequence([action1,action2,action3, action4])
+    idle.run(SKAction.repeatForever(sequence))
     
     
     
@@ -93,7 +95,8 @@ class MenuScene: SKScene {
     }
 
     if touchedNode.name == "buttonStart" {
-      self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
+       
+        self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
       let scene = GameScene(size: size)
         GameManager.shared.gameScene = scene
       scene.scaleMode = scaleMode
