@@ -69,7 +69,7 @@ class Player: SKSpriteNode {
         case fat
     }
     
-    private var debug = false
+    private var debug = true
     
     init() {
         self.textureWalkFat = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
@@ -131,14 +131,14 @@ class Player: SKSpriteNode {
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
         self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene
         // Physics
-        hitBox = Rect(x: position.x, y: position.y - 5, height: 48, width: 23)
+        hitBox = Rect(x: position.x, y: position.y - 5, height: 48, width: 19)
         
         let range = SKRange(lowerLimit: rangeLowerLimit!, upperLimit: rangeUpperLimit!)
         let stattFerm = [SKConstraint.positionX(range)]
         self.constraints = stattFerm
         
         if debug{
-            debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 23 , height: 48))
+            debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 19 , height: 48))
             debugHitBox?.position = position
             debugHitBox?.position.y -= 5
             debugHitBox?.zPosition = Z.HUD
