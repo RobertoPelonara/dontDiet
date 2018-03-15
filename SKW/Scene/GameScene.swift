@@ -47,6 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         backgroundColor = .black
         let background = SKSpriteNode(imageNamed: "background")
+        background.size = frame.size
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = Z.background
         addChild(background)
@@ -106,10 +107,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             donut.setup(.big,gameScene: self)
 
+            let spawnTime = (-3.5 * Double(GameManager.shared.score) + 15000.0)/3000.0
+            spawnInterval = TimeInterval(Double(arc4random_uniform(301)) + (spawnTime * 100)) / 100
+            print(spawnInterval)
+
             
-            spawnInterval = TimeInterval(arc4random_uniform(101) + 300) / 100
-//            spawnInterval = 0.2
-//            print(spawnInterval)
         }
     
     }
