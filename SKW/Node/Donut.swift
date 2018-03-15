@@ -149,6 +149,7 @@ class Donut: SKSpriteNode {
             positionAsVector.y = GameManager.shared.groundY + (hitBox?.r)!
             if self.type == .smallLeft || self.type == .smallRight {
                 if self.counter < 2 {counter += 1} else {
+                    self.counter = 0
                     if debug {debugHitBox?.removeFromParent()}
                     self.removeFromParent()
                     let index = GameManager.shared.spawnedDonuts.index(of: self)
