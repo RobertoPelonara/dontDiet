@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import  AVFoundation
 
 class GameManager {
     
@@ -20,6 +21,11 @@ class GameManager {
     var startGameTimer: TimeInterval = 0
     var endGameTimer: TimeInterval = 0
     var totalGameTimer: TimeInterval = 0
+    
+    
+        
+    
+    var deathReason: DeathReason?
     
     var score: Int{
         get {
@@ -63,7 +69,7 @@ class GameManager {
     let gravity = CGPoint (x: 0, y: -0.4)
     let groundY = CGFloat(40)
     
-    
+    var soundtrack: AVAudioPlayer?
     
     func initializeDonuts(){
         
@@ -119,13 +125,13 @@ class GameManager {
         
     }
     
-    func gameOver () {
+    func gameOver (_ reason : DeathReason) {
         guard let _gameViewController = gameViewController,
         let _endScene = endScene,
         let _gameScene = gameScene else {
              return
         }
-        
+        deathReason = reason
         print("GAME OVER")
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970

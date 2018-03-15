@@ -202,7 +202,7 @@ class Player: SKSpriteNode {
                 }
                 if shouldDie{
 
-                    GameManager.shared.gameOver()
+                    GameManager.shared.gameOver( .hit)
                     removeFromParent()
                     hitBox = nil
                     
@@ -226,7 +226,7 @@ class Player: SKSpriteNode {
         case .slim:
             if GameManager.shared.timer > FatTimer.slimThreshold {self.setFatLevel(.normal)} else if GameManager.shared.timer <= FatTimer.xsThreshold {self.setFatLevel(.xs)}
         case .xs:
-            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {GameManager.shared.gameOver()}
+            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {GameManager.shared.gameOver(.outOfTime)}
         }
     }
     

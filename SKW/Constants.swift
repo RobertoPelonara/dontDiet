@@ -88,4 +88,8 @@ enum DonutConstants {
     static let zRotation = Double.pi / 60
 }
 
+enum DeathReason {
+    case outOfTime
+    case hit
+}
 

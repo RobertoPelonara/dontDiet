@@ -23,6 +23,7 @@
 		5FB36C1E203E1BE000AD3F10 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FB36C1D203E1BE000AD3F10 /* Assets.xcassets */; };
 		5FB36C21203E1BE000AD3F10 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FB36C1F203E1BE000AD3F10 /* LaunchScreen.storyboard */; };
 		76DFCF95205A681F00E6C396 /* Unipix.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76DFCF94205A681F00E6C396 /* Unipix.ttf */; };
+		E363B184205B2CB500875964 /* soundtrack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E363B183205B2CB500875964 /* soundtrack.mp3 */; };
 		E36E5F9420554363007D057D /* Fork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F9320554363007D057D /* Fork.swift */; };
 		E36E5F96205543E1007D057D /* Donut.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F95205543E1007D057D /* Donut.swift */; };
 		E36E5F98205548D0007D057D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36E5F97205548D0007D057D /* Utility.swift */; };
@@ -52,6 +53,7 @@
 		5FB36C20203E1BE000AD3F10 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FB36C22203E1BE000AD3F10 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76DFCF94205A681F00E6C396 /* Unipix.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Unipix.ttf; sourceTree = "<group>"; };
+		E363B183205B2CB500875964 /* soundtrack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soundtrack.mp3; sourceTree = "<group>"; };
 		E36E5F9320554363007D057D /* Fork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fork.swift; sourceTree = "<group>"; };
 		E36E5F95205543E1007D057D /* Donut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Donut.swift; sourceTree = "<group>"; };
 		E36E5F97205548D0007D057D /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 		5F895067204D27AD00F07123 /* SoundFX */ = {
 			isa = PBXGroup;
 			children = (
+				E363B183205B2CB500875964 /* soundtrack.mp3 */,
 				FEA4A287205A925000B0379F /* eatBroccoli.wav */,
 				FEA4A288205A925000B0379F /* eatDonut.mp3 */,
 				FEA4A289205A925000B0379F /* throwFork.wav */,
@@ -227,6 +230,7 @@
 				5F995B1A204834B500B4FDC8 /* Main.storyboard in Resources */,
 				76DFCF95205A681F00E6C396 /* Unipix.ttf in Resources */,
 				5F3935CB204CA59600AEC461 /* Sprites.atlas in Resources */,
+				E363B184205B2CB500875964 /* soundtrack.mp3 in Resources */,
 				FEA4A28C205A925000B0379F /* throwFork.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,7 +388,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F27C7JQD27;
+				DEVELOPMENT_TEAM = 8V8B595TM4;
 				INFOPLIST_FILE = SKW/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.narax.dontDiet;
@@ -401,7 +405,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = F27C7JQD27;
+				DEVELOPMENT_TEAM = 8V8B595TM4;
 				INFOPLIST_FILE = SKW/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.narax.dontDiet;
