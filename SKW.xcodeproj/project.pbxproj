@@ -31,6 +31,7 @@
 		FEA4A28A205A925000B0379F /* eatBroccoli.wav in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A287205A925000B0379F /* eatBroccoli.wav */; };
 		FEA4A28B205A925000B0379F /* eatDonut.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A288205A925000B0379F /* eatDonut.mp3 */; };
 		FEA4A28C205A925000B0379F /* throwFork.wav in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A289205A925000B0379F /* throwFork.wav */; };
+		FEA4A28F205B168400B0379F /* dontDiet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEA4A28D205B168400B0379F /* dontDiet.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		FEA4A287205A925000B0379F /* eatBroccoli.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = eatBroccoli.wav; path = SoundFX/eatBroccoli.wav; sourceTree = SOURCE_ROOT; };
 		FEA4A288205A925000B0379F /* eatDonut.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = eatDonut.mp3; path = SoundFX/eatDonut.mp3; sourceTree = SOURCE_ROOT; };
 		FEA4A289205A925000B0379F /* throwFork.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = throwFork.wav; path = SoundFX/throwFork.wav; sourceTree = SOURCE_ROOT; };
+		FEA4A28E205B168400B0379F /* dontDiet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dontDiet.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		5FB36C04203E1BDF00AD3F10 = {
 			isa = PBXGroup;
 			children = (
+				FEA4A28D205B168400B0379F /* dontDiet.xcdatamodeld */,
 				5FB36C0F203E1BDF00AD3F10 /* SKW */,
 				5FB36C0E203E1BDF00AD3F10 /* Products */,
 			);
@@ -247,6 +250,7 @@
 				5FB36C17203E1BE000AD3F10 /* GameScene.swift in Sources */,
 				5F7AA9132048A6DA0029E5AA /* EndScene.swift in Sources */,
 				5F7AA90F20484BF60029E5AA /* Background.swift in Sources */,
+				FEA4A28F205B168400B0379F /* dontDiet.xcdatamodeld in Sources */,
 				5F995B1C2048353A00B4FDC8 /* MenuScene.swift in Sources */,
 				5F7AA90D20484ACE0029E5AA /* Constants.swift in Sources */,
 				5FB36C19203E1BE000AD3F10 /* GameViewController.swift in Sources */,
@@ -434,6 +438,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FEA4A28D205B168400B0379F /* dontDiet.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FEA4A28E205B168400B0379F /* dontDiet.xcdatamodel */,
+			);
+			currentVersion = FEA4A28E205B168400B0379F /* dontDiet.xcdatamodel */;
+			path = dontDiet.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5FB36C05203E1BDF00AD3F10 /* Project object */;
 }
