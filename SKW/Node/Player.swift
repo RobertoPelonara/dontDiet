@@ -49,7 +49,7 @@ class Player: SKSpriteNode {
     // States
     var shooting = false
     var movingForward = false
-    var fatState: FatState = .slim
+    var fatState: FatState = .fat
     
     var motionManager = CMMotionManager()
     
@@ -83,7 +83,7 @@ class Player: SKSpriteNode {
         self.slimIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkSlim, timePerFrame: 0.07))
         self.xsIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkXS, timePerFrame: 0.07))
         
-        super.init(texture: textureWalkXS[0], color: .clear, size: SpriteSize.player)
+        super.init(texture: textureWalkFat[0], color: .clear, size: SpriteSize.player)
         
         legRNode = SKSpriteNode(texture: textureWalkLegR[0], size: SpriteSize.player)
         legLNode = SKSpriteNode(texture: textureWalkLegL[0], size: SpriteSize.player)
@@ -91,8 +91,8 @@ class Player: SKSpriteNode {
         legRNode!.zPosition = self.zPosition + 0.01
         legLNode!.zPosition = self.zPosition - 0.01
         
-        legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
-        legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+        legRNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
+        legLNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
         
         let animationL = SKAction.animate(with: textureWalkLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: textureWalkLegR, timePerFrame: 0.07)
@@ -246,20 +246,20 @@ class Player: SKSpriteNode {
         switch type {
         case .fat:
             self.run(fatIdle!)
-            legRNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
-            legLNode?.position = CGPoint(x: position.x + 10, y: position.y - 17)
+            legRNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
+            legLNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
         case .normal:
             self.run(normalIdle!)
-            legRNode?.position = CGPoint(x: position.x + 7, y: position.y - 17)
-            legLNode?.position = CGPoint(x: position.x + 7, y: position.y - 17)
+            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
+            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
         case .slim:
             self.run(slimIdle!)
-            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
-            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
+            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
         case .xs:
             self.run(xsIdle!)
-            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
-            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 17)
+            legRNode?.position = CGPoint(x: position.x + 3, y: position.y - 12)
+            legLNode?.position = CGPoint(x: position.x + 3, y: position.y - 12)
         }
         
     }
