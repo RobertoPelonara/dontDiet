@@ -6,6 +6,7 @@
 //
 
 import SpriteKit
+import  AVFoundation
 
 class GameManager {
     
@@ -20,6 +21,9 @@ class GameManager {
     var startGameTimer: TimeInterval = 0
     var endGameTimer: TimeInterval = 0
     var totalGameTimer: TimeInterval = 0
+    
+    
+        
     
     var deathReason: DeathReason?
     
@@ -65,7 +69,7 @@ class GameManager {
     let gravity = CGPoint (x: 0, y: -0.4)
     let groundY = CGFloat(40)
     
-    
+    var soundtrack: AVAudioPlayer?
     
     func initializeDonuts(){
         

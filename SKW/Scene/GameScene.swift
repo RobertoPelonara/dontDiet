@@ -54,10 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = Z.background
         addChild(background)
         
-        
-        
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
         perna.setup(view: self.view!,gameScene:self)
+        
+        GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
+
         
         let tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
         tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)

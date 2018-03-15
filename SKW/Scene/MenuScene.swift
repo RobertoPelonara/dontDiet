@@ -56,9 +56,7 @@ class MenuScene: SKScene {
     idle.zPosition = Z.player
     idle.size = SpriteSize.player
     idle.setup(view: view,gameScene: self)
-    let backgroundMusic = SKAudioNode(fileNamed: "soundtrack.mp3")
-    backgroundMusic.run(SKAction.play())
-    addChild(backgroundMusic)
+    
     
     let positionBase = idle.position.x
     let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
@@ -70,9 +68,9 @@ class MenuScene: SKScene {
 
     let sequence = SKAction.sequence([action1,action2,action3, action4])
     idle.run(SKAction.repeatForever(sequence))
-    
-    
-    
+   
+    GameManager.shared.soundtrack?.volume = 0.6
+
     
   }
 

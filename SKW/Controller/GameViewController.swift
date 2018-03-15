@@ -8,6 +8,7 @@
 import UIKit
 import SpriteKit
 import CoreData
+import AVFoundation
 
 class GameViewController: UIViewController {
     
@@ -61,6 +62,17 @@ class GameViewController: UIViewController {
         
         let scene = MenuScene(size: view.frame.size)
         GameManager.shared.menuScene = scene
+        
+        let path = Bundle.main.path(forResource: "soundtrack.mp3", ofType:nil)!
+        let url = URL(fileURLWithPath: path)
+        
+        do {
+            GameManager.shared.soundtrack = try AVAudioPlayer(contentsOf: url)
+            GameManager.shared.soundtrack?.play()
+            GameManager.shared.soundtrack?.numberOfLoops = Int.max
+        } catch {
+            // couldn't load file :(
+        }
         
         loadScene(scene, nil)
         
