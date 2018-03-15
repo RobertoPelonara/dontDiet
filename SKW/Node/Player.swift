@@ -21,6 +21,11 @@ class Player: SKSpriteNode {
     var textureThrowNormal: [SKTexture] = []
     var textureThrowSlim: [SKTexture] = []
     var textureThrowXS: [SKTexture] = []
+    
+    //Sounds
+    var throwSound: SKAction?
+    var eatSound: SKAction?
+    
     var hasPowerUp = true
     
     var fatIdle: SKAction?
@@ -82,6 +87,9 @@ class Player: SKSpriteNode {
         self.normalIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkNormal, timePerFrame: 0.07))
         self.slimIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkSlim, timePerFrame: 0.07))
         self.xsIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkXS, timePerFrame: 0.07))
+        
+        self.throwSound = SKAction.playSoundFileNamed("throwFork.wav", waitForCompletion: false)
+       
         
         super.init(texture: textureWalkFat[0], color: .clear, size: SpriteSize.player)
         
@@ -197,6 +205,7 @@ class Player: SKSpriteNode {
                     GameManager.shared.gameOver()
                     return
                 }
+                
                 GameManager.shared.addScore()
                 GameManager.shared.addFat()
                 donut.hit()
@@ -271,7 +280,7 @@ class Player: SKSpriteNode {
         }
         
         let shoot = SKAction.animate(with: textureThrow, timePerFrame: 0.3)
-        
+        self.run(self.throwSound!)
         return SKAction.sequence([shoot, idle])
         
     }
