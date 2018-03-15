@@ -13,6 +13,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Actors
     var perna = Player()
     
+    var tapisRoulantTextures:[SKTexture] = []
+    var tapisRoulantAnimation: SKAction?
     // Update Timer
     var lastTime: TimeInterval = 0
     var deltaTime: TimeInterval = 0
@@ -44,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
-        
+        self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .black
         let background = SKSpriteNode(imageNamed: "background")
         background.size = frame.size
@@ -52,8 +54,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = Z.background
         addChild(background)
         
+        
+        
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
         perna.setup(view: self.view!,gameScene:self)
+        
+        let tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
+        tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
+         self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
+        tapisRoulant.run(tapisRoulantAnimation!)
+        addChild(tapisRoulant)
         
     }
     

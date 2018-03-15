@@ -8,9 +8,12 @@
 import SpriteKit
 
 class MenuScene: SKScene {
-
+    
+    var tapisRoulantTextures:[SKTexture] = []
+    var tapisRoulantAnimation: SKAction?
+    
   override func didMove(to view: SKView) {
-
+    self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
     //debugPrint("view: \(view.frame)")
     backgroundColor = .white
 
@@ -20,6 +23,12 @@ class MenuScene: SKScene {
     background.zPosition = Z.background
     addChild(background)
 
+    let tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
+    tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
+    self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
+    tapisRoulant.run(tapisRoulantAnimation!)
+    addChild(tapisRoulant)
+    
     let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
     gameLabel2.fontSize = 82
     gameLabel2.fontColor = .black
