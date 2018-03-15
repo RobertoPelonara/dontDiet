@@ -38,7 +38,7 @@ class GameManager {
         }
         set {
             _timer += newValue
-            gameScene?.hud.timer = _timer
+            gameScene?.hud.timer = [newValue, _timer]
         }
     }
     
