@@ -69,7 +69,7 @@ class Player: SKSpriteNode {
         case fat
     }
     
-    private var debug = true
+    private var debug = false
     
     init() {
         self.textureWalkFat = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
@@ -167,7 +167,6 @@ class Player: SKSpriteNode {
     }
     
     func update(deltaTime: TimeInterval) {
-        
         updateMoveAndAnim(deltaTime)
         updateHitBox()
         checkCollisionWithDonuts()
