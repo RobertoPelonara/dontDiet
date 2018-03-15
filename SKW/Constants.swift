@@ -31,14 +31,16 @@ enum Z {
 
 enum SpriteSize {
     
+    static let playerHitBox = CGSize(width: 19, height: 48)
     static let player = CGSize(width: 64, height: 64)
     static let enemy = CGSize(width: 30, height: 30)
     static let bullet = CGSize(width: 10, height: 10)
     static let mushroom = CGSize(width: 20, height: 20)
     static let button = CGSize(width: 50, height: 50)
+    static let statusBar = CGSize(width: 118, height: 21)
     
     static let fork = CGSize(width: 15, height: 777)
-    
+    static let tapisRoulant = CGSize(width:667,height:36)
     static let donutBig = CGSize(width: 60, height: 60)
     static let donutMid = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.medium), height: (SpriteSize.donutBig.height * DonutConstants.scale.medium))
     static let donutSmall = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.small), height: (SpriteSize.donutBig.height * DonutConstants.scale.small))

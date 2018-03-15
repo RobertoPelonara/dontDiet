@@ -21,6 +21,15 @@ class Donut: SKSpriteNode {
     //costante per il deltaTime: tarato sui 60fps, quindi avrà valore 60 (velocity * deltaTime = 1)
     let velocity: CGFloat = 60
     
+    //counter per rimbalzi piccole
+    var counter: Int = 0
+    
+    //animazione minidonut
+    let pulseWhite = SKAction.sequence([
+        SKAction.colorize(with: SKColor.green, colorBlendFactor: 1.0, duration: 0.2),
+        SKAction.wait(forDuration: 0.2),
+        SKAction.colorize(withColorBlendFactor: 0.0, duration: 0.2)])
+    
     enum DonutType {
         case big
         case mediumLeft
@@ -64,9 +73,7 @@ class Donut: SKSpriteNode {
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
-        //setto il reflect per la ciambella
         reflectParameter = DonutConstants.Reflect.big
-        //setto il parametro di spostamento orizzontale
         xParameter = DonutConstants.XMovement.big
         
         self.position = self.randomPositionSpawn()
@@ -104,6 +111,8 @@ class Donut: SKSpriteNode {
         self.xParameter = self.type == .smallLeft ? -DonutConstants.XMovement.small : DonutConstants.XMovement.small
         
         self.gameScene?.addChild(self)
+        
+        self.run(SKAction.sequence([pulseWhite, pulseWhite, pulseWhite]))
     }
     
     func randomPositionSpawn() -> CGPoint {
@@ -138,10 +147,20 @@ class Donut: SKSpriteNode {
         if positionAsVector.y <= GameManager.shared.groundY + (hitBox?.r)! {
             currForce.y = reflectParameter!
             positionAsVector.y = GameManager.shared.groundY + (hitBox?.r)!
+            if self.type == .smallLeft || self.type == .smallRight {
+                if self.counter < 2 {counter += 1} else {
+                    self.counter = 0
+                    if debug {debugHitBox?.removeFromParent()}
+                    self.removeFromParent()
+                    let index = GameManager.shared.spawnedDonuts.index(of: self)
+                    hitBox = nil
+                    GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
+                }
+            }
         }
         
-        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         updateHitBox()
+        position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         
     }
     
@@ -201,6 +220,7 @@ class Donut: SKSpriteNode {
     
     
     func updateHitBox () {
+        guard let _ = hitBox else{return}
         hitBox!.x = position.x
         hitBox!.y = position.y
         
