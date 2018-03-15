@@ -12,7 +12,7 @@ class GameManager {
     static let shared = GameManager()
     
     var gameViewController: GameViewController?
-    
+    let eatSound = SKAction.playSoundFileNamed("eatDonut.mp3", waitForCompletion: false)
     var gameScene: GameScene?
     var menuScene: MenuScene?
     var endScene: EndScene?
@@ -144,6 +144,7 @@ class GameManager {
     func addScore () {
         print("SIAMO ENTRATI QUI")
         score += Scores.bonus
+        gameScene!.run(self.eatSound)
     }
     
     func addFat() {
