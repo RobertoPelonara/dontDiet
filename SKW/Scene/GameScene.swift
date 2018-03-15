@@ -45,6 +45,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         backgroundColor = .black
         let background = SKSpriteNode(imageNamed: "background")
+        background.size = frame.size
         background.position = CGPoint(x: size.width / 2, y: size.height / 2)
         background.zPosition = Z.background
         addChild(background)

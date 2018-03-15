@@ -15,14 +15,21 @@ class MenuScene: SKScene {
     backgroundColor = .white
 
     let background = SKSpriteNode(imageNamed: "background")
+    background.size = frame.size
     background.position = CGPoint(x: size.width/2 , y: size.height/2)
     background.zPosition = Z.background
     addChild(background)
 
-    let gameLabel = SKLabelNode(fontNamed: "Courier")
+    let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
+    gameLabel2.fontSize = 82
+    gameLabel2.fontColor = .black
+    gameLabel2.text = "Don't Die(t)"
+    gameLabel2.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
+    addChild(gameLabel2)
+    let gameLabel = SKLabelNode(fontNamed: "Unipix")
     gameLabel.fontSize = 80
-    gameLabel.fontColor = .red
-    gameLabel.text = "Don't Diet"
+    gameLabel.fontColor = .white
+    gameLabel.text = "Don't Die(t)"
     gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
     addChild(gameLabel)
 
