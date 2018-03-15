@@ -34,6 +34,14 @@ class EndScene: SKScene {
     scoreLabel.position = CGPoint(x: gameLabel.position.x , y: gameLabel.position.y - 100)
     addChild(scoreLabel)
     
+    let recordLabel = SKLabelNode(fontNamed: "Unipix")
+    recordLabel.fontSize = 40
+    recordLabel.fontColor = .black
+    recordLabel.text = "Your highest score was \(100000) calories"
+    print(GameManager.shared.score)
+    recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - 30)
+    addChild(recordLabel)
+    
     let timerLabel = SKLabelNode(fontNamed: "Unipix")
     timerLabel.fontSize = 35
     timerLabel.fontColor = .black
@@ -46,6 +54,7 @@ class EndScene: SKScene {
     
     let wait = SKAction.wait(forDuration: 2.0)
     let block = SKAction.run {
+        
       GameManager.shared.gameViewController!.loadScene(GameManager.shared.menuScene!, self)
     }
     self.run(SKAction.sequence([wait, block]))
