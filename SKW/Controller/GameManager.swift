@@ -128,5 +128,9 @@ class GameManager {
     func addScore () {
         score += Scores.bonus
     }
+    
+    func addFat() {
+        timer = FatTimer.bonus
+    }
 }
 

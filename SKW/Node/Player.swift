@@ -198,6 +198,7 @@ class Player: SKSpriteNode {
                     return
                 }
                 GameManager.shared.addScore()
+                GameManager.shared.addFat()
                 
             }
         }
