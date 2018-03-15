@@ -16,7 +16,6 @@ class GameManager {
     var gameScene: GameScene?
     var menuScene: MenuScene?
     var endScene: EndScene?
-
     
     var score: Int{
         get {
@@ -26,12 +25,20 @@ class GameManager {
             _score = newValue
             gameScene?.hud.score = _score
         }
-        
-    
     }
+    
+    var timer: TimeInterval {
+        get {
+            return _timer
+        }
+        set {
+            _timer += newValue
+            gameScene?.hud.timer = _timer
+        }
+    }
+    
     var appCounted: Bool = false
     var monstersKills: Int = 0
-    var timerCounter: Int = 30
     
     // Textures
     var allTextures: [SKTexture] = []
@@ -45,6 +52,7 @@ class GameManager {
     var availableForks: [Fork] = []
     
     private var _score: Int = 0
+    private var _timer: TimeInterval = FatTimer.maxValue
     
     //Physics
     let gravity = CGPoint (x: 0, y: -0.4)

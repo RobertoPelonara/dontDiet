@@ -50,6 +50,13 @@ enum Scores {
   static let malus = -10
 }
 
+enum FatTimer {
+    static let maxValue: TimeInterval = 20
+    static let normalThreshold: TimeInterval = FatTimer.maxValue * 3/4
+    static let slimThreshold: TimeInterval = FatTimer.maxValue * 1/2
+    static let xsThreshold: TimeInterval = FatTimer.maxValue * 1/4
+}
+
 enum DeviceGravity {
     static let min: Double = 0.030
 }

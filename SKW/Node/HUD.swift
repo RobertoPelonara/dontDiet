@@ -22,6 +22,15 @@ class HUD: SKNode {
         }
     }
     
+    var timer: TimeInterval {
+        get {
+            return GameManager.shared.timer
+        }
+        set {
+            timerLabel.text = "Score: \(GameManager.shared.timer)"
+        }
+    }
+    
     override init() {
         super.init()
         self.name = "HUD"
