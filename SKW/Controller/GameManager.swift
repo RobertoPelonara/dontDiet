@@ -17,6 +17,10 @@ class GameManager {
     var menuScene: MenuScene?
     var endScene: EndScene?
     
+    var startGameTimer: TimeInterval = 0
+    var endGameTimer: TimeInterval = 0
+    var totalGameTimer: TimeInterval = 0
+    
     var score: Int{
         get {
             return _score
@@ -120,7 +124,9 @@ class GameManager {
         let _gameScene = gameScene else {
              return
         }
+        self.endGameTimer = Date().timeIntervalSince1970
         
+        totalGameTimer = self.endGameTimer - self.startGameTimer
         _gameViewController.loadScene(_endScene)
 
     }
