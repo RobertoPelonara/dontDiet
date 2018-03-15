@@ -120,13 +120,33 @@ class GameManager {
         let _gameScene = gameScene else {
              return
         }
+        availableDonuts.removeAll()
+        availableForks.removeAll()
+        spawnedForks.removeAll()
+        spawnedDonuts.removeAll()
+        _timer = FatTimer.maxValue
+        _score = 0
         
-        _gameViewController.loadScene(_endScene)
+        print("GAME OVER")
+        _gameViewController.loadScene(_endScene, _gameScene)
+        gameScene = nil
 
     }
     
     func addScore () {
         score += Scores.bonus
     }
+}
+
+extension SKScene {
+    
+    func destroyScene () {
+        print(self.children.count)
+        removeAllChildren()
+        print(self.children.count)
+        removeAllActions()
+        removeFromParent()
+    }
+    
 }
 

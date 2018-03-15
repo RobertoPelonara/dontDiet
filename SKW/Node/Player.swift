@@ -178,11 +178,10 @@ class Player: SKSpriteNode {
         
         for donut in GameManager.shared.spawnedDonuts {
             if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
-                print("QUALCOSA è ACCADUTO")
+                
                 var shouldDie = false
                 switch donut.type!{
                 case .big:
-                    print("big hit")
                     shouldDie = true
                 case .mediumLeft:
                     shouldDie = true
@@ -195,6 +194,9 @@ class Player: SKSpriteNode {
                 }
                 if shouldDie{
                     GameManager.shared.gameOver()
+                    removeFromParent()
+                    hitBox = nil
+                    
                     return
                 }
                 GameManager.shared.addScore()

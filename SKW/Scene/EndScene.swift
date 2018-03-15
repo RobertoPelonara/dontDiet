@@ -27,10 +27,7 @@ class EndScene: SKScene {
     
     let wait = SKAction.wait(forDuration: 6.0)
     let block = SKAction.run {
-      let scene = MenuScene(size: self.size)
-      scene.scaleMode = .aspectFill
-      let transitionType = SKTransition.flipHorizontal(withDuration: 0.5)
-      self.view?.presentScene(scene, transition: transitionType)
+      GameManager.shared.gameViewController!.loadScene(GameManager.shared.menuScene!, self)
     }
     self.run(SKAction.sequence([wait, block]))
 

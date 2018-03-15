@@ -31,8 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return texture.description.contains("Donut")
     }
     
-    GameManager.shared.initializeForks()
-    GameManager.shared.initializeDonuts()
+   
     return true
   }
 

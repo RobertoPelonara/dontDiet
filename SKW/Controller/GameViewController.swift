@@ -18,14 +18,21 @@ class GameViewController: UIViewController {
     GameManager.shared.endScene = endScene
     
     let scene = MenuScene(size: view.frame.size)
-    loadScene(scene)
+    GameManager.shared.menuScene = scene
+
+    loadScene(scene, nil)
    
 
   }
     
-    func loadScene (_ scene: SKScene) {
+    func loadScene (_ scene: SKScene, _ currentScene: SKScene?) {
         // Create view
         if let view = self.view as! SKView? {
+            
+            if let _currentScene = currentScene {
+                _currentScene.destroyScene()
+            }
+            
             
             // Create Scene
             //let scene = MenuScene(size: view.frame.size)

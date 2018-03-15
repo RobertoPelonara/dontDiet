@@ -150,7 +150,9 @@ class Donut: SKSpriteNode {
         
         self.removeFromParent()
         let index = GameManager.shared.spawnedDonuts.index(of: self)
-
+        
+        hitBox = nil
+        
         GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
 
         var type1: DonutType?
@@ -175,13 +177,12 @@ class Donut: SKSpriteNode {
             type2 = .smallRight
             
         case .smallLeft:
-            removeFromParent()
+            
             //HUD.shared.score = 5
             return
         
         case .smallRight:
-            removeFromParent()
-
+            
             //HUD.shared.score = 5
             return
 
