@@ -52,7 +52,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         background.zPosition = Z.background
         addChild(background)
         
-        
+        GameManager.shared.startGameTimer = Date().timeIntervalSince1970
         perna.setup(view: self.view!,gameScene:self)
         
     }

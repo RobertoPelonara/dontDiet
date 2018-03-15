@@ -13,17 +13,35 @@ class EndScene: SKScene {
 
     backgroundColor = .white
 
-    let bg = SKSpriteNode(color: .purple, size: CGSize(width: 200, height: 200))
-    bg.position = CGPoint(x: size.width / 2, y: size.height / 2)
-    bg.zPosition = -1
-    addChild(bg)
-    
-    let gameLabel = SKLabelNode(fontNamed: "Courier")
+    let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
+    gameLabel2.fontSize = 82
+    gameLabel2.fontColor = .black
+    gameLabel2.text = "You Diet"
+    gameLabel2.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
+    addChild(gameLabel2)
+    let gameLabel = SKLabelNode(fontNamed: "Unipix")
     gameLabel.fontSize = 80
     gameLabel.fontColor = .red
     gameLabel.text = "You Diet"
     gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
     addChild(gameLabel)
+    
+    let scoreLabel = SKLabelNode(fontNamed: "Unipix")
+    scoreLabel.fontSize = 40
+    scoreLabel.fontColor = .black
+    scoreLabel.text = "You gained \(GameManager.shared.score) calories"
+    scoreLabel.position = CGPoint(x: gameLabel.position.x , y: gameLabel.position.y - 100)
+    addChild(scoreLabel)
+    
+    let timerLabel = SKLabelNode(fontNamed: "Unipix")
+    timerLabel.fontSize = 35
+    timerLabel.fontColor = .black
+    timerLabel.text = "You have fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
+    timerLabel.position = CGPoint(x: gameLabel.position.x , y: scoreLabel.position.y - 100)
+    addChild(timerLabel)
+
+    
+    
     
     let wait = SKAction.wait(forDuration: 6.0)
     let block = SKAction.run {

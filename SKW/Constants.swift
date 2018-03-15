@@ -55,6 +55,7 @@ enum FatTimer {
     static let normalThreshold: TimeInterval = FatTimer.maxValue * 3/4
     static let slimThreshold: TimeInterval = FatTimer.maxValue * 1/2
     static let xsThreshold: TimeInterval = FatTimer.maxValue * 1/4
+    static let bonus: TimeInterval = FatTimer.maxValue/10
 }
 
 enum DeviceGravity {

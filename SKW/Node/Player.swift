@@ -200,8 +200,8 @@ class Player: SKSpriteNode {
                     return
                 }
                 GameManager.shared.addScore()
+                GameManager.shared.addFat()
                 donut.hit()
-                
             }
         }
     }
@@ -216,7 +216,7 @@ class Player: SKSpriteNode {
         case .slim:
             if GameManager.shared.timer > FatTimer.slimThreshold {self.setFatLevel(.normal)} else if GameManager.shared.timer <= FatTimer.xsThreshold {self.setFatLevel(.xs)}
         case .xs:
-            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {}
+            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {GameManager.shared.gameOver()}
         }
     }
     
