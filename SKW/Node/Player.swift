@@ -145,7 +145,7 @@ class Player: SKSpriteNode {
             
         }
         
-        self.run(fatIdle!)
+        self.run((fatIdle!), withKey: "runAnim")
         
         gameScene.addChild(self)
     }
@@ -293,19 +293,19 @@ class Player: SKSpriteNode {
         print("prima gamba: \(legRNode?.position)")
         switch type {
         case .fat:
-            self.run(fatIdle!)
+            self.run((fatIdle!), withKey: "runAnim")
             legRNode?.position = CGPoint(x: 8, y: -12)
             legLNode?.position = CGPoint(x: 8, y: -12)
         case .normal:
-            self.run(normalIdle!)
+            self.run((normalIdle!), withKey: "runAnim")
             legRNode?.position = CGPoint(x: 5, y: -12)
             legLNode?.position = CGPoint(x: 5, y: -12)
         case .slim:
-            self.run(slimIdle!)
+            self.run((slimIdle!), withKey: "runAnim")
             legRNode?.position = CGPoint(x: 5, y: -12)
             legLNode?.position = CGPoint(x: 5, y: -12)
         case .xs:
-            self.run(xsIdle!)
+            self.run((xsIdle!), withKey: "runAnim")
             legRNode?.position = CGPoint(x: 3, y: -12)
             legLNode?.position = CGPoint(x: 3, y: -12)
         }
