@@ -199,7 +199,7 @@ class Player: SKSpriteNode {
                 }
                 GameManager.shared.addScore()
                 GameManager.shared.addFat()
-                
+                donut.hit()
             }
         }
     }
