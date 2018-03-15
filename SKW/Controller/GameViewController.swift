@@ -31,11 +31,26 @@ class GameViewController: UIViewController {
 //        }
         do{
             let result = try self.managedContext.fetch(request)
+    
+            if result.count == 0 {
+                let entity = NSEntityDescription.entity(forEntityName: "Score", in: managedContext)
+                let score = NSManagedObject(entity: entity!, insertInto: managedContext)
+                
+                score.setValue(0, forKey: "highestScore")
+                do{
+                    try self.managedContext.save()
+                    print("la riga non esisteva ma l'ho creata")
+                } catch let error as NSError {
+                    print("a bucchin e mammt \(error) , \(error.userInfo)")
+                }
+                
+            } else {
+                
             let score = result[0] as! NSManagedObject
-
             print("the fetched value is: \(score.value(forKey: "highestScore"))")
-//            highestScore = score.value(forKey: "highestScore") as! Int
-
+                
+            }
+            
         }catch {
             fatalError("Failed to fetch player : \(error)")
         }
