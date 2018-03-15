@@ -24,6 +24,12 @@ class Donut: SKSpriteNode {
     //counter per rimbalzi piccole
     var counter: Int = 0
     
+    //animazione minidonut
+    let pulseWhite = SKAction.sequence([
+        SKAction.colorize(with: SKColor.green, colorBlendFactor: 1.0, duration: 0.2),
+        SKAction.wait(forDuration: 0.2),
+        SKAction.colorize(withColorBlendFactor: 0.0, duration: 0.2)])
+    
     enum DonutType {
         case big
         case mediumLeft
@@ -67,9 +73,7 @@ class Donut: SKSpriteNode {
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
-        //setto il reflect per la ciambella
         reflectParameter = DonutConstants.Reflect.big
-        //setto il parametro di spostamento orizzontale
         xParameter = DonutConstants.XMovement.big
         
         self.position = self.randomPositionSpawn()
@@ -107,6 +111,8 @@ class Donut: SKSpriteNode {
         self.xParameter = self.type == .smallLeft ? -DonutConstants.XMovement.small : DonutConstants.XMovement.small
         
         self.gameScene?.addChild(self)
+        
+        self.run(SKAction.sequence([pulseWhite, pulseWhite, pulseWhite]))
     }
     
     func randomPositionSpawn() -> CGPoint {
