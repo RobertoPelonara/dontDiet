@@ -30,7 +30,7 @@ class Player: SKSpriteNode {
     
     //stuff
     var limit: CGFloat?
-  
+    
     var gameScene: SKScene?
     
     //Physics
@@ -91,8 +91,8 @@ class Player: SKSpriteNode {
         legRNode!.zPosition = self.zPosition + 0.01
         legLNode!.zPosition = self.zPosition - 0.01
         
-        legRNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
-        legLNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
+        legRNode?.position = CGPoint(x: 8, y: -12)
+        legLNode?.position = CGPoint(x: 8, y: -12)
         
         let animationL = SKAction.animate(with: textureWalkLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: textureWalkLegR, timePerFrame: 0.07)
@@ -134,7 +134,7 @@ class Player: SKSpriteNode {
             debugHitBox?.position = position
             debugHitBox?.zPosition = Z.HUD
             gameScene.addChild(debugHitBox!)
-           
+            
         }
         
         self.run(fatIdle!)
@@ -171,7 +171,7 @@ class Player: SKSpriteNode {
         hitBox!.y = position.y
         debugHitBox?.position.x = hitBox!.x
         debugHitBox?.position.y = hitBox!.y
-
+        
     }
     
     func checkCollisionWithDonuts () {
@@ -199,7 +199,21 @@ class Player: SKSpriteNode {
                 }
                 GameManager.shared.addScore()
                 
+            }
         }
+    }
+    
+    func checkFat() {
+        
+        switch self.fatState {
+        case .fat:
+            if GameManager.shared.timer <= FatTimer.normalThreshold {self.setFatLevel(.normal)}
+        case .normal:
+            if GameManager.shared.timer > FatTimer.normalThreshold {self.setFatLevel(.fat)} else if GameManager.shared.timer <= FatTimer.slimThreshold {self.setFatLevel(.slim)}
+        case .slim:
+            if GameManager.shared.timer > FatTimer.slimThreshold {self.setFatLevel(.normal)} else if GameManager.shared.timer <= FatTimer.xsThreshold {self.setFatLevel(.xs)}
+        case .xs:
+            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {}
         }
     }
     
@@ -232,6 +246,8 @@ class Player: SKSpriteNode {
             (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim
             self.action(forKey: "runAnim")?.speed = deltaAnim
         }
+        
+        self.checkFat()
     }
     
     func shootAnimation() -> SKAction {
@@ -262,25 +278,26 @@ class Player: SKSpriteNode {
     func setFatLevel(_ type: FatState) {
         self.fatState = type
         
+        print("prima gamba: \(legRNode?.position)")
         switch type {
         case .fat:
             self.run(fatIdle!)
-            legRNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
-            legLNode?.position = CGPoint(x: position.x + 8, y: position.y - 12)
+            legRNode?.position = CGPoint(x: 8, y: -12)
+            legLNode?.position = CGPoint(x: 8, y: -12)
         case .normal:
             self.run(normalIdle!)
-            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
-            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
+            legRNode?.position = CGPoint(x: 5, y: -12)
+            legLNode?.position = CGPoint(x: 5, y: -12)
         case .slim:
             self.run(slimIdle!)
-            legRNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
-            legLNode?.position = CGPoint(x: position.x + 5, y: position.y - 12)
+            legRNode?.position = CGPoint(x: 5, y: -12)
+            legLNode?.position = CGPoint(x: 5, y: -12)
         case .xs:
             self.run(xsIdle!)
-            legRNode?.position = CGPoint(x: position.x + 3, y: position.y - 12)
-            legLNode?.position = CGPoint(x: position.x + 3, y: position.y - 12)
+            legRNode?.position = CGPoint(x: 3, y: -12)
+            legLNode?.position = CGPoint(x: 3, y: -12)
         }
-        
+        print("dopo gamba: \(legRNode?.position)")
     }
     
     // Swift requires this initializer
@@ -289,3 +306,5 @@ class Player: SKSpriteNode {
     }
     
 }
+
+

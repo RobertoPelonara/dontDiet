@@ -73,6 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Update delta time
         deltaTime = currentTime - lastTime
+        GameManager.shared.timer = -deltaTime
         
         // Random spawn
         spawnDonut(deltaTime: deltaTime)
