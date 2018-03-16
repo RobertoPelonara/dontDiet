@@ -32,15 +32,13 @@ class Broccoli: SKSpriteNode {
     func setup(gameScene: SKScene){
         
         self.gameScene = gameScene
+        self.currForce.y = 0
         
         let randomX = CGFloat(arc4random_uniform(UInt32(gameScene.frame.width)))
         self.position.x = randomX
         
         hitBox = Circle(x: position.x, y: position.y, radius:15.5)
         self.position.y = gameScene.frame.height + self.size.height/2
-        
-        
-        
         
         if debug{
         
