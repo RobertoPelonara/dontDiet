@@ -177,8 +177,10 @@ class Player: SKSpriteNode {
         
         hitBox!.x = position.x
         hitBox!.y = position.y - 5
+        if debug {
         debugHitBox?.position.x = hitBox!.x
         debugHitBox?.position.y = hitBox!.y - 5
+        }
         
     }
     

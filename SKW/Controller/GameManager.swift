@@ -44,6 +44,7 @@ class GameManager {
         }
         set {
             _timer += newValue
+            if _timer >= FatTimer.maxValue {_timer = FatTimer.maxValue}
             gameScene?.hud.timer = [newValue, _timer]
         }
     }
