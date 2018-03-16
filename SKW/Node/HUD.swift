@@ -13,7 +13,7 @@ class HUD: SKNode {
     let scoreLabel = SKLabelNode(fontNamed:"Courier")
     
     let statusBar = SKSpriteNode()
-    let statusBarBackground = SKSpriteNode()
+    let statusBarBackground = SKSpriteNode(texture: SKTexture.init(imageNamed: "candy_cane_back.png"), color: .clear, size: SpriteSize.statusBarBackground)
     let cropNode = SKCropNode()
     let maskNode = SKSpriteNode(color: .black, size: CGSize(width: SpriteSize.statusBar.width, height: SpriteSize.statusBar.height))
     var cropNodeStartX: CGFloat?
@@ -58,8 +58,6 @@ class HUD: SKNode {
         statusBar.zPosition = Z.HUD
         statusBar.name = "bar"
         
-        statusBarBackground.texture = SKTexture.init(imageNamed: "white_gradient.png")
-        statusBarBackground.color = .clear
         statusBarBackground.zPosition = Z.HUD - 10
         
         cropNode.zPosition = Z.HUD
@@ -81,7 +79,6 @@ class HUD: SKNode {
         
         statusBar.position = .zero
         
-        statusBarBackground.size = CGSize(width: SpriteSize.statusBar.width * 2, height: SpriteSize.statusBar.height * 7)
         statusBarBackground.position = cropNode.position
         addChild(statusBarBackground)
         
