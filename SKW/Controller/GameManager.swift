@@ -54,7 +54,9 @@ class GameManager {
     
     // Textures
     var allTextures: [SKTexture] = []
-    var allDonutsTextures: [SKTexture] = []
+    var allBigDonutsTextures: [SKTexture] = []
+    var allMediumDonutsTextures: [SKTexture] = []
+    var allSmallDonutsTextures: [SKTexture] = []
     
     // Donuts
     var spawnedDonuts: [Donut] = []

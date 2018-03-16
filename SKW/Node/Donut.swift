@@ -44,8 +44,7 @@ class Donut: SKSpriteNode {
     var gameScene: SKScene?
     
     init() {
-        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allDonutsTextures.count)))
-        super.init(texture: GameManager.shared.allDonutsTextures[rand], color: .clear, size: SpriteSize.donutBig)
+        super.init(texture: nil, color: .clear, size: .zero)
     }
     
     func setup (_ type: DonutType, gameScene: SKScene, spawnPosition: CGPoint? = nil) {
@@ -69,7 +68,10 @@ class Donut: SKSpriteNode {
     }
     
     func bigDonutSetup() {
-        self.setScale(1)
+        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allBigDonutsTextures.count)))
+        self.texture = GameManager.shared.allBigDonutsTextures[rand]
+        self.color = .clear
+        self.size = SpriteSize.donutBig
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
@@ -82,7 +84,10 @@ class Donut: SKSpriteNode {
     }
     
     func mediumDonutSetup(_ spawnPosition: CGPoint) {
-        self.setScale(DonutConstants.scale.medium)
+        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allMediumDonutsTextures.count)))
+        self.texture = GameManager.shared.allMediumDonutsTextures[rand]
+        self.color = .clear
+        self.size = SpriteSize.donutMid
         
         self.position = spawnPosition
         
@@ -98,7 +103,10 @@ class Donut: SKSpriteNode {
     }
     
     func smallDonutSetup(_ spawnPosition: CGPoint) {
-        self.setScale(DonutConstants.scale.small)
+        let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allSmallDonutsTextures.count)))
+        self.texture = GameManager.shared.allSmallDonutsTextures[rand]
+        self.color = .clear
+        self.size = SpriteSize.donutSmall
         
         self.position = spawnPosition
         
