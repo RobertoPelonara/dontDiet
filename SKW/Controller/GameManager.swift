@@ -155,7 +155,7 @@ class GameManager {
     func addScore () {
         score += Scores.bonus
         gameScene!.run(self.eatSound)
-        if !gameScene?.overdoseStarted{
+        if !gameScene!.overdoseStarted{
         gameScene!.rushStarted = true
         gameScene!.rushCount += 1
         if gameScene!.rushCount >= gameScene!.donutToOverdose {

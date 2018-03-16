@@ -48,18 +48,23 @@ class EndScene: SKScene {
     timerLabel.text = "You have fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
     timerLabel.position = CGPoint(x: gameLabel.position.x , y: scoreLabel.position.y - 100)
     addChild(timerLabel)
+    
+    let tapToReturn = SKLabelNode(fontNamed: "Unipix")
+    tapToReturn.fontSize = 30
+    tapToReturn.fontColor = .black
+    tapToReturn.color?.withAlphaComponent(0.7)
+    tapToReturn.text = "Tap to return to Main Menu"
+    tapToReturn.position = CGPoint(x: gameLabel.position.x , y: timerLabel.position.y - 100)
+    addChild(tapToReturn)
 
     
-    
-    
-    let wait = SKAction.wait(forDuration: 2.0)
-    let block = SKAction.run {
-        
-      GameManager.shared.gameViewController!.loadScene(GameManager.shared.menuScene!, self)
-    }
-    self.run(SKAction.sequence([wait, block]))
 
   }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        GameManager.shared.gameViewController!.loadScene(GameManager.shared.menuScene!, self)
+
+    }
 
 }
 
