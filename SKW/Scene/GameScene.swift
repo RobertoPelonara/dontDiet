@@ -38,7 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var defaultRushTimer = 5.0
     var rushTimer = 5.0
     var rushCount = 0
-    var donutToOverdose = 5
+    var donutToOverdose = 3
     var defaultOverdoseTimer = 7.0
     var overdoseTimer = 7.0
     var overdoseStarted = false
