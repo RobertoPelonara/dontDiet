@@ -76,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
          self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
         tapisRoulant.run(tapisRoulantAnimation!)
+        tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
     }
