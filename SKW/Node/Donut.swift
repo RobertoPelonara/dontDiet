@@ -139,11 +139,12 @@ class Donut: SKSpriteNode {
     
     func update(deltaTime: TimeInterval) {
         
+        guard let selfBox = self.hitBox else {return}
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
-        if position.x < (hitBox?.r)! {
+        if position.x < selfBox.r {
             xParameter = abs(xParameter!)
-        } else if position.x > ((gameScene?.frame.width)! - (hitBox?.r)!) {
+        } else if position.x > ((gameScene?.frame.width)! - selfBox.r) {
             xParameter = -(abs(xParameter!))
         }
         if self.xParameter! <= 0 {self.zRotation += CGFloat(DonutConstants.zRotation)} else {self.zRotation -= CGFloat(DonutConstants.zRotation)}
@@ -158,11 +159,10 @@ class Donut: SKSpriteNode {
             if self.type == .smallLeft || self.type == .smallRight {
                 if self.counter < 2 {counter += 1} else {
                     self.counter = 0
-                    if debug {debugHitBox?.removeFromParent()}
-                    self.removeFromParent()
-                    let index = GameManager.shared.spawnedDonuts.index(of: self)
                     hitBox = nil
-                    GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
+                    self.zRotation = 0
+                    if debug {debugHitBox?.removeFromParent()}
+                    self.run(SKAction.sequence([DestroyDonutsActions.pinkDonuts, DestroyDonutsActions.removeFromParentAction(donut: self)]))
                 }
             }
         }

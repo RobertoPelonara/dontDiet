@@ -94,3 +94,16 @@ enum DeathReason {
     case hit
 }
 
+enum DestroyDonutsActions {
+    static func removeFromParentAction(donut: Donut) -> SKAction {
+        let action = SKAction.run {
+            donut.removeFromParent()
+            let index = GameManager.shared.spawnedDonuts.index(of: donut)
+            GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
+        }
+        
+        return action
+    }
+    static let pinkDonuts = SKAction.animate(with: GameManager.shared.allSmallPinkDonutsBreakTextures, timePerFrame: 0.02)
+}
+

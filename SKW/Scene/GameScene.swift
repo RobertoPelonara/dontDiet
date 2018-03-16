@@ -67,6 +67,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(background!)
         
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
+            
         perna.setup(view: self.view!,gameScene:self)
         
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
@@ -78,6 +79,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tapisRoulant.run(tapisRoulantAnimation!)
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
+        
+        GameManager.shared.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
         
     }
     

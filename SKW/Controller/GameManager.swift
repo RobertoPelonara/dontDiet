@@ -22,9 +22,6 @@ class GameManager {
     var endGameTimer: TimeInterval = 0
     var totalGameTimer: TimeInterval = 0
     
-    
-        
-    
     var deathReason: DeathReason?
     
     var score: Int{
@@ -57,6 +54,8 @@ class GameManager {
     var allBigDonutsTextures: [SKTexture] = []
     var allMediumDonutsTextures: [SKTexture] = []
     var allSmallDonutsTextures: [SKTexture] = []
+    var allSmallPinkDonutsBreakTextures: [SKTexture] = []
+    
     
     // Donuts
     var spawnedDonuts: [Donut] = []
@@ -70,7 +69,7 @@ class GameManager {
     
     //Physics
     let gravity = CGPoint (x: 0, y: -0.4)
-    let groundY = CGFloat(40)
+    var groundY = CGFloat(40)
     
     var soundtrack: AVAudioPlayer?
     
@@ -87,6 +86,7 @@ class GameManager {
     }
     
     func initializeForks() {
+        
         
         for i in 0...4 {
             

@@ -37,6 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GameManager.shared.allSmallDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
         return texture.description.contains("donut_small")
     }
+    GameManager.shared.allSmallPinkDonutsBreakTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("donut_breaks_pink")
+    }
    
     return true
   }
