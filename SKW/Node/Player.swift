@@ -159,7 +159,7 @@ class Player: SKSpriteNode {
             
             let fork = GameManager.shared.getFork()
             fork.setup(playerPosition: self.position,gameScene: self.gameScene!)
-            
+            fork.zPosition = -1
             self.run(shootAnimation())
             
         } else {return}
