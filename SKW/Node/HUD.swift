@@ -16,6 +16,7 @@ class HUD: SKNode {
     let statusBarBackground = SKSpriteNode()
     let cropNode = SKCropNode()
     let maskNode = SKSpriteNode(color: .black, size: CGSize(width: SpriteSize.statusBar.width, height: SpriteSize.statusBar.height))
+    var cropNodeStartX: CGFloat?
     
     var score: Int {
         get {
@@ -31,8 +32,13 @@ class HUD: SKNode {
             return [GameManager.shared.timer]
         }
         set {
-            cropNode.childNode(withName: "bar")?.position.x -= (SpriteSize.statusBar.width * CGFloat(newValue[0])) / CGFloat(FatTimer.maxValue)
-            cropNode.position.x += (SpriteSize.statusBar.width * CGFloat(newValue[0])) / CGFloat(FatTimer.maxValue)
+            if GameManager.shared.timer < FatTimer.maxValue {
+                statusBar.position.x -= (SpriteSize.statusBar.width * CGFloat(newValue[0])) / CGFloat(FatTimer.maxValue)
+                cropNode.position.x += (SpriteSize.statusBar.width * CGFloat(newValue[0])) / CGFloat(FatTimer.maxValue)
+            } else {
+                statusBar.position.x = 0
+                cropNode.position.x = cropNodeStartX!
+            }
         }
     }
     
@@ -68,6 +74,7 @@ class HUD: SKNode {
         addChild(scoreLabel)
         
         cropNode.position = CGPoint(x: size.width - (spacing * 2) - SpriteSize.statusBar.width/2, y: size.height - SpriteSize.statusBar.height/2 - (spacing * 2))
+        cropNodeStartX = cropNode.position.x
         cropNode.addChild(statusBar)
         cropNode.maskNode = maskNode
         addChild(cropNode)
