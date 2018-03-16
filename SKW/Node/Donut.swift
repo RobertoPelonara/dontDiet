@@ -38,7 +38,7 @@ class Donut: SKSpriteNode {
         case smallRight
     }
     
-    var debug = false
+    var debug = true
     var currForce = Vector2(x: 0, y: 0)
     
     var gameScene: SKScene?
@@ -225,8 +225,8 @@ class Donut: SKSpriteNode {
         hitBox!.y = position.y
         
         if debug {
-            debugHitBox!.position.x = hitBox!.x
-            debugHitBox!.position.y = hitBox!.y
+            debugHitBox!.position.x = position.x
+            debugHitBox!.position.y = position.y
         }
     }
     

@@ -59,6 +59,10 @@ class GameManager {
     var spawnedDonuts: [Donut] = []
     var spawnedForks: [Fork] = []
     
+    //Broccoli
+    var spawnedBroccoli: [Broccoli] = []
+    var availableBroccoli: [Broccoli] = []
+    
     var availableDonuts: [Donut] = []
     var availableForks: [Fork] = []
     
@@ -91,6 +95,28 @@ class GameManager {
             //fork.isInGame = false
             fork.indexInArray = i
             self.availableForks.append(fork)
+        }
+    }
+    
+    func initializeBroccoli() {
+        
+        for _ in 0...4 {
+            let broccoli = Broccoli()
+            self.availableBroccoli.append(broccoli)
+        }
+    }
+    
+    func getBroccoli() -> Broccoli {
+        if !self.availableBroccoli.isEmpty {
+            
+            let broccoli = self.availableBroccoli.removeFirst()
+            return broccoli
+            
+        } else {
+            
+            let broccoli = Broccoli()
+            return broccoli
+            
         }
     }
     
