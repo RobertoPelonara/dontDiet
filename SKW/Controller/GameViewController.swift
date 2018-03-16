@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
             } else {
                 
             let score = result[0] as! NSManagedObject
-            print("the fetched value is: \(score.value(forKey: "highestScore")!)")
+            
             highestScore = score.value(forKey: "highestScore") as! Int
                 
             }

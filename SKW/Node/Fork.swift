@@ -61,6 +61,7 @@ class Fork: SKSpriteNode {
     func checkCollision () {
         
         for donut in GameManager.shared.spawnedDonuts {
+            guard let _ = donut.hitBox else { print ("sarei dovuto crashare a causa della ciambellina piccola"); return}
             if rectInCircle(rect: self.hitBox!, circle: donut.hitBox!){
                 donut.hit()
                 destroyThisFork()

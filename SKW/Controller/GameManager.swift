@@ -161,7 +161,7 @@ class GameManager {
              return
         }
         deathReason = reason
-        print("GAME OVER")
+        
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970
         totalGameTimer = self.endGameTimer - self.startGameTimer
