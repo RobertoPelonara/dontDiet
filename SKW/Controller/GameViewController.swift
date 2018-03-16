@@ -20,16 +20,7 @@ class GameViewController: UIViewController {
         
         managedContext = appDelegate().persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Score")
-//        let entity = NSEntityDescription.entity(forEntityName: "Score", in: managedContext)
-//        let score = NSManagedObject(entity: entity!, insertInto: managedContext)
-//
-//        score.setValue(0, forKey: "highestScore")
-//        do{
-//            try self.managedContext.save()
-//            print("row created")
-//        } catch let error as NSError {
-//            print("a bucchin e mammt \(error) , \(error.userInfo)")
-//        }
+
         do{
             let result = try self.managedContext.fetch(request)
     
@@ -38,17 +29,22 @@ class GameViewController: UIViewController {
                 let score = NSManagedObject(entity: entity!, insertInto: managedContext)
                 
                 score.setValue(0, forKey: "highestScore")
+                highestScore = 0
                 do{
                     try self.managedContext.save()
                     print("la riga non esisteva ma l'ho creata")
+                    
                 } catch let error as NSError {
-                    print("a bucchin e mammt \(error) , \(error.userInfo)")
+                    
+                    print("NON SONO RIUSCITO A CREARE LA RIGA \(error) , \(error.userInfo)")
+                    
                 }
                 
             } else {
                 
             let score = result[0] as! NSManagedObject
-            print("the fetched value is: \(score.value(forKey: "highestScore"))")
+            print("the fetched value is: \(score.value(forKey: "highestScore")!)")
+            highestScore = score.value(forKey: "highestScore") as! Int
                 
             }
             
@@ -110,6 +106,27 @@ class GameViewController: UIViewController {
         }
     }
     
+    func updateSavedScore(newScore: Int){
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Score")
+        
+        do{
+            let result = try self.managedContext.fetch(request)
+            let score = result[0] as! NSManagedObject
+            score.setValue(newScore, forKey: "highestScore")
+            
+            do{
+                try self.managedContext.save()
+                
+            } catch let error as NSError{
+                fatalError("Failed to save score : \(error)")
+            }
+            
+        }catch let error as NSError {
+            fatalError("Failed to fetch score : \(error)")
+        }
+        
+    }
     override var shouldAutorotate: Bool {
         return true
     }

@@ -37,7 +37,7 @@ class EndScene: SKScene {
     let recordLabel = SKLabelNode(fontNamed: "Unipix")
     recordLabel.fontSize = 40
     recordLabel.fontColor = .black
-    recordLabel.text = "Your highest score was \(100000) calories"
+    recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
     print(GameManager.shared.score)
     recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - 30)
     addChild(recordLabel)

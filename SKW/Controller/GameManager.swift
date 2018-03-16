@@ -137,11 +137,16 @@ class GameManager {
         self.endGameTimer = Date().timeIntervalSince1970
         totalGameTimer = self.endGameTimer - self.startGameTimer
         _gameViewController.loadScene(_endScene, _gameScene)
+        
         availableDonuts.removeAll()
         availableForks.removeAll()
         spawnedForks.removeAll()
         spawnedDonuts.removeAll()
         _timer = FatTimer.maxValue
+        if score > (gameViewController?.highestScore)! {
+            gameViewController?.updateSavedScore(newScore: score)
+            gameViewController?.highestScore = score
+        }
         _score = 0
         
 
