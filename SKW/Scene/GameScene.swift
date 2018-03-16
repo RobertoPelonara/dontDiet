@@ -33,8 +33,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let triggerDistance: CGFloat = 20
     var initialTouch: CGPoint = CGPoint.zero
     
+    //Overdose
+    var rushStarted = false
+    var defaultRushTimer = 5.0
+    var rushTimer = 5.0
+    var rushCount = 0
+    var donutToOverdose = 2
+    var defaultOverdoseTimer = 7.0
+    var overdoseTimer = 7.0
+    var overdoseStarted = false
+    
+    
     //HUD
     var hud = HUD()
+    var background: SKSpriteNode?
     
     // Before the Scene
     override func sceneDidLoad() {
@@ -48,11 +60,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .black
-        let background = SKSpriteNode(imageNamed: "background")
-        background.size = frame.size
-        background.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        background.zPosition = Z.background
-        addChild(background)
+        background = SKSpriteNode(imageNamed: "background")
+        background!.size = frame.size
+        background!.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        background!.zPosition = Z.background
+        addChild(background!)
         
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
         perna.setup(view: self.view!,gameScene:self)
@@ -82,8 +94,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
         if lastTime <= 0 { lastTime = currentTime }
         
+        
         // Update delta time
         deltaTime = currentTime - lastTime
+       
+        
+        if rushStarted {
+            rushTimer -= deltaTime
+            if rushTimer <= 0 {
+                rushStarted = false
+                rushTimer = defaultRushTimer
+                rushCount = 0
+            }
+        }
+        if overdoseStarted {
+            overdoseTimer -= deltaTime
+            if overdoseTimer <= 0 {
+                overdoseStarted = false
+                overdoseTimer = defaultOverdoseTimer
+                endOverdose()
+            }
+        }
+
         GameManager.shared.timer = -deltaTime
         
         // Random spawn
@@ -109,7 +141,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
    
+    func startOverdose () {
+        background?.texture = SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))
+        overdoseStarted = true
+        rushStarted = false
+        rushCount = 0
+    }
     
+    func endOverdose () {
+        background?.texture = SKTexture(image: #imageLiteral(resourceName: "background"))
+    }
     func spawnDonut(deltaTime: TimeInterval) {
         
         spawnInterval -= deltaTime

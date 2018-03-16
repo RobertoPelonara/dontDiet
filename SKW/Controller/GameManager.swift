@@ -148,9 +148,14 @@ class GameManager {
     }
     
     func addScore () {
-        print("SIAMO ENTRATI QUI")
         score += Scores.bonus
         gameScene!.run(self.eatSound)
+        gameScene!.rushStarted = true
+        gameScene!.rushCount += 1
+        if gameScene!.rushCount >= gameScene!.donutToOverdose {
+            gameScene!.startOverdose()
+        }
+        
     }
     
     func addFat() {

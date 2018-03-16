@@ -200,7 +200,7 @@ class Player: SKSpriteNode {
                 case .smallRight:
                     break
                 }
-                if shouldDie{
+                if shouldDie && !(gameScene as! GameScene).overdoseStarted{
 
                     GameManager.shared.gameOver( .hit)
                     removeFromParent()
@@ -211,6 +211,7 @@ class Player: SKSpriteNode {
                 
                 GameManager.shared.addScore()
                 GameManager.shared.addFat()
+                
                 donut.hit()
             }
         }
