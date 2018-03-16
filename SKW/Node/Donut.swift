@@ -38,7 +38,7 @@ class Donut: SKSpriteNode {
         case smallRight
     }
     
-    var debug = true
+    var debug = false
     var currForce = Vector2(x: 0, y: 0)
     
     var gameScene: SKScene?

@@ -19,7 +19,7 @@ class Broccoli: SKSpriteNode {
     var debugHitBox: SKShapeNode?
     
     
-    private var debug = true
+    private var debug = false
     
     init(){
         
