@@ -22,7 +22,7 @@ class HUD: SKNode {
             return GameManager.shared.score
         }
         set {
-            scoreLabel.text = "Score: \(GameManager.shared.score)"
+            scoreLabel.text = "Calories: \(GameManager.shared.score)"
         }
     }
     
@@ -42,7 +42,7 @@ class HUD: SKNode {
         
         self.name = "HUD"
         
-        scoreLabel.text = "Score: 0"
+        scoreLabel.text = "Calories: 0"
         scoreLabel.fontSize = 20
         scoreLabel.zPosition = Z.HUD
         
