@@ -157,17 +157,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         spawnInterval -= deltaTime
         
         if spawnInterval <= 0 {
-            let donut = GameManager.shared.getDonut()
             
-            donut.setup(.big,gameScene: self)
-
+            let percentuale = arc4random_uniform(101)
+            if percentuale <= 90 {
+                
+                let donut = GameManager.shared.getDonut()
+                
+                donut.setup(.big,gameScene: self)
+                
+            } else {
+                
+                //SPAWNA BROCCOLO
+                
+            }
+            
             let spawnTime = (-3.5 * Double(GameManager.shared.score) + 15000.0)/3000.0
             spawnInterval = TimeInterval(Double(arc4random_uniform(301)) + (spawnTime * 100)) / 100
             print(spawnInterval)
-
+            
             
         }
-    
+        
     }
     
 }

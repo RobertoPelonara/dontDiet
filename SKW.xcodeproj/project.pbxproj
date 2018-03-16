@@ -32,6 +32,7 @@
 		FEA4A28B205A925000B0379F /* eatDonut.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A288205A925000B0379F /* eatDonut.mp3 */; };
 		FEA4A28C205A925000B0379F /* throwFork.wav in Resources */ = {isa = PBXBuildFile; fileRef = FEA4A289205A925000B0379F /* throwFork.wav */; };
 		FEA4A28F205B168400B0379F /* dontDiet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FEA4A28D205B168400B0379F /* dontDiet.xcdatamodeld */; };
+		FECC9F35205B52700089845E /* Broccoli.swift in Sources */ = {isa = PBXBuildFile; fileRef = FECC9F34205B52700089845E /* Broccoli.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		FEA4A288205A925000B0379F /* eatDonut.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = eatDonut.mp3; path = SoundFX/eatDonut.mp3; sourceTree = SOURCE_ROOT; };
 		FEA4A289205A925000B0379F /* throwFork.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = throwFork.wav; path = SoundFX/throwFork.wav; sourceTree = SOURCE_ROOT; };
 		FEA4A28E205B168400B0379F /* dontDiet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dontDiet.xcdatamodel; sourceTree = "<group>"; };
+		FECC9F34205B52700089845E /* Broccoli.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Broccoli.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 				5F7AA90E20484BF60029E5AA /* Background.swift */,
 				E36E5F9320554363007D057D /* Fork.swift */,
 				E36E5F95205543E1007D057D /* Donut.swift */,
+				FECC9F34205B52700089845E /* Broccoli.swift */,
 			);
 			path = Node;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				5F995B1C2048353A00B4FDC8 /* MenuScene.swift in Sources */,
 				5F7AA90D20484ACE0029E5AA /* Constants.swift in Sources */,
 				5FB36C19203E1BE000AD3F10 /* GameViewController.swift in Sources */,
+				FECC9F35205B52700089845E /* Broccoli.swift in Sources */,
 				E36E5F96205543E1007D057D /* Donut.swift in Sources */,
 				5FB36C11203E1BE000AD3F10 /* AppDelegate.swift in Sources */,
 				E36E5F9A2055B651007D057D /* Vector2.swift in Sources */,
