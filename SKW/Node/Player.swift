@@ -28,10 +28,12 @@ class Player: SKSpriteNode {
     
     var hasPowerUp = true
     
+    //Animations and sound
     var fatIdle: SKAction?
     var normalIdle: SKAction?
     var slimIdle: SKAction?
     var xsIdle: SKAction?
+    var eatBroccoliSound: SKAction?
     
     //stuff
     var limit: CGFloat?
@@ -87,7 +89,7 @@ class Player: SKSpriteNode {
         self.normalIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkNormal, timePerFrame: 0.07))
         self.slimIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkSlim, timePerFrame: 0.07))
         self.xsIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkXS, timePerFrame: 0.07))
-        
+        self.eatSound = SKAction.playSoundFileNamed("eatBroccoli.wav", waitForCompletion: false)
         self.throwSound = SKAction.playSoundFileNamed("throwFork.wav", waitForCompletion: false)
        
         
@@ -175,12 +177,13 @@ class Player: SKSpriteNode {
     }
     
     func updateHitBox () {
-        
-        hitBox!.x = position.x
-        hitBox!.y = position.y - 5
+        guard var _hitBox = hitBox else {print("Player.updateHitBox: didn't find hitBox\n");return}
+        _hitBox.x = position.x
+        _hitBox.y = position.y - 5
         if debug {
-        debugHitBox?.position.x = hitBox!.x
-        debugHitBox?.position.y = hitBox!.y - 5
+            guard var _debugHitbox = debugHitBox else {print("Player.updateHitBox: didn't find debugHitBox\n"); return}
+            _debugHitbox.position.x = hitBox!.x
+            _debugHitbox.position.y = hitBox!.y - 5
         }
         
     }
@@ -188,8 +191,8 @@ class Player: SKSpriteNode {
     func checkCollisionWithDonuts () {
         
         for donut in GameManager.shared.spawnedDonuts {
-            guard let donutBox = donut.hitBox else {return}
-            if rectInCircle(rect: hitBox!, circle: donutBox){
+            guard let donutBox = donut.hitBox, let playerBox = self.hitBox else {print("Player.checkCollisionWithDonuts: missing one of the two hitbox\n");return}
+            if rectInCircle(rect: playerBox, circle: donutBox){
                 
                 var shouldDie = false
                 switch donut.type!{
@@ -224,10 +227,12 @@ class Player: SKSpriteNode {
     func checkCollisionWithBroccoli(){
         for broccoli in GameManager.shared.spawnedBroccoli {
             
-            guard let _ = self.hitBox else {return}
-            if rectInCircle(rect: self.hitBox!, circle: broccoli.hitBox!){
+            guard let playerHitbox = self.hitBox, let broccoliHitBox = broccoli.hitBox else {print("Player.checkCollisionWithBroccoli: didn't find one of the two hitbox\n");return}
+            if rectInCircle(rect: playerHitbox, circle: broccoliHitBox){
             
+            self.run(eatSound!)
             GameManager.shared.timer = -3
+            
             broccoli.hit()
             }
             

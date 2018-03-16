@@ -60,10 +60,20 @@ class Fork: SKSpriteNode {
     
     func checkCollision () {
         
+        //Check collision with donuts
         for donut in GameManager.shared.spawnedDonuts {
-            guard let _ = donut.hitBox else { print ("sarei dovuto crashare a causa della ciambellina piccola"); return}
-            if rectInCircle(rect: self.hitBox!, circle: donut.hitBox!){
+            guard let donutHitBox = donut.hitBox, let forkHitBox = self.hitBox else { print ("Fork.checkCollision: didn't find one of the two hitbox in a donut-collision\n"); return}
+            if rectInCircle(rect: forkHitBox, circle: donutHitBox){
                 donut.hit()
+                destroyThisFork()
+            }
+        }
+        
+        for broccoli in GameManager.shared.spawnedDonuts {
+            guard let broccoliHitBox = broccoli.hitBox,let forkHitBox = self.hitBox else {print("Fork.checkCollision: didn't find one of the two hitbox in a broccoli-collision\n");return}
+            
+            if rectInCircle(rect: forkHitBox, circle: broccoliHitBox){
+                broccoli.hit()
                 destroyThisFork()
             }
         }
@@ -72,12 +82,8 @@ class Fork: SKSpriteNode {
     
     func destroyThisFork() {
         self.removeFromParent()
-        guard let indexFork = GameManager.shared.spawnedForks.index(of: self) else {
-            
-            print ("no fork found in spawned!")
-            return
-            
-        }
+        
+        guard let indexFork = GameManager.shared.spawnedForks.index(of: self) else {print("Fork.destroyThisFork: this fork was already destroyed.\n") ;return}
         
         GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: indexFork))
         if self.debug {self.debugHitBox?.removeFromParent()}
@@ -88,8 +94,8 @@ class Fork: SKSpriteNode {
         
         if self.position.y + SpriteSize.fork.height/2 >= (gameScene?.frame.height)! {
             self.removeFromParent()
-            let index = GameManager.shared.spawnedForks.index(of: self)
-            GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index!))
+            guard let index = GameManager.shared.spawnedForks.index(of: self) else {print("Fork.updateMovement: this fork wasn't in 'spawnedForks' array.\n");return}
+            GameManager.shared.availableForks.append(GameManager.shared.spawnedForks.remove(at: index))
             
             if debug {debugHitBox?.removeFromParent()}
           
@@ -102,12 +108,14 @@ class Fork: SKSpriteNode {
     }
     
     func updateHitBox () {
-        hitBox!.x = position.x
-        hitBox!.y = position.y
+        guard var _hitBox = self.hitBox else {print("Fork.updateHitbox: didn't find hitBox.\n"); return}
+        _hitBox.x = position.x
+        _hitBox.y = position.y
         
         if debug {
-            debugHitBox!.position.x = hitBox!.x
-            debugHitBox!.position.y = hitBox!.y
+            guard let _debugHitbox = self.debugHitBox else {print("Fork.updateHitbox: didn't find debugHitBox.\n");return}
+            _debugHitbox.position.x = _hitBox.x
+            _debugHitbox.position.y = _hitBox.y
         }
     }
     

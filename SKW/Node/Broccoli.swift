@@ -89,13 +89,14 @@ class Broccoli: SKSpriteNode {
     
     func updateHitBox () {
         
-        guard let _ = hitBox else{return}
-        hitBox!.x = position.x
-        hitBox!.y = position.y
+        guard var _hitBox = hitBox else{print("Broccoli.updateHitBox: didn't find hitBox.\n");return}
+        _hitBox.x = position.x
+        _hitBox.y = position.y
         
         if debug {
-            debugHitBox?.position.x = hitBox!.x
-            debugHitBox?.position.y = hitBox!.y
+            guard let _debugHitBox = debugHitBox else {print("Broccoli.updateHitBox: didn't find debugHitBox.\n");return}
+            _debugHitBox.position.x = position.x
+            _debugHitBox.position.y = position.y
         }
         
     }
@@ -103,13 +104,13 @@ class Broccoli: SKSpriteNode {
     func hit(){
         
         self.removeFromParent()
-        let index = GameManager.shared.spawnedBroccoli.index(of: self)
+        guard let index = GameManager.shared.spawnedBroccoli.index(of: self) else{print("Broccoli.hit: this broccoli was already removed from 'spawnedBroccoli' array");return}
         
         hitBox = nil
         if debug {
             self.debugHitBox?.removeFromParent()
         }
-        GameManager.shared.availableBroccoli.append(GameManager.shared.spawnedBroccoli.remove(at: index!))
+        GameManager.shared.availableBroccoli.append(GameManager.shared.spawnedBroccoli.remove(at: index))
         
 
     }

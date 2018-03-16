@@ -146,22 +146,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         perna.update(deltaTime: deltaTime)
-        debugHitBox?.position.x = perna.hitBox!.x
-        debugHitBox?.position.y = perna.hitBox!.y
         
-        
+    
     }
     
    
     func startOverdose () {
+        
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))
         overdoseStarted = true
         rushStarted = false
         rushCount = 0
+        
     }
     
     func endOverdose () {
+        
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "background"))
+        
     }
     func spawnDonut(deltaTime: TimeInterval) {
         
