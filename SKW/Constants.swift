@@ -27,6 +27,7 @@ enum Z {
     static let player: CGFloat = 10.0
     static let HUD: CGFloat = 100.0
     static let fork: CGFloat = 5.0
+    static let tapisRoulant: CGFloat = 6.0
 }
 
 enum SpriteSize {
