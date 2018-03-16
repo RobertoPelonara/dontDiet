@@ -22,7 +22,7 @@ class Donut: SKSpriteNode {
     let velocity: CGFloat = 60
     
     //counter per rimbalzi piccole
-    var counter: Int = 0
+    var bounceCounter: Int = 0
     
     //animazione minidonut
     let pulseWhite = SKAction.sequence([
@@ -51,6 +51,8 @@ class Donut: SKSpriteNode {
         
         self.gameScene = gameScene
         self.type = type
+        self.color = .clear
+        self.bounceCounter = 0
         
         if type == .big {bigDonutSetup()}
         if type == .mediumLeft || type == .mediumRight {mediumDonutSetup(spawnPosition!)}
@@ -70,8 +72,9 @@ class Donut: SKSpriteNode {
     func bigDonutSetup() {
         let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allBigDonutsTextures.count)))
         self.texture = GameManager.shared.allBigDonutsTextures[rand]
-        self.color = .clear
         self.size = SpriteSize.donutBig
+        
+        self.currForce.y = 0
         
         hitBox = Circle(x: position.x, y: position.y, radius: SpriteSize.donutBig.width/2)
         
@@ -86,7 +89,6 @@ class Donut: SKSpriteNode {
     func mediumDonutSetup(_ spawnPosition: CGPoint) {
         let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allMediumDonutsTextures.count)))
         self.texture = GameManager.shared.allMediumDonutsTextures[rand]
-        self.color = .clear
         self.size = SpriteSize.donutMid
         
         self.position = spawnPosition
@@ -105,7 +107,6 @@ class Donut: SKSpriteNode {
     func smallDonutSetup(_ spawnPosition: CGPoint) {
         let rand = Int(arc4random_uniform(UInt32(GameManager.shared.allSmallDonutsTextures.count)))
         self.texture = GameManager.shared.allSmallDonutsTextures[rand]
-        self.color = .clear
         self.size = SpriteSize.donutSmall
         
         self.position = spawnPosition
@@ -157,8 +158,7 @@ class Donut: SKSpriteNode {
             currForce.y = reflectParameter!
             positionAsVector.y = GameManager.shared.groundY + (hitBox?.r)!
             if self.type == .smallLeft || self.type == .smallRight {
-                if self.counter < 2 {counter += 1} else {
-                    self.counter = 0
+                if self.bounceCounter < 2 {bounceCounter += 1} else {
                     hitBox = nil
                     self.zRotation = 0
                     if debug {debugHitBox?.removeFromParent()}
