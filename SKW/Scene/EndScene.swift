@@ -30,7 +30,6 @@ class EndScene: SKScene {
     scoreLabel.fontSize = 40
     scoreLabel.fontColor = .black
     scoreLabel.text = "You gained \(GameManager.shared.score) calories"
-    print(GameManager.shared.score)
     scoreLabel.position = CGPoint(x: gameLabel.position.x , y: gameLabel.position.y - 100)
     addChild(scoreLabel)
     
@@ -38,7 +37,6 @@ class EndScene: SKScene {
     recordLabel.fontSize = 40
     recordLabel.fontColor = .black
     recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
-    print(GameManager.shared.score)
     recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - 30)
     addChild(recordLabel)
     

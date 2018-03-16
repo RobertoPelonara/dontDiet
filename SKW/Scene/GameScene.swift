@@ -20,9 +20,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deltaTime: TimeInterval = 0
     
     // Donut spawn Timer
-    var lastDonutTime: TimeInterval = 0
-    var timeFromLastDonut: TimeInterval = 0
-    var spawnInterval: TimeInterval = 2
+    var spawnDonutInterval: TimeInterval = 2
+    
+    // Broccoli spawn Timer
+    var spawnBroccoliInterval: TimeInterval = 15
+    
+    
     
     // Special
     var donut: Donut? = nil
@@ -124,6 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Random spawn
         spawnDonut(deltaTime: deltaTime)
+        spawnBroccoli(deltaTime: deltaTime)
         
         // Set last frame time to current time
         lastTime = currentTime
@@ -135,6 +139,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         for fork in GameManager.shared.spawnedForks {
             fork.update(deltaTime: deltaTime)
+        }
+        
+        for broccoli in GameManager.shared.spawnedBroccoli {
+            broccoli.update(deltaTime: deltaTime)
         }
         
         perna.update(deltaTime: deltaTime)
@@ -157,27 +165,52 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     func spawnDonut(deltaTime: TimeInterval) {
         
-        spawnInterval -= deltaTime
+        spawnDonutInterval -= deltaTime
         
-        if spawnInterval <= 0 {
+        if spawnDonutInterval <= 0 {
             
-            let percentuale = arc4random_uniform(101)
-            if percentuale <= 90 {
+            let donut = GameManager.shared.getDonut()
+            
+            donut.setup(.big,gameScene: self)
+            
+            if GameManager.shared.score >= 3000 {
                 
-                let donut = GameManager.shared.getDonut()
-                
-                donut.setup(.big,gameScene: self)
+                spawnDonutInterval = TimeInterval(Double(arc4random_uniform(301)) + (1.5 * 100)) / 100
                 
             } else {
                 
-                //SPAWNA BROCCOLO
+                let spawnTime = (-3.5 * Double(GameManager.shared.score) + 15000.0)/3000.0
+                
+                spawnDonutInterval = TimeInterval(Double(arc4random_uniform(301)) + (spawnTime * 100)) / 100
+            
                 
             }
             
-            let spawnTime = (-3.5 * Double(GameManager.shared.score) + 15000.0)/3000.0
-            spawnInterval = TimeInterval(Double(arc4random_uniform(301)) + (spawnTime * 100)) / 100
-            print(spawnInterval)
+        }
+        
+    }
+    
+    func spawnBroccoli(deltaTime: TimeInterval) {
+        
+        spawnBroccoliInterval -= deltaTime
+        
+        if spawnBroccoliInterval <= 0 {
             
+            let broccoli = GameManager.shared.getBroccoli()
+            
+            broccoli.setup(gameScene: self)
+            
+            if GameManager.shared.score >= 3000 {
+    
+                  spawnBroccoliInterval = TimeInterval(Double(arc4random_uniform(1001)) + (5 * 100)) / 100
+                
+            } else{
+                
+                let spawnTime = (-15 * Double(GameManager.shared.score) + 60000.0)/3000.0
+                spawnBroccoliInterval = TimeInterval(Double(arc4random_uniform(1001)) + (spawnTime * 100)) / 100
+                
+            }
+
             
         }
         

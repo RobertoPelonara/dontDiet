@@ -170,6 +170,7 @@ class Player: SKSpriteNode {
         updateMoveAndAnim(deltaTime)
         updateHitBox()
         checkCollisionWithDonuts()
+        checkCollisionWithBroccoli()
         
     }
     
@@ -217,6 +218,20 @@ class Player: SKSpriteNode {
                 
                 donut.hit()
             }
+        }
+    }
+    
+    func checkCollisionWithBroccoli(){
+        for broccoli in GameManager.shared.spawnedBroccoli {
+            
+            guard let _ = self.hitBox else {return}
+            if rectInCircle(rect: self.hitBox!, circle: broccoli.hitBox!){
+            
+            GameManager.shared.timer = -3
+            broccoli.hit()
+            }
+            
+           
         }
     }
     
@@ -295,7 +310,7 @@ class Player: SKSpriteNode {
     func setFatLevel(_ type: FatState) {
         self.fatState = type
         
-        print("prima gamba: \(legRNode?.position)")
+        
         switch type {
         case .fat:
             self.run((fatIdle!), withKey: "runAnim")
@@ -314,7 +329,7 @@ class Player: SKSpriteNode {
             legRNode?.position = CGPoint(x: 3, y: -12)
             legLNode?.position = CGPoint(x: 3, y: -12)
         }
-        print("dopo gamba: \(legRNode?.position)")
+       
     }
     
     // Swift requires this initializer

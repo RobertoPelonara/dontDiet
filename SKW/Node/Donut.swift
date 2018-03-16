@@ -233,8 +233,8 @@ class Donut: SKSpriteNode {
         hitBox!.y = position.y
         
         if debug {
-            debugHitBox!.position.x = hitBox!.x
-            debugHitBox!.position.y = hitBox!.y
+            debugHitBox!.position.x = position.x
+            debugHitBox!.position.y = position.y
         }
     }
     

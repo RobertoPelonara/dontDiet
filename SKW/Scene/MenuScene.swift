@@ -52,6 +52,7 @@ class MenuScene: SKScene {
     
     GameManager.shared.initializeForks()
     GameManager.shared.initializeDonuts()
+    GameManager.shared.initializeBroccoli()
     let idle = Player()
     idle.position = CGPoint(x: size.width/2 , y:size.height/6)
     idle.zPosition = Z.player
