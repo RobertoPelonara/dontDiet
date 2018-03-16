@@ -43,8 +43,8 @@ enum SpriteSize {
     static let fork = CGSize(width: 15, height: 777)
     static let tapisRoulant = CGSize(width:667,height:36)
     static let donutBig = CGSize(width: 60, height: 60)
-    static let donutMid = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.medium), height: (SpriteSize.donutBig.height * DonutConstants.scale.medium))
-    static let donutSmall = CGSize(width: (SpriteSize.donutBig.width * DonutConstants.scale.small), height: (SpriteSize.donutBig.height * DonutConstants.scale.small))
+    static let donutMid = CGSize(width: 45, height: 45)
+    static let donutSmall = CGSize(width: 24, height: 24)
     
 }
 
@@ -92,5 +92,18 @@ enum DonutConstants {
 enum DeathReason {
     case outOfTime
     case hit
+}
+
+enum DestroyDonutsActions {
+    static func removeFromParentAction(donut: Donut) -> SKAction {
+        let action = SKAction.run {
+            donut.removeFromParent()
+            let index = GameManager.shared.spawnedDonuts.index(of: donut)
+            GameManager.shared.availableDonuts.append(GameManager.shared.spawnedDonuts.remove(at: index!))
+        }
+        
+        return action
+    }
+    static let pinkDonuts = SKAction.animate(with: GameManager.shared.allSmallPinkDonutsBreakTextures, timePerFrame: 0.02)
 }
 

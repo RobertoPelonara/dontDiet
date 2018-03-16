@@ -28,10 +28,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return playerAtlas.textureNamed($0)
     }
     
-    GameManager.shared.allDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("Donut")
+    GameManager.shared.allBigDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("donut_big")
     }
-    
+    GameManager.shared.allMediumDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("donut_medium")
+    }
+    GameManager.shared.allSmallDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("donut_small")
+    }
+    GameManager.shared.allSmallPinkDonutsBreakTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("donut_breaks_pink")
+    }
    
     return true
   }

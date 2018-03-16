@@ -188,7 +188,8 @@ class Player: SKSpriteNode {
     func checkCollisionWithDonuts () {
         
         for donut in GameManager.shared.spawnedDonuts {
-            if rectInCircle(rect: hitBox!, circle: donut.hitBox!){
+            guard let donutBox = donut.hitBox else {return}
+            if rectInCircle(rect: hitBox!, circle: donutBox){
                 
                 var shouldDie = false
                 switch donut.type!{

@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var defaultRushTimer = 5.0
     var rushTimer = 5.0
     var rushCount = 0
-    var donutToOverdose = 5
+    var donutToOverdose = 3
     var defaultOverdoseTimer = 7.0
     var overdoseTimer = 7.0
     var overdoseStarted = false
@@ -70,6 +70,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(background!)
         
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
+            
         perna.setup(view: self.view!,gameScene:self)
         
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
@@ -81,6 +82,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tapisRoulant.run(tapisRoulantAnimation!)
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
+        
+        GameManager.shared.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
         
     }
     
