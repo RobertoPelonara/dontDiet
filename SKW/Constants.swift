@@ -40,7 +40,7 @@ enum SpriteSize {
     static let button = CGSize(width: 50, height: 50)
     static let statusBar = CGSize(width: 118, height: 31)
     static let statusBarBackground = CGSize(width: 122, height: 35)
-    static let broccoli = CGSize(width: 21, height: 28)
+    static let broccoli = CGSize(width: 45, height: 60)
     static let fork = CGSize(width: 15, height: 777)
     static let tapisRoulant = CGSize(width:667,height:36)
     static let donutBig = CGSize(width: 60, height: 60)
