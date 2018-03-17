@@ -55,10 +55,21 @@ class Fork: SKSpriteNode {
         
         updateMovement(deltaTime: deltaTime)
         updateHitBox()
-        checkCollision()
+        checkCollisionWithDonuts()
+        checkCollisionWithBroccoli()
+        
     }
-    
-    func checkCollision () {
+    func checkCollisionWithBroccoli() {
+        for broccoli in GameManager.shared.spawnedBroccoli {
+            guard let broccoliHitBox = broccoli.hitBox,let forkHitBox = self.hitBox else {print("Fork.checkCollision: didn't find one of the two hitbox in a broccoli-collision\n");return}
+            
+            if rectInCircle(rect: forkHitBox, circle: broccoliHitBox){
+                broccoli.hit()
+                destroyThisFork()
+            }
+        }
+    }
+    func checkCollisionWithDonuts () {
         
         //Check collision with donuts
         for donut in GameManager.shared.spawnedDonuts {
@@ -68,16 +79,6 @@ class Fork: SKSpriteNode {
                 destroyThisFork()
             }
         }
-        
-        for broccoli in GameManager.shared.spawnedDonuts {
-            guard let broccoliHitBox = broccoli.hitBox,let forkHitBox = self.hitBox else {print("Fork.checkCollision: didn't find one of the two hitbox in a broccoli-collision\n");return}
-            
-            if rectInCircle(rect: forkHitBox, circle: broccoliHitBox){
-                broccoli.hit()
-                destroyThisFork()
-            }
-        }
-        
     }
     
     func destroyThisFork() {
@@ -108,15 +109,15 @@ class Fork: SKSpriteNode {
     }
     
     func updateHitBox () {
-        guard var _hitBox = self.hitBox else {print("Fork.updateHitbox: didn't find hitBox.\n"); return}
-        _hitBox.x = position.x
-        _hitBox.y = position.y
-        
+        guard let _ = hitBox else {print("Fork.updateHitBox: didn't find hitBox\n");return}
+        hitBox!.x = position.x
+        hitBox!.y = position.y
         if debug {
-            guard let _debugHitbox = self.debugHitBox else {print("Fork.updateHitbox: didn't find debugHitBox.\n");return}
-            _debugHitbox.position.x = _hitBox.x
-            _debugHitbox.position.y = _hitBox.y
+            guard let _ = debugHitBox else {print("Fork.updateHitBox: didn't find debugHitBox\n"); return}
+            debugHitBox!.position.x = hitBox!.x
+            debugHitBox!.position.y = hitBox!.y
         }
+        
     }
     
 }

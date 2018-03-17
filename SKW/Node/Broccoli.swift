@@ -88,15 +88,13 @@ class Broccoli: SKSpriteNode {
     }
     
     func updateHitBox () {
-        
-        guard var _hitBox = hitBox else{print("Broccoli.updateHitBox: didn't find hitBox.\n");return}
-        _hitBox.x = position.x
-        _hitBox.y = position.y
-        
+        guard let _ = hitBox else {print("Broccoli.updateHitBox: didn't find hitBox\n");return}
+        hitBox!.x = position.x
+        hitBox!.y = position.y
         if debug {
-            guard let _debugHitBox = debugHitBox else {print("Broccoli.updateHitBox: didn't find debugHitBox.\n");return}
-            _debugHitBox.position.x = position.x
-            _debugHitBox.position.y = position.y
+            guard let _ = debugHitBox else {print("Broccoli.updateHitBox: didn't find debugHitBox\n"); return}
+            debugHitBox!.position.x = hitBox!.x
+            debugHitBox!.position.y = hitBox!.y
         }
         
     }
