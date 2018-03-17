@@ -46,6 +46,9 @@ enum SpriteSize {
     static let donutBig = CGSize(width: 60, height: 60)
     static let donutMid = CGSize(width: 45, height: 45)
     static let donutSmall = CGSize(width: 24, height: 24)
+    static let donutAuraBig = CGSize(width: 68, height: 68)
+    static let donutAuraMid = CGSize(width: 53, height: 53)
+    static let donutAuraSmall = CGSize(width: 32, height: 32)
     
 }
 
@@ -95,7 +98,7 @@ enum DeathReason {
     case hit
 }
 
-enum DestroyDonutsActions {
+enum DonutsActions {
     static func removeFromParentAction(donut: Donut) -> SKAction {
         let action = SKAction.run {
             donut.removeFromParent()
@@ -106,5 +109,8 @@ enum DestroyDonutsActions {
         return action
     }
     static let pinkDonuts = SKAction.animate(with: GameManager.shared.allSmallPinkDonutsBreakTextures, timePerFrame: 0.02)
+    static let smallAuraAnim = SKAction.repeatForever(SKAction.animate(with: GameManager.shared.allSmallDonutsAuraTextures, timePerFrame: 0.05))
+    static let midAuraAnim = SKAction.repeatForever(SKAction.animate(with: GameManager.shared.allMidDonutsAuraTextures, timePerFrame: 0.05))
+    static let bigAuraAnim = SKAction.repeatForever(SKAction.animate(with: GameManager.shared.allBigDonutsAuraTextures, timePerFrame: 0.05))
 }
 

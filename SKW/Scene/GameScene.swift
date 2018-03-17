@@ -37,15 +37,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialTouch: CGPoint = CGPoint.zero
     
     //Overdose
-    var rushStarted = false
     var defaultRushTimer = 5.0
     var rushTimer = 5.0
     var rushCount = 0
     var donutToOverdose = 3
     var defaultOverdoseTimer = 7.0
     var overdoseTimer = 7.0
-    var overdoseStarted = false
-    
     
     //HUD
     var hud = HUD()
@@ -106,18 +103,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         deltaTime = currentTime - lastTime
        
         
-        if rushStarted {
+        if GameManager.shared.rushStarted {
             rushTimer -= deltaTime
             if rushTimer <= 0 {
-                rushStarted = false
+                GameManager.shared.rushStarted = false
                 rushTimer = defaultRushTimer
                 rushCount = 0
             }
         }
-        if overdoseStarted {
+        if GameManager.shared.overdoseStarted {
             overdoseTimer -= deltaTime
             if overdoseTimer <= 0 {
-                overdoseStarted = false
+                GameManager.shared.overdoseStarted = false
                 overdoseTimer = defaultOverdoseTimer
                 endOverdose()
             }
@@ -154,9 +151,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func startOverdose () {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))
-        overdoseStarted = true
-        rushStarted = false
+        GameManager.shared.overdoseStarted = true
+        GameManager.shared.rushStarted = false
         rushCount = 0
+        
+        for donut in GameManager.shared.spawnedDonuts {
+            if donut.type == .big {
+                donut.auraNode?.run(DonutsActions.bigAuraAnim)
+            } else if donut.type == .mediumLeft || donut.type == .mediumRight {
+                donut.auraNode?.run(DonutsActions.midAuraAnim)
+            }
+        }
         
     }
     
@@ -164,7 +169,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "background"))
         
+        for donut in GameManager.shared.spawnedDonuts {
+            if donut.type != .smallLeft && donut.type != .smallRight {
+                donut.auraNode?.removeAllActions()
+                donut.auraNode?.texture = nil
+            }
+        }
+        
     }
+    
     func spawnDonut(deltaTime: TimeInterval) {
         
         spawnDonutInterval -= deltaTime

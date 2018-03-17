@@ -24,11 +24,8 @@ class Donut: SKSpriteNode {
     //counter per rimbalzi piccole
     var bounceCounter: Int = 0
     
-    //animazione minidonut
-    let pulseWhite = SKAction.sequence([
-        SKAction.colorize(with: SKColor.green, colorBlendFactor: 1.0, duration: 0.2),
-        SKAction.wait(forDuration: 0.2),
-        SKAction.colorize(withColorBlendFactor: 0.0, duration: 0.2)])
+    //aura node
+    var auraNode: SKSpriteNode?
     
     enum DonutType {
         case big
@@ -45,9 +42,16 @@ class Donut: SKSpriteNode {
     
     init() {
         super.init(texture: nil, color: .clear, size: .zero)
+        
+        let node = SKSpriteNode.init(texture: nil, color: .clear, size: .zero)
+        auraNode = node
+        auraNode!.zPosition = -0.001
+        addChild(auraNode!)
     }
     
     func setup (_ type: DonutType, gameScene: SKScene, spawnPosition: CGPoint? = nil) {
+        auraNode?.removeAllActions()
+        auraNode?.texture = nil
         
         self.gameScene = gameScene
         self.type = type
@@ -80,8 +84,12 @@ class Donut: SKSpriteNode {
         
         reflectParameter = DonutConstants.Reflect.big
         xParameter = DonutConstants.XMovement.big
-        
         self.position = self.randomPositionSpawn()
+        
+        auraNode?.size = SpriteSize.donutAuraBig
+        if GameManager.shared.overdoseStarted == true {
+            auraNode?.run(DonutsActions.bigAuraAnim)
+        }
         
         gameScene?.addChild(self)
     }
@@ -101,6 +109,11 @@ class Donut: SKSpriteNode {
         self.currForce.y = DonutConstants.startingForce.medium
         self.xParameter = self.type == .mediumLeft ? -DonutConstants.XMovement.medium : DonutConstants.XMovement.medium
         
+        auraNode?.size = SpriteSize.donutAuraMid
+        if GameManager.shared.overdoseStarted == true {
+            auraNode?.run(DonutsActions.midAuraAnim)
+        }
+        
         self.gameScene?.addChild(self)
     }
     
@@ -119,9 +132,10 @@ class Donut: SKSpriteNode {
         self.currForce.y = DonutConstants.startingForce.small
         self.xParameter = self.type == .smallLeft ? -DonutConstants.XMovement.small : DonutConstants.XMovement.small
         
-        self.gameScene?.addChild(self)
+        auraNode?.size = SpriteSize.donutAuraSmall
+        auraNode?.run(DonutsActions.smallAuraAnim)
         
-        self.run(SKAction.sequence([pulseWhite, pulseWhite, pulseWhite]))
+        self.gameScene?.addChild(self)
     }
     
     func randomPositionSpawn() -> CGPoint {
@@ -165,8 +179,10 @@ class Donut: SKSpriteNode {
                 if self.bounceCounter < 2 {bounceCounter += 1} else {
                     hitBox = nil
                     self.zRotation = 0
+                    auraNode?.removeAllActions()
+                    auraNode?.texture = nil
                     if debug {debugHitBox?.removeFromParent()}
-                    self.run(SKAction.sequence([DestroyDonutsActions.pinkDonuts, DestroyDonutsActions.removeFromParentAction(donut: self)]))
+                    self.run(SKAction.sequence([DonutsActions.pinkDonuts, DonutsActions.removeFromParentAction(donut: self)]))
                 }
             }
         }

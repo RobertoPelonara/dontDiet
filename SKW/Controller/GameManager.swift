@@ -55,11 +55,17 @@ class GameManager {
     var allMediumDonutsTextures: [SKTexture] = []
     var allSmallDonutsTextures: [SKTexture] = []
     var allSmallPinkDonutsBreakTextures: [SKTexture] = []
-    
+    var allSmallDonutsAuraTextures: [SKTexture] = []
+    var allMidDonutsAuraTextures: [SKTexture] = []
+    var allBigDonutsAuraTextures: [SKTexture] = []
     
     // Donuts
     var spawnedDonuts: [Donut] = []
     var spawnedForks: [Fork] = []
+    
+    //Flags
+    var overdoseStarted = false
+    var rushStarted = false
     
     //Broccoli
     var spawnedBroccoli: [Broccoli] = []
@@ -184,8 +190,8 @@ class GameManager {
     func addScore () {
         score += Scores.bonus
         gameScene!.run(self.eatSound)
-        if !gameScene!.overdoseStarted{
-        gameScene!.rushStarted = true
+        if !GameManager.shared.overdoseStarted{
+        GameManager.shared.rushStarted = true
         gameScene!.rushCount += 1
         if gameScene!.rushCount >= gameScene!.donutToOverdose {
             gameScene!.startOverdose()

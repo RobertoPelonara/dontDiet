@@ -207,7 +207,7 @@ class Player: SKSpriteNode {
                 case .smallRight:
                     break
                 }
-                if shouldDie && !(gameScene as! GameScene).overdoseStarted{
+                if shouldDie && !GameManager.shared.overdoseStarted {
 
                     GameManager.shared.gameOver( .hit)
                     removeFromParent()
