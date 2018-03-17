@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 
-struct Circle {
+class Circle {
     var x: CGFloat
     var y: CGFloat
     var r: CGFloat
@@ -21,11 +21,18 @@ struct Circle {
     }
 }
 
-struct Rect {
+class Rect {
     var x: CGFloat
     var y: CGFloat
     var height: CGFloat
     var width: CGFloat
+    
+    init(x:CGFloat, y: CGFloat, height: CGFloat, width:CGFloat){
+        self.x = x
+        self.y = y
+        self.height = height
+        self.width = width
+    }
     
 }
 

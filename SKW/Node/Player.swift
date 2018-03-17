@@ -177,13 +177,13 @@ class Player: SKSpriteNode {
     }
     
     func updateHitBox () {
-        guard let _ = hitBox else {print("Player.updateHitBox: didn't find hitBox\n");return}
-        hitBox!.x = position.x
-        hitBox!.y = position.y - 5
+        guard let _hitBox = hitBox else {print("Player.updateHitBox: didn't find hitBox\n");return}
+        _hitBox.x = position.x
+        _hitBox.y = position.y - 5
         if debug {
-            guard let _ = debugHitBox else {print("Player.updateHitBox: didn't find debugHitBox\n"); return}
-            debugHitBox!.position.x = hitBox!.x
-            debugHitBox!.position.y = hitBox!.y - 5
+            guard let _debugHitBox = debugHitBox else {print("Player.updateHitBox: didn't find debugHitBox\n"); return}
+            _debugHitBox.position.x = _hitBox.x
+            _debugHitBox.position.y = _hitBox.y - 5
         }
         
     }
