@@ -83,8 +83,8 @@ enum DonutConstants {
         static let small: CGFloat = 3
     }
     enum startingForce {
-        static let medium: CGFloat = 5
-        static let small: CGFloat = 5
+        static let medium: CGFloat = 7
+        static let small: CGFloat = 6
     }
     enum scale {
         static let medium: CGFloat = 0.75
