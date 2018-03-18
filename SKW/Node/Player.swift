@@ -21,6 +21,10 @@ class Player: SKSpriteNode {
     var textureThrowNormal: [SKTexture] = []
     var textureThrowSlim: [SKTexture] = []
     var textureThrowXS: [SKTexture] = []
+    var textureDeath: [SKTexture] = []
+    
+    //game over force
+    var currentForceY: CGFloat = 8
     
     //Sounds
     var throwSound: SKAction?
@@ -84,6 +88,7 @@ class Player: SKSpriteNode {
         self.textureThrowNormal = GameManager.shared.allTextures.filter { $0.description.contains("fork_normal") }
         self.textureThrowSlim = GameManager.shared.allTextures.filter { $0.description.contains("fork_slim") }
         self.textureThrowXS = GameManager.shared.allTextures.filter { $0.description.contains("fork_XS") }
+        self.textureDeath = GameManager.shared.allTextures.filter { $0.description.contains("death") }
         
         self.fatIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkFat, timePerFrame: 0.07))
         self.normalIdle = SKAction.repeatForever(SKAction.animate(with: textureWalkNormal, timePerFrame: 0.07))
@@ -208,9 +213,9 @@ class Player: SKSpriteNode {
                     break
                 }
                 if shouldDie && !GameManager.shared.overdoseStarted {
-
-                    GameManager.shared.gameOver( .hit)
-                    removeFromParent()
+                    
+                    removeAllChildren()
+                    GameManager.shared.gameOverStart( .hit)
                     hitBox = nil
                     
                     return
@@ -250,41 +255,47 @@ class Player: SKSpriteNode {
         case .slim:
             if GameManager.shared.timer > FatTimer.slimThreshold {self.setFatLevel(.normal)} else if GameManager.shared.timer <= FatTimer.xsThreshold {self.setFatLevel(.xs)}
         case .xs:
-            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {GameManager.shared.gameOver(.outOfTime)}
+            if GameManager.shared.timer > FatTimer.xsThreshold {self.setFatLevel(.slim)} else if GameManager.shared.timer <= 0 {GameManager.shared.gameOverStart(.outOfTime)}
         }
     }
     
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
-        
-        guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
-        let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
-        
-        let orientation: CGFloat = yDeviceGravity >= 0 ? 1.0 : -1.0
-        let deltaMove = velocity * CGFloat(pow((fabs(yDeviceGravity) - 0.030), 1/1.5)) * CGFloat(deltaTime) * deviceOrientation
-        
-        /*
-         "deltaAnim" è il coefficiente che ogni frame attribuiamo alla velocità delle animazioni del personaggio per renderla proporzionale al deltaMove. C'è bisogno di sapere se il device è orientato in landscape right o left altrimenti ruotando il device l'animazione rallenta/si velocizza "al contrario", e tutti i calcoli son stati fatti per restituire valori MAI uguali o minori di 0 (altrimenti l'animazione si ferma del tutto). La logica dietro l'if/else sta nel permettere alla velocità di cambiare inversamente a seconda dell'orientation del device.
-         
-         speedingFunc e slowingFunc ce le siam trovate matematicamente (geogebra)
-         */
-        
-        if fabs(yDeviceGravity) >= DeviceGravity.min {
+        if !GameManager.shared.gameIsEnding {
             
-            let speedingFunc = deviceOrientation == 1 ? CGFloat(0.8 + 2.2 * yDeviceGravity - pow(yDeviceGravity, 2)) : CGFloat(0.8 - 2.2 * yDeviceGravity - pow(yDeviceGravity, 2))
-            let slowingFunc = deviceOrientation == 1 ? CGFloat(0.8 + yDeviceGravity  + 0.5 * pow(yDeviceGravity, 2)) : CGFloat(0.8 - yDeviceGravity + 0.5 * pow(yDeviceGravity, 2))
+            guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
+            let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
             
-            let deltaAnim: CGFloat = CGFloat(yDeviceGravity) * deviceOrientation >= 0 ? speedingFunc : slowingFunc
+            let orientation: CGFloat = yDeviceGravity >= 0 ? 1.0 : -1.0
+            let deltaMove = velocity * CGFloat(pow((fabs(yDeviceGravity) - 0.030), 1/1.5)) * CGFloat(deltaTime) * deviceOrientation
             
-            //            print("orientation: \(deviceOrientation)")
-            //            print("delta anim: \(deltaAnim)")
-            //            print("gravity: \(yDeviceGravity)\n")
-            position.x += orientation * deltaMove
-            (legRNode?.action(forKey: "runAnim"))?.speed = deltaAnim
-            (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim
-            self.action(forKey: "runAnim")?.speed = deltaAnim
+            /*
+             "deltaAnim" è il coefficiente che ogni frame attribuiamo alla velocità delle animazioni del personaggio per renderla proporzionale al deltaMove. C'è bisogno di sapere se il device è orientato in landscape right o left altrimenti ruotando il device l'animazione rallenta/si velocizza "al contrario", e tutti i calcoli son stati fatti per restituire valori MAI uguali o minori di 0 (altrimenti l'animazione si ferma del tutto). La logica dietro l'if/else sta nel permettere alla velocità di cambiare inversamente a seconda dell'orientation del device.
+             
+             speedingFunc e slowingFunc ce le siam trovate matematicamente (geogebra)
+             */
+            
+            if fabs(yDeviceGravity) >= DeviceGravity.min {
+                
+                let speedingFunc = deviceOrientation == 1 ? CGFloat(0.8 + 2.2 * yDeviceGravity - pow(yDeviceGravity, 2)) : CGFloat(0.8 - 2.2 * yDeviceGravity - pow(yDeviceGravity, 2))
+                let slowingFunc = deviceOrientation == 1 ? CGFloat(0.8 + yDeviceGravity  + 0.5 * pow(yDeviceGravity, 2)) : CGFloat(0.8 - yDeviceGravity + 0.5 * pow(yDeviceGravity, 2))
+                
+                let deltaAnim: CGFloat = CGFloat(yDeviceGravity) * deviceOrientation >= 0 ? speedingFunc : slowingFunc
+                
+                //            print("orientation: \(deviceOrientation)")
+                //            print("delta anim: \(deltaAnim)")
+                //            print("gravity: \(yDeviceGravity)\n")
+                position.x += orientation * deltaMove
+                (legRNode?.action(forKey: "runAnim"))?.speed = deltaAnim
+                (legLNode?.action(forKey: "runAnim"))?.speed = deltaAnim
+                self.action(forKey: "runAnim")?.speed = deltaAnim
+            }
+            
+            self.checkFat()
+            
+        } else if !GameManager.shared.playerIsHit {
+            self.position.y += currentForceY
+            currentForceY += DonutConstants.gravity.y
         }
-        
-        self.checkFat()
     }
     
     func shootAnimation() -> SKAction {

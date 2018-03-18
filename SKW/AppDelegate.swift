@@ -49,6 +49,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GameManager.shared.allBigDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
         return texture.description.contains("aura_big")
     }
+    
+    //shared actions
+    GameManager.shared.sceneStop = SKAction.run {
+        GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
+        GameManager.shared.gameIsEnding = true
+        GameManager.shared.playerIsHit = true
+        GameManager.shared.gameScene?.perna.removeAllActions()
+        GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
+        GameManager.shared.gameScene?.perna.setScale(0.65)
+        GameManager.shared.gameScene?.perna.position.y -= 5
+        GameManager.shared.gameScene?.perna.texture = GameManager.shared.gameScene?.perna.textureDeath[0]
+    }
+    GameManager.shared.sceneResume = SKAction.run {
+        GameManager.shared.playerIsHit = false
+        GameManager.shared.gameScene?.perna.run(SKAction.repeatForever(SKAction.animate(with: (GameManager.shared.gameScene?.perna.textureDeath)!, timePerFrame: 0.1)))
+    }
+    GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)
+    GameManager.shared.gameOverSequence = SKAction.sequence([GameManager.shared.sceneStop, GameManager.shared.wait, GameManager.shared.sceneResume])
    
     return true
   }

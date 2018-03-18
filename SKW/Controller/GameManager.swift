@@ -69,6 +69,14 @@ class GameManager {
     var overdoseStarted = false
     var rushStarted = false
     var overdoseEnding = false
+    var gameIsEnding = false
+    var playerIsHit = false
+    
+    //Actions
+    var sceneResume = SKAction()
+    var sceneStop = SKAction()
+    var wait = SKAction()
+    var gameOverSequence = SKAction()
     
     //Broccoli
     var spawnedBroccoli: [Broccoli] = []
@@ -159,13 +167,20 @@ class GameManager {
         
     }
     
-    func gameOver (_ reason : DeathReason) {
-        guard let _gameViewController = gameViewController,
-        let _endScene = endScene,
-        let _gameScene = gameScene else {
-             return
-        }
+    func gameOverStart (_ reason : DeathReason) {
         deathReason = reason
+        
+        gameScene?.run(gameOverSequence)
+    }
+    
+    func gameOverEnd () {
+        self.gameIsEnding = false
+        
+        guard let _gameViewController = gameViewController,
+            let _endScene = endScene,
+            let _gameScene = gameScene else {
+                return
+        }
         
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970
@@ -177,13 +192,11 @@ class GameManager {
         spawnedForks.removeAll()
         spawnedDonuts.removeAll()
         _timer = FatTimer.maxValue
-        if score > (gameViewController?.highestScore)! {
-            gameViewController?.updateSavedScore(newScore: score)
-            gameViewController?.highestScore = score
+        if score > _gameViewController.highestScore {
+            _gameViewController.updateSavedScore(newScore: score)
+            _gameViewController.highestScore = score
         }
         _score = 0
-        
-
     }
     
     func addScore () {

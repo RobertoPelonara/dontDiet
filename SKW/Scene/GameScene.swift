@@ -25,7 +25,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Broccoli spawn Timer
     var spawnBroccoliInterval: TimeInterval = 15
     
-    
+    //tapis roulant node
+    var tapisRoulant = SKSpriteNode()
     
     // Special
     var donut: Donut? = nil
@@ -77,7 +78,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
 
         
-        let tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
+        tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
         tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
          self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
         tapisRoulant.run(tapisRoulantAnimation!)
@@ -106,55 +107,57 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Render Loop
     override func update(_ currentTime: TimeInterval) {
         
-        // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
-        if lastTime <= 0 { lastTime = currentTime }
-        
-        
-        // Update delta time
-        deltaTime = currentTime - lastTime
-       
-        
-        if GameManager.shared.rushStarted {
-            rushTimer -= deltaTime
-            if rushTimer <= 0 {
-                GameManager.shared.rushStarted = false
-                rushTimer = defaultRushTimer
-                rushCount = 0
+        if !GameManager.shared.gameIsEnding {
+            
+            // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
+            if lastTime <= 0 { lastTime = currentTime }
+            
+            // Update delta time
+            deltaTime = currentTime - lastTime
+            
+            if GameManager.shared.rushStarted {
+                rushTimer -= deltaTime
+                if rushTimer <= 0 {
+                    GameManager.shared.rushStarted = false
+                    rushTimer = defaultRushTimer
+                    rushCount = 0
+                }
             }
-        }
-        if GameManager.shared.overdoseStarted {
-            overdoseTimer -= deltaTime
-            if overdoseTimer <= 0 && !GameManager.shared.overdoseEnding {
-                GameManager.shared.overdoseEnding = true
-                background?.run(overdoseEndingSequence!)
+            if GameManager.shared.overdoseStarted {
+                overdoseTimer -= deltaTime
+                if overdoseTimer <= 0 && !GameManager.shared.overdoseEnding {
+                    GameManager.shared.overdoseEnding = true
+                    background?.run(overdoseEndingSequence!)
+                }
             }
-        }
-
-        GameManager.shared.timer = -deltaTime
-        
-        // Random spawn
-        spawnDonut(deltaTime: deltaTime)
-        spawnBroccoli(deltaTime: deltaTime)
-        
-        // Set last frame time to current time
-        lastTime = currentTime
-        
-//        print(GameManager.shared.spawnedDonuts.count)
-        for donut in GameManager.shared.spawnedDonuts {
-            donut.update(deltaTime: deltaTime)
-        }
-        
-        for fork in GameManager.shared.spawnedForks {
-            fork.update(deltaTime: deltaTime)
-        }
-        
-        for broccoli in GameManager.shared.spawnedBroccoli {
-            broccoli.update(deltaTime: deltaTime)
+            
+            GameManager.shared.timer = -deltaTime
+            
+            // Random spawn
+            spawnDonut(deltaTime: deltaTime)
+            spawnBroccoli(deltaTime: deltaTime)
+            
+            // Set last frame time to current time
+            lastTime = currentTime
+            
+            for donut in GameManager.shared.spawnedDonuts {
+                donut.update(deltaTime: deltaTime)
+            }
+            for fork in GameManager.shared.spawnedForks {
+                fork.update(deltaTime: deltaTime)
+            }
+            for broccoli in GameManager.shared.spawnedBroccoli {
+                broccoli.update(deltaTime: deltaTime)
+            }
+            
+        } else {
+            if perna.position.y < -SpriteSize.player.height {
+                GameManager.shared.gameOverEnd()
+            }
         }
         
         perna.update(deltaTime: deltaTime)
         
-    
     }
     
    

@@ -20,6 +20,7 @@ enum AnimationSpeeds {
     static let legsMaxSpeed: CGFloat = 0.07
     static let bodyMinSpeedScale: CGFloat = 0.64
     static let legsMinSpeedScale: CGFloat = 0.7
+    static let deathAnimationWaitTime: TimeInterval = 0.75
 }
 
 enum Z {
@@ -34,6 +35,7 @@ enum SpriteSize {
     
     static let playerHitBox = CGSize(width: 19, height: 48)
     static let player = CGSize(width: 64, height: 64)
+    static let playerDying = CGSize(width: 64, height: 73)
     static let enemy = CGSize(width: 30, height: 30)
     static let bullet = CGSize(width: 10, height: 10)
     static let mushroom = CGSize(width: 20, height: 20)
