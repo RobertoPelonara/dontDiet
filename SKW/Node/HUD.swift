@@ -72,7 +72,7 @@ class HUD: SKNode {
         scoreLabel.position = CGPoint(x: spacing, y: size.height - scoreLabel.frame.height - spacing)
         addChild(scoreLabel)
         
-        cropNode.position = CGPoint(x: size.width - (spacing * 2) - SpriteSize.statusBar.width/2, y: size.height - SpriteSize.statusBar.height/2 - (spacing * 2))
+        cropNode.position = CGPoint(x: size.width - spacing - SpriteSize.statusBar.width/2, y: size.height - SpriteSize.statusBar.height/2 - spacing)
         cropNodeStartX = cropNode.position.x
         cropNode.addChild(statusBar)
         cropNode.maskNode = maskNode
