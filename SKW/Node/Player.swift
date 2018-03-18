@@ -214,7 +214,6 @@ class Player: SKSpriteNode {
                 }
                 if shouldDie && !GameManager.shared.overdoseStarted {
                     
-                    removeAllChildren()
                     GameManager.shared.gameOverStart( .hit)
                     hitBox = nil
                     

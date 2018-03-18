@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GameManager.shared.gameIsEnding = true
         GameManager.shared.playerIsHit = true
         GameManager.shared.gameScene?.perna.removeAllActions()
+        GameManager.shared.gameScene?.perna.removeAllChildren()
         GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
         GameManager.shared.gameScene?.perna.setScale(0.65)
         GameManager.shared.gameScene?.perna.position.y -= 5
