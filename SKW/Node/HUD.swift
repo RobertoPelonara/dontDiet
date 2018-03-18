@@ -49,7 +49,7 @@ class HUD: SKNode {
         self.name = "HUD"
         
         scoreLabel.text = "Calories: 0"
-        scoreLabel.fontColor = SKColor.purple
+        scoreLabel.fontColor = SKColor(red: 0, green: 0, blue: 0.6, alpha: 1)
         scoreLabel.fontSize = 25
         scoreLabel.zPosition = Z.HUD
         
