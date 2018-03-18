@@ -107,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: Render Loop
     override func update(_ currentTime: TimeInterval) {
         
-        if !GameManager.shared.gameIsEnding {
+        if !GameManager.shared.gamePaused {
             
             // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
             if lastTime <= 0 { lastTime = currentTime }

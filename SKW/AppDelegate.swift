@@ -53,8 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //shared actions
     GameManager.shared.sceneStop = SKAction.run {
         GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
-        GameManager.shared.gameIsEnding = true
-        GameManager.shared.playerIsHit = true
+        GameManager.shared.gamePaused = true
         GameManager.shared.gameScene?.perna.removeAllActions()
         GameManager.shared.gameScene?.perna.removeAllChildren()
         GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
@@ -63,7 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GameManager.shared.gameScene?.perna.texture = GameManager.shared.gameScene?.perna.textureDeath[0]
     }
     GameManager.shared.sceneResume = SKAction.run {
-        GameManager.shared.playerIsHit = false
+        GameManager.shared.gameIsOver = true
         GameManager.shared.gameScene?.perna.run(SKAction.repeatForever(SKAction.animate(with: (GameManager.shared.gameScene?.perna.textureDeath)!, timePerFrame: 0.1)))
     }
     GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)

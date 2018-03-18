@@ -259,7 +259,7 @@ class Player: SKSpriteNode {
     }
     
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
-        if !GameManager.shared.gameIsEnding {
+        if !GameManager.shared.gamePaused {
             
             guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
             let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
@@ -291,7 +291,7 @@ class Player: SKSpriteNode {
             
             self.checkFat()
             
-        } else if !GameManager.shared.playerIsHit {
+        } else if GameManager.shared.gameIsOver {
             self.position.y += currentForceY
             currentForceY += DonutConstants.gravity.y
         }

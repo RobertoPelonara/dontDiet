@@ -69,8 +69,8 @@ class GameManager {
     var overdoseStarted = false
     var rushStarted = false
     var overdoseEnding = false
-    var gameIsEnding = false
-    var playerIsHit = false
+    var gamePaused = false
+    var gameIsOver = false
     
     //Actions
     var sceneResume = SKAction()
@@ -174,7 +174,8 @@ class GameManager {
     }
     
     func gameOverEnd () {
-        self.gameIsEnding = false
+        self.gamePaused = false
+        self.gameIsOver = false
         
         guard let _gameViewController = gameViewController,
             let _endScene = endScene,
