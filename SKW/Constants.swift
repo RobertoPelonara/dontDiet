@@ -95,6 +95,9 @@ enum DonutConstants {
         //6
     }
     static let zRotation = Double.pi / 60
+    static let gravity = CGPoint (x: 0, y: -0.3)
+    //prima: -0.4
+    static var groundY: CGFloat = 40
 }
 
 enum DeathReason {

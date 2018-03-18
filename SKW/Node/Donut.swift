@@ -159,7 +159,7 @@ class Donut: SKSpriteNode {
         guard let donutHitBox = self.hitBox else {print("Donut.update: didn't find hitBox.\n");return}
         
         
-        let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
+        let gravityVector = Vector2(x: DonutConstants.gravity.x, y: DonutConstants.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
         if position.x < donutHitBox.r {
             xParameter = abs(xParameter!)
@@ -172,9 +172,9 @@ class Donut: SKSpriteNode {
         positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
         positionAsVector.x = positionAsVector.x + (xParameter! * velocity * CGFloat(deltaTime))
 
-        if positionAsVector.y <= GameManager.shared.groundY + donutHitBox.r {
+        if positionAsVector.y <= DonutConstants.groundY + donutHitBox.r {
             currForce.y = reflectParameter!
-            positionAsVector.y = GameManager.shared.groundY + donutHitBox.r
+            positionAsVector.y = DonutConstants.groundY + donutHitBox.r
             if self.type == .smallLeft || self.type == .smallRight {
                 if self.bounceCounter < 2 {bounceCounter += 1} else {
                     hitBox = nil

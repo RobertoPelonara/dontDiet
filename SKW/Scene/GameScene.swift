@@ -80,7 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
-        GameManager.shared.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
+        DonutConstants.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
         
     }
     
