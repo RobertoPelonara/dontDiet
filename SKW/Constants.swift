@@ -74,7 +74,7 @@ enum DonutConstants {
     enum Reflect {
         static let big: CGFloat = 13
         //prima: 15.2
-        static let medium: CGFloat = 9.25
+        static let medium: CGFloat = 9.75
         //prima: 12
         static let small: CGFloat = 7.75
         //prima: 9
