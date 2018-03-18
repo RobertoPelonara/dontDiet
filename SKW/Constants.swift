@@ -72,23 +72,27 @@ enum DeviceGravity {
 enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
-        static let big: CGFloat = 15.2
-        static let medium: CGFloat = 12
-        static let small: CGFloat = 9
+        static let big: CGFloat = 13
+        //prima: 15.2
+        static let medium: CGFloat = 9.25
+        //prima: 12
+        static let small: CGFloat = 7.75
+        //prima: 9
     }
     //velocità sull'asse X
     enum XMovement {
-        static let big: CGFloat = 5
-        static let medium: CGFloat = 4
-        static let small: CGFloat = 3
+        static let big: CGFloat = 4
+        //5
+        static let medium: CGFloat = 3.5
+        //4
+        static let small: CGFloat = 2.5
+        //3
     }
     enum startingForce {
-        static let medium: CGFloat = 7
-        static let small: CGFloat = 6
-    }
-    enum scale {
-        static let medium: CGFloat = 0.75
-        static let small: CGFloat = 0.40
+        static let medium: CGFloat = 5.5
+        //7
+        static let small: CGFloat = 4.75
+        //6
     }
     static let zRotation = Double.pi / 60
 }

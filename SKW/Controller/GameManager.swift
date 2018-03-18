@@ -78,7 +78,8 @@ class GameManager {
     private var _timer: TimeInterval = FatTimer.maxValue
     
     //Physics
-    let gravity = CGPoint (x: 0, y: -0.4)
+    let gravity = CGPoint (x: 0, y: -0.3)
+    //prima: -0.4
     var groundY = CGFloat(40)
     
     var soundtrack: AVAudioPlayer?
