@@ -59,7 +59,7 @@ class GameManager {
     var allMidDonutsAuraTextures: [SKTexture] = []
     var allBigDonutsAuraTextures: [SKTexture] = []
     
-    let backgroundOverdoseTextures: [SKTexture] = [SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose")), SKTexture(image: #imageLiteral(resourceName: "background"))]
+    let backgroundOverdoseTextures: [SKTexture] = [SKTexture(image: #imageLiteral(resourceName: "background")), SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))]
     
     // Donuts
     var spawnedDonuts: [Donut] = []
