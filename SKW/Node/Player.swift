@@ -127,7 +127,7 @@ class Player: SKSpriteNode {
         
         self.setScale(0.75)
         self.gameScene = gameScene
-        self.position = CGPoint(x: view.frame.midX, y: self.size.height/2 + DonutConstants.groundY + 8)
+        self.position = CGPoint(x: view.frame.midX, y: self.size.height/2 + DonutConstants.groundY + 12)
         self.zPosition = Z.player
         destination = position
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2

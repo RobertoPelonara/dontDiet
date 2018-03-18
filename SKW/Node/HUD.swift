@@ -10,7 +10,7 @@ import SpriteKit
 class HUD: SKNode {
     
     
-    let scoreLabel = SKLabelNode(fontNamed:"Courier")
+    let scoreLabel = SKLabelNode(fontNamed:"Unipix")
     
     let statusBar = SKSpriteNode()
     let statusBarBackground = SKSpriteNode(texture: SKTexture.init(imageNamed: "candy_cane_back.png"), color: .clear, size: SpriteSize.statusBarBackground)
@@ -49,7 +49,8 @@ class HUD: SKNode {
         self.name = "HUD"
         
         scoreLabel.text = "Calories: 0"
-        scoreLabel.fontSize = 20
+        scoreLabel.fontColor = SKColor.purple
+        scoreLabel.fontSize = 25
         scoreLabel.zPosition = Z.HUD
         
         statusBar.texture = SKTexture.init(imageNamed: "candy_cane.png")

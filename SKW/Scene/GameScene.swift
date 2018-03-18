@@ -81,7 +81,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(tapisRoulant)
         
         DonutConstants.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
-        
     }
     
      
