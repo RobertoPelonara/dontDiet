@@ -59,6 +59,8 @@ class GameManager {
     var allMidDonutsAuraTextures: [SKTexture] = []
     var allBigDonutsAuraTextures: [SKTexture] = []
     
+    let backgroundOverdoseTextures: [SKTexture] = [SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose")), SKTexture(image: #imageLiteral(resourceName: "background"))]
+    
     // Donuts
     var spawnedDonuts: [Donut] = []
     var spawnedForks: [Fork] = []
@@ -66,6 +68,7 @@ class GameManager {
     //Flags
     var overdoseStarted = false
     var rushStarted = false
+    var overdoseEnding = false
     
     //Broccoli
     var spawnedBroccoli: [Broccoli] = []

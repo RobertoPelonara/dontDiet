@@ -30,6 +30,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Special
     var donut: Donut? = nil
     var debugHitBox: SKSpriteNode?
+    
     // Gesture
     var deltaX: CGFloat = 0
     var deltaY: CGFloat = 0
@@ -43,6 +44,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var donutToOverdose = 3
     var defaultOverdoseTimer = 7.0
     var overdoseTimer = 7.0
+    
+    var overdoseEndingSequence: SKAction?
+    let backgroundOverdoseAction = SKAction.repeat(SKAction.animate(with: GameManager.shared.backgroundOverdoseTextures, timePerFrame: 0.15), count: 5)
     
     //HUD
     var hud = HUD()
@@ -81,6 +85,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(tapisRoulant)
         
         DonutConstants.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
+        
+        let overdoseEndingAction = SKAction.run {
+            GameManager.shared.overdoseStarted = false
+            self.overdoseTimer = self.defaultOverdoseTimer
+            self.endOverdose()
+        }
+        
+        overdoseEndingSequence = SKAction.sequence([self.backgroundOverdoseAction, overdoseEndingAction])
     }
     
      
@@ -112,10 +124,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if GameManager.shared.overdoseStarted {
             overdoseTimer -= deltaTime
-            if overdoseTimer <= 0 {
-                GameManager.shared.overdoseStarted = false
-                overdoseTimer = defaultOverdoseTimer
-                endOverdose()
+            if overdoseTimer <= 0 && !GameManager.shared.overdoseEnding {
+                GameManager.shared.overdoseEnding = true
+                background?.run(overdoseEndingSequence!)
             }
         }
 
@@ -167,6 +178,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func endOverdose () {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "background"))
+        GameManager.shared.overdoseEnding = false
         
         for donut in GameManager.shared.spawnedDonuts {
             if donut.type != .smallLeft && donut.type != .smallRight {
