@@ -12,7 +12,6 @@
 		5F7AA90F20484BF60029E5AA /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA90E20484BF60029E5AA /* Background.swift */; };
 		5F7AA9112048A1040029E5AA /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA9102048A1040029E5AA /* GameManager.swift */; };
 		5F7AA9132048A6DA0029E5AA /* EndScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA9122048A6DA0029E5AA /* EndScene.swift */; };
-		5F7AA915204ABC480029E5AA /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7AA914204ABC480029E5AA /* Enemy.swift */; };
 		5F995B132047F26400B4FDC8 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F995B122047F26400B4FDC8 /* Player.swift */; };
 		5F995B152048015B00B4FDC8 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F995B142048015B00B4FDC8 /* HUD.swift */; };
 		5F995B1A204834B500B4FDC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F995B19204834B500B4FDC8 /* Main.storyboard */; };
@@ -41,7 +40,6 @@
 		5F7AA90E20484BF60029E5AA /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
 		5F7AA9102048A1040029E5AA /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		5F7AA9122048A6DA0029E5AA /* EndScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScene.swift; sourceTree = "<group>"; };
-		5F7AA914204ABC480029E5AA /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
 		5F995B122047F26400B4FDC8 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5F995B142048015B00B4FDC8 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 		5F995B19204834B500B4FDC8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 			children = (
 				5F995B142048015B00B4FDC8 /* HUD.swift */,
 				5F995B122047F26400B4FDC8 /* Player.swift */,
-				5F7AA914204ABC480029E5AA /* Enemy.swift */,
 				5F7AA90E20484BF60029E5AA /* Background.swift */,
 				E36E5F9320554363007D057D /* Fork.swift */,
 				E36E5F95205543E1007D057D /* Donut.swift */,
@@ -249,7 +246,6 @@
 				5F995B132047F26400B4FDC8 /* Player.swift in Sources */,
 				5F7AA9112048A1040029E5AA /* GameManager.swift in Sources */,
 				5F995B152048015B00B4FDC8 /* HUD.swift in Sources */,
-				5F7AA915204ABC480029E5AA /* Enemy.swift in Sources */,
 				5FB36C17203E1BE000AD3F10 /* GameScene.swift in Sources */,
 				5F7AA9132048A6DA0029E5AA /* EndScene.swift in Sources */,
 				5F7AA90F20484BF60029E5AA /* Background.swift in Sources */,
