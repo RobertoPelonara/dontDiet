@@ -37,7 +37,7 @@ class MenuScene: SKScene {
     gameLabel.fontColor = .white
     gameLabel.text = "Don't Die"
     gameLabel.zPosition = Z.tapisRoulant
-    gameLabel.position = CGPoint(x: size.width / 2, y: size.height / 1.2)
+    
     addChild(gameLabel)
     
     let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
@@ -63,6 +63,14 @@ class MenuScene: SKScene {
     tLabel2.zPosition = gameLabel2.zPosition
     tLabel2.position = CGPoint(x:gameLabel2.frame.width/2 + tLabel2.frame.width/2, y: 0)
     gameLabel2.addChild(tLabel2)
+    
+    
+    
+    gameLabel.position = CGPoint(x: size.width / 2 - tLabel.frame.width/2, y: size.height / 1.2)
+    
+    
+    
+    
     
     let tapToStartLabel2 = SKLabelNode(fontNamed: "Unipix")
     tapToStartLabel2.fontSize = 40
