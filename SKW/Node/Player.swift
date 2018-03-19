@@ -292,8 +292,8 @@ class Player: SKSpriteNode {
             self.checkFat()
             
         } else if GameManager.shared.gameIsOver {
-            self.position.y += currentForceY
-            currentForceY += DonutConstants.gravity.y
+            self.position.y += currentForceY * velocity * CGFloat(deltaTime)
+            currentForceY += DonutConstants.gravity.y * velocity * CGFloat(deltaTime)
         }
     }
     
