@@ -10,6 +10,7 @@ import SpriteKit
 
 class Donut: SKSpriteNode {
     
+    var frameCounter = 0
     var hitBox: Circle?
     var debugHitBox: SKShapeNode?
     var xParameter: CGFloat?
@@ -143,7 +144,7 @@ class Donut: SKSpriteNode {
     func update(deltaTime: TimeInterval) {
         
         guard let donutHitBox = self.hitBox else {print("Donut.update: didn't find hitBox.\n");return}
-        
+        frameCounter+=1
         
         let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
@@ -154,9 +155,10 @@ class Donut: SKSpriteNode {
         }
         if self.xParameter! <= 0 {self.zRotation += CGFloat(DonutConstants.zRotation)} else {self.zRotation -= CGFloat(DonutConstants.zRotation)}
         
-        currForce.y += gravityVector.y * velocity * CGFloat(deltaTime)
-        positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
-        positionAsVector.x = positionAsVector.x + (xParameter! * velocity * CGFloat(deltaTime))
+        let oldForce = currForce
+        currForce.y += gravityVector.y * CGFloat(deltaTime) * velocity
+        positionAsVector.y += (oldForce.y + currForce.y) * 0.5 * CGFloat(deltaTime) * velocity
+        positionAsVector.x = positionAsVector.x + (xParameter!) * CGFloat(deltaTime) * velocity
 
         if positionAsVector.y <= GameManager.shared.groundY + donutHitBox.r {
             currForce.y = reflectParameter!
@@ -168,11 +170,12 @@ class Donut: SKSpriteNode {
                     if debug {debugHitBox?.removeFromParent()}
                     self.run(SKAction.sequence([DestroyDonutsActions.pinkDonuts, DestroyDonutsActions.removeFromParentAction(donut: self)]))
                 }
+                
             }
         }
-        
         updateHitBox()
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
+        print("FRAME \(frameCounter): velocita:\(currForce.y) posizione:\(position.y)")
         
     }
     
