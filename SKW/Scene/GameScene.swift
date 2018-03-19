@@ -99,9 +99,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
      
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let _ = touches.first else {return}
-        perna.throwFork()
-        
+        if !GameManager.shared.gamePaused {
+            guard let _ = touches.first else {return}
+            perna.throwFork()
+        }
     }
     
     // MARK: Render Loop
