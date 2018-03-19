@@ -219,8 +219,6 @@ class Donut: SKSpriteNode {
             type1 = .smallLeft
             type2 = .smallRight
             
-            
-            
         case .mediumLeft:
             
             type1 = .smallLeft
@@ -244,11 +242,7 @@ class Donut: SKSpriteNode {
         donut1.setup(type1!, gameScene: self.gameScene!, spawnPosition: self.position)
         donut2.setup(type2!, gameScene: self.gameScene!, spawnPosition: self.position)
        
-//        DEBUG
-      
     }
-    
-    
     
     func updateHitBox () {
         guard let _hitBox = hitBox else {print("Donut.updateHitBox: didn't find hitBox\n");return}
