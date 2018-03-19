@@ -53,6 +53,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //shared actions
     GameManager.shared.sceneStop = SKAction.run {
         GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
+        for donut in GameManager.shared.spawnedDonuts {
+            donut.auraNode?.removeAllActions()
+        }
         GameManager.shared.gamePaused = true
         GameManager.shared.gameScene?.perna.removeAllActions()
         GameManager.shared.gameScene?.perna.removeAllChildren()
