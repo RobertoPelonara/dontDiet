@@ -11,7 +11,16 @@ class MenuScene: SKScene {
     
     var tapisRoulantTextures:[SKTexture] = []
     var tapisRoulantAnimation: SKAction?
-    var velocity = 0
+    var velocity: CGFloat = 0
+    var bounceCounter = 0
+    var lastTime: TimeInterval = 0
+    var deltaTime: TimeInterval = 0
+    let reflect:CGFloat = 5
+    
+    var tLabel = SKLabelNode(fontNamed: "Unipix")
+    var tLabel2 = SKLabelNode(fontNamed: "Unipix")
+    var gameLabel = SKLabelNode(fontNamed: "Unipix")
+    var gameLabel2 = SKLabelNode(fontNamed: "Unipix")
     override func didMove(to view: SKView) {
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         //debugPrint("view: \(view.frame)")
@@ -30,9 +39,6 @@ class MenuScene: SKScene {
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
-        
-        
-        let gameLabel = SKLabelNode(fontNamed: "Unipix")
         gameLabel.fontSize = 80
         gameLabel.fontColor = .white
         gameLabel.text = "Don't Die"
@@ -40,15 +46,12 @@ class MenuScene: SKScene {
         
         addChild(gameLabel)
         
-        let gameLabel2 = SKLabelNode(fontNamed: "Unipix")
         gameLabel2.fontSize = 80
         gameLabel2.fontColor = .black
         gameLabel2.text = "Don't Die"
-        gameLabel2.zPosition = -0.1
-        gameLabel2.position = CGPoint(x:3, y:3)
-        gameLabel.addChild(gameLabel2)
+        gameLabel2.zPosition = Z.tapisRoulant - 0.1
+        addChild(gameLabel2)
         
-        let tLabel = SKLabelNode(fontNamed: "Unipix")
         tLabel.fontSize = gameLabel.fontSize
         tLabel.fontColor = gameLabel.color
         tLabel.text = " t"
@@ -56,16 +59,14 @@ class MenuScene: SKScene {
         
         addChild(tLabel)
         
-        let tLabel2 = SKLabelNode(fontNamed: "Unipix")
         tLabel2.fontSize = gameLabel2.fontSize
         tLabel2.fontColor = gameLabel2.fontColor
         tLabel2.text = " t"
         tLabel2.zPosition = gameLabel2.zPosition
         addChild(tLabel2)
         
-        
-        
-        gameLabel.position = CGPoint(x: size.width / 2 - tLabel.frame.width/2, y: size.height / 1.2)
+        gameLabel.position = CGPoint(x: size.width / 2 - tLabel.frame.width/2, y: size.height / 1.25) //1.2)
+        gameLabel2.position = CGPoint(x:gameLabel.position.x + 3, y:gameLabel.position.y + 3)
         tLabel.position = CGPoint(x:gameLabel.position.x + gameLabel.frame.width/2 + tLabel.frame.width/2, y:size.height + tLabel.frame.height)
         tLabel2.position = CGPoint(x:tLabel.position.x + 3, y:size.height + tLabel2.frame.height)
         
@@ -85,8 +86,6 @@ class MenuScene: SKScene {
         tapToStartLabel.position = CGPoint(x: size.width/2, y: tapToStartLabel.frame.height/2)
         addChild(tapToStartLabel)
         
-        
-        
         GameManager.shared.initializeForks()
         GameManager.shared.initializeDonuts()
         GameManager.shared.initializeBroccoli()
@@ -96,7 +95,6 @@ class MenuScene: SKScene {
         idle.zPosition = Z.player
         idle.size = SpriteSize.player
         idle.setup(view: view,gameScene: self)
-        
         
         let positionBase = idle.position.x
         let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
@@ -110,17 +108,10 @@ class MenuScene: SKScene {
         let fade = SKAction.sequence([SKAction.fadeIn(withDuration: 0.6),SKAction.fadeOut(withDuration: 0.6)])
         let sequence = SKAction.sequence([action1,action2,action3, action4])
         
-        let bounceIn = SKAction.moveTo(y: gameLabel.position.y, duration: 0.5)
-        let bounceOut = SKAction.moveTo(y: gameLabel.position.y + 50, duration: 0.5)
-        
-        let bounce = SKAction.sequence([bounceIn,bounceOut,bounceIn])
         idle.run(SKAction.repeatForever(sequence))
         tapToStartLabel.run(SKAction.repeatForever(fade))
         tapToStartLabel2.run(SKAction.repeatForever(fade))
-        tLabel.run(bounce)
-        tLabel2.run(bounce)
-        //    tLabel.run(SKAction.repeatForever(fade))
-        //    tLabel2.run(SKAction.repeatForever(fade))
+
         
         GameManager.shared.soundtrack?.volume = 0.6
         
@@ -133,11 +124,32 @@ class MenuScene: SKScene {
         GameManager.shared.gameScene = scene
         scene.scaleMode = scaleMode
         GameManager.shared.gameViewController?.loadScene(scene, self)
+        velocity = 0
+        bounceCounter = 0
+        lastTime = 0
     }
     
     override func update(_ currentTime: TimeInterval) {
         
+        if lastTime <= 0 { lastTime = currentTime }
         
+        // Update delta time
+        deltaTime = currentTime - lastTime
+        lastTime = currentTime
+        if bounceCounter < 2 {
+            velocity += -0.3 * CGFloat(deltaTime) * 60
+            tLabel.position.y += velocity * CGFloat(deltaTime) * 60
+            tLabel2.position.y += velocity * CGFloat(deltaTime) * 60
+            
+            if tLabel2.position.y <= gameLabel.position.y {
+                
+                velocity = reflect
+                tLabel.position.y = gameLabel.position.y
+                tLabel2.position.y = gameLabel.position.y
+                bounceCounter += 1
+            }
+            
+        }
         
     }
     
