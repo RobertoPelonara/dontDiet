@@ -32,7 +32,6 @@ enum Z {
 }
 
 enum SpriteSize {
-    
     static let playerHitBox = CGSize(width: 19, height: 48)
     static let player = CGSize(width: 64, height: 64)
     static let playerDying = CGSize(width: 64, height: 73)
@@ -51,7 +50,7 @@ enum SpriteSize {
     static let donutAuraBig = CGSize(width: 68, height: 68)
     static let donutAuraMid = CGSize(width: 53, height: 53)
     static let donutAuraSmall = CGSize(width: 32, height: 32)
-    
+    static let tutorialPanel = CGSize(width: 500, height: 250)
 }
 
 enum Scores {
