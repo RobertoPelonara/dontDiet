@@ -40,16 +40,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     GameManager.shared.allSmallPinkDonutsBreakTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
         return texture.description.contains("donut_breaks_pink")
     }
+    GameManager.shared.allSmallDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("aura_small")
+    }
+    GameManager.shared.allMidDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("aura_mid")
+    }
+    GameManager.shared.allBigDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+        return texture.description.contains("aura_big")
+    }
+    
+    //shared actions
+    GameManager.shared.sceneStop = SKAction.run {
+        GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
+        for donut in GameManager.shared.spawnedDonuts {
+            donut.auraNode?.removeAllActions()
+        }
+        GameManager.shared.gamePaused = true
+        GameManager.shared.gameScene?.perna.removeAllActions()
+        GameManager.shared.gameScene?.perna.removeAllChildren()
+        GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
+        GameManager.shared.gameScene?.perna.setScale(0.65)
+        GameManager.shared.gameScene?.perna.position.y -= 5
+        GameManager.shared.gameScene?.perna.texture = GameManager.shared.gameScene?.perna.textureDeath[0]
+    }
+    GameManager.shared.sceneResume = SKAction.run {
+        GameManager.shared.gameIsOver = true
+        GameManager.shared.gameScene?.perna.run(SKAction.repeatForever(SKAction.animate(with: (GameManager.shared.gameScene?.perna.textureDeath)!, timePerFrame: 0.1)))
+    }
+    GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)
+    GameManager.shared.gameOverSequence = SKAction.sequence([GameManager.shared.sceneStop, GameManager.shared.wait, GameManager.shared.sceneResume])
    
     return true
   }
 
   func applicationWillResignActive(_ application: UIApplication) {
-
+    GameManager.shared.gameScene?.lastTime = 0
+    GameManager.shared.gamePaused = true
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
-
+    
   }
 
   func applicationWillEnterForeground(_ application: UIApplication) {
@@ -57,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidBecomeActive(_ application: UIApplication) {
-
+    GameManager.shared.gamePaused = false
   }
 
   func applicationWillTerminate(_ application: UIApplication) {

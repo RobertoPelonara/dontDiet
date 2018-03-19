@@ -55,11 +55,28 @@ class GameManager {
     var allMediumDonutsTextures: [SKTexture] = []
     var allSmallDonutsTextures: [SKTexture] = []
     var allSmallPinkDonutsBreakTextures: [SKTexture] = []
+    var allSmallDonutsAuraTextures: [SKTexture] = []
+    var allMidDonutsAuraTextures: [SKTexture] = []
+    var allBigDonutsAuraTextures: [SKTexture] = []
     
+    let backgroundOverdoseTextures: [SKTexture] = [SKTexture(image: #imageLiteral(resourceName: "background")), SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))]
     
     // Donuts
     var spawnedDonuts: [Donut] = []
     var spawnedForks: [Fork] = []
+    
+    //Flags
+    var overdoseStarted = false
+    var rushStarted = false
+    var overdoseEnding = false
+    var gamePaused = false
+    var gameIsOver = false
+    
+    //Actions
+    var sceneResume = SKAction()
+    var sceneStop = SKAction()
+    var wait = SKAction()
+    var gameOverSequence = SKAction()
     
     //Broccoli
     var spawnedBroccoli: [Broccoli] = []
@@ -154,13 +171,21 @@ class GameManager {
         
     }
     
-    func gameOver (_ reason : DeathReason) {
-        guard let _gameViewController = gameViewController,
-        let _endScene = endScene,
-        let _gameScene = gameScene else {
-             return
-        }
+    func gameOverStart (_ reason : DeathReason) {
         deathReason = reason
+        
+        gameScene?.run(gameOverSequence)
+    }
+    
+    func gameOverEnd () {
+        self.gamePaused = false
+        self.gameIsOver = false
+        
+        guard let _gameViewController = gameViewController,
+            let _endScene = endScene,
+            let _gameScene = gameScene else {
+                return
+        }
         
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970
@@ -172,20 +197,18 @@ class GameManager {
         spawnedForks.removeAll()
         spawnedDonuts.removeAll()
         _timer = FatTimer.maxValue
-        if score > (gameViewController?.highestScore)! {
-            gameViewController?.updateSavedScore(newScore: score)
-            gameViewController?.highestScore = score
+        if score > _gameViewController.highestScore {
+            _gameViewController.updateSavedScore(newScore: score)
+            _gameViewController.highestScore = score
         }
         _score = 0
-        
-
     }
     
     func addScore () {
         score += Scores.bonus
         gameScene!.run(self.eatSound)
-        if !gameScene!.overdoseStarted{
-        gameScene!.rushStarted = true
+        if !GameManager.shared.overdoseStarted{
+        GameManager.shared.rushStarted = true
         gameScene!.rushCount += 1
         if gameScene!.rushCount >= gameScene!.donutToOverdose {
             gameScene!.startOverdose()

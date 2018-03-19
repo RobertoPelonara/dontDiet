@@ -25,11 +25,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Broccoli spawn Timer
     var spawnBroccoliInterval: TimeInterval = 15
     
-    
+    //tapis roulant node
+    var tapisRoulant = SKSpriteNode()
     
     // Special
     var donut: Donut? = nil
     var debugHitBox: SKSpriteNode?
+    
     // Gesture
     var deltaX: CGFloat = 0
     var deltaY: CGFloat = 0
@@ -37,15 +39,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var initialTouch: CGPoint = CGPoint.zero
     
     //Overdose
-    var rushStarted = false
     var defaultRushTimer = 5.0
     var rushTimer = 5.0
     var rushCount = 0
     var donutToOverdose = 3
     var defaultOverdoseTimer = 7.0
     var overdoseTimer = 7.0
-    var overdoseStarted = false
     
+    var overdoseEndingSequence: SKAction?
+    let backgroundOverdoseAction = SKAction.repeat(SKAction.animate(with: GameManager.shared.backgroundOverdoseTextures, timePerFrame: 0.15), count: 5)
     
     //HUD
     var hud = HUD()
@@ -76,95 +78,121 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
 
         
-        let tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
+        tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
         tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
          self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
         tapisRoulant.run(tapisRoulantAnimation!)
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
-        GameManager.shared.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
+        DonutConstants.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
         
+        let overdoseEndingAction = SKAction.run {
+            GameManager.shared.overdoseStarted = false
+            self.overdoseTimer = self.defaultOverdoseTimer
+            self.endOverdose()
+        }
+        
+        overdoseEndingSequence = SKAction.sequence([self.backgroundOverdoseAction, overdoseEndingAction])
     }
     
      
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let _ = touches.first else {return}
-        perna.throwFork()
-        
+        if !GameManager.shared.gamePaused {
+            guard let _ = touches.first else {return}
+            perna.throwFork()
+        }
     }
     
     // MARK: Render Loop
     override func update(_ currentTime: TimeInterval) {
         
-        // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
-        if lastTime <= 0 { lastTime = currentTime }
-        
-        
-        // Update delta time
-        deltaTime = currentTime - lastTime
-       
-        
-        if rushStarted {
-            rushTimer -= deltaTime
-            if rushTimer <= 0 {
-                rushStarted = false
-                rushTimer = defaultRushTimer
-                rushCount = 0
+        if !GameManager.shared.gamePaused {
+            
+            // If we don't have a last frame time value, this is the first frame, so delta time will be zero.
+            if lastTime <= 0 { lastTime = currentTime }
+            
+            // Update delta time
+            deltaTime = currentTime - lastTime
+            
+            if GameManager.shared.rushStarted {
+                rushTimer -= deltaTime
+                if rushTimer <= 0 {
+                    GameManager.shared.rushStarted = false
+                    rushTimer = defaultRushTimer
+                    rushCount = 0
+                }
             }
-        }
-        if overdoseStarted {
-            overdoseTimer -= deltaTime
-            if overdoseTimer <= 0 {
-                overdoseStarted = false
-                overdoseTimer = defaultOverdoseTimer
-                endOverdose()
+            if GameManager.shared.overdoseStarted {
+                overdoseTimer -= deltaTime
+                if overdoseTimer <= 0 && !GameManager.shared.overdoseEnding {
+                    GameManager.shared.overdoseEnding = true
+                    background?.run(overdoseEndingSequence!)
+                }
             }
-        }
-
-        GameManager.shared.timer = -deltaTime
-        
-        // Random spawn
-        spawnDonut(deltaTime: deltaTime)
-        spawnBroccoli(deltaTime: deltaTime)
-        
-        // Set last frame time to current time
-        lastTime = currentTime
-        
-//        print(GameManager.shared.spawnedDonuts.count)
-        for donut in GameManager.shared.spawnedDonuts {
-            donut.update(deltaTime: deltaTime)
-        }
-        
-        for fork in GameManager.shared.spawnedForks {
-            fork.update(deltaTime: deltaTime)
-        }
-        
-        for broccoli in GameManager.shared.spawnedBroccoli {
-            broccoli.update(deltaTime: deltaTime)
+            
+            GameManager.shared.timer = -deltaTime
+            
+            // Random spawn
+            spawnDonut(deltaTime: deltaTime)
+            spawnBroccoli(deltaTime: deltaTime)
+            
+            // Set last frame time to current time
+            lastTime = currentTime
+            
+            for donut in GameManager.shared.spawnedDonuts {
+                donut.update(deltaTime: deltaTime)
+            }
+            for fork in GameManager.shared.spawnedForks {
+                fork.update(deltaTime: deltaTime)
+            }
+            for broccoli in GameManager.shared.spawnedBroccoli {
+                broccoli.update(deltaTime: deltaTime)
+            }
+            
+        } else {
+            if perna.position.y < -SpriteSize.player.height {
+                GameManager.shared.gameOverEnd()
+            }
         }
         
         perna.update(deltaTime: deltaTime)
         
-    
     }
     
    
     func startOverdose () {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))
-        overdoseStarted = true
-        rushStarted = false
+        GameManager.shared.overdoseStarted = true
+        GameManager.shared.rushStarted = false
         rushCount = 0
+        
+        for donut in GameManager.shared.spawnedDonuts {
+            if donut.type == .big {
+                donut.auraNode?.run(DonutsActions.bigAuraAnim)
+            } else if donut.type == .mediumLeft || donut.type == .mediumRight {
+                donut.auraNode?.run(DonutsActions.midAuraAnim)
+            }
+        }
         
     }
     
     func endOverdose () {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "background"))
+        GameManager.shared.overdoseEnding = false
+        
+        for donut in GameManager.shared.spawnedDonuts {
+            if donut.type != .smallLeft && donut.type != .smallRight {
+                donut.auraNode?.removeAllActions()
+                donut.auraNode?.texture = nil
+            }
+        }
         
     }
+    
     func spawnDonut(deltaTime: TimeInterval) {
         
         spawnDonutInterval -= deltaTime
