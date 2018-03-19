@@ -24,9 +24,6 @@ class InfoPanel: SKSpriteNode {
     var bigDonutLabel = SKLabelNode(fontNamed:"Unipix")
     var smallDonutLabel = SKLabelNode(fontNamed:"Unipix")
     
-    var TextPlayerRunning: SKLabelNode?
-    var TextPlayerShooting: SKLabelNode?
-    
     var playerNodeRunning: SKSpriteNode?
     var playerNodeShooting: SKSpriteNode?
     
