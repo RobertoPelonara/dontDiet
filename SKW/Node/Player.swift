@@ -56,6 +56,7 @@ class Player: SKSpriteNode {
     // Manual Movement
     var destination = CGPoint()
     let velocity: CGFloat = 1300
+    let velocityGameOver: CGFloat = 60
     
     // States
     var shooting = false
@@ -292,8 +293,8 @@ class Player: SKSpriteNode {
             self.checkFat()
             
         } else if GameManager.shared.gameIsOver {
-            self.position.y += currentForceY * velocity * CGFloat(deltaTime)
-            currentForceY += DonutConstants.gravity.y * velocity * CGFloat(deltaTime)
+            self.position.y += currentForceY * velocityGameOver * CGFloat(deltaTime)
+            currentForceY += DonutConstants.gravity.y * velocityGameOver * CGFloat(deltaTime)
         }
     }
     
