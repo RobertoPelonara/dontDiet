@@ -270,6 +270,8 @@ class InfoPanel: SKSpriteNode {
     
     func setupTutorial() {
         
+        removeAllChildren()
+        
         //add nodes in panel
         self.addChild(playerNodeRunning!)
         self.addChild(playerNodeShooting!)
