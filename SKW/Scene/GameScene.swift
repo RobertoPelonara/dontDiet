@@ -64,9 +64,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
-        DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(0.63, 2))) / 0.63
-        DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.516, 2))) / 0.516
-        DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.3999, 2))) / 0.3999
+         //NON MODIFICARE, PER CAMBIARE LA VELOCITA' DELLE CIAMBELLE BISOGNA AGIRE SUL VALORE DonutConstants.gravity
+         DonutConstants.Reflect.big = sqrt((DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height / 2)) * 2 * abs(DonutConstants.gravity.y))
+         DonutConstants.Reflect.medium = sqrt((DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2)) * 2 * abs(DonutConstants.gravity.y))
+         DonutConstants.Reflect.small = sqrt((DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2)) * 2 * abs(DonutConstants.gravity.y))
         
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .black
