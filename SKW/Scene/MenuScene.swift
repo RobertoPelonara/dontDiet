@@ -129,11 +129,15 @@ class MenuScene: SKScene {
   override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     guard let _ = touches.first else { return }
     
-    self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
+//    self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
     let scene = GameScene(size: size)
     GameManager.shared.gameScene = scene
     scene.scaleMode = scaleMode
-    GameManager.shared.gameViewController?.loadScene(scene, self)
+    let infoPanel = InfoPanel(sceneSize: self.frame)
+    addChild(infoPanel)
+    infoPanel.setupEndPanel()
+    infoPanel.show()
+    //GameManager.shared.gameViewController?.loadScene(scene, self)
   }
 
 }

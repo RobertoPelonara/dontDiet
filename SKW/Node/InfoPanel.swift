@@ -209,6 +209,59 @@ class InfoPanel: SKSpriteNode {
         
     }
     
+    func setupEndPanel () {
+        
+//        TODO: Fixare solo se il gioco avrà successo
+        setupTutorial()
+        removeAllChildren()
+        
+        
+        let titleLabel = SKLabelNode(fontNamed: "Unipix")
+        titleLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 59 : 40
+        titleLabel.fontColor = .white
+        titleLabel.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
+        titleLabel.position = CGPoint(x: 0, y: 70)
+        addChild(titleLabel)
+        
+//        let titleShadow = SKLabelNode(fontNamed: "Unipix")
+//        titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
+//        titleShadow.fontColor = .black
+//        titleShadow.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
+//        titleShadow.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
+//        addChild(titleShadow)
+       
+        
+        let scoreLabel = SKLabelNode(fontNamed: "Unipix")
+        scoreLabel.fontSize = 36
+        scoreLabel.fontColor = .white
+        scoreLabel.text = "You gained \(GameManager.shared.score) calories"
+        scoreLabel.position = CGPoint(x: titleLabel.position.x , y: titleLabel.position.y - 60)
+        addChild(scoreLabel)
+        
+        let recordLabel = SKLabelNode(fontNamed: "Unipix")
+        recordLabel.fontSize = 28
+        recordLabel.fontColor = .white
+        recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
+        recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - 50)
+        addChild(recordLabel)
+        
+        let timerLabel = SKLabelNode(fontNamed: "Unipix")
+        timerLabel.fontSize = 28
+        timerLabel.fontColor = .white
+        timerLabel.text = "You fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
+        timerLabel.position = CGPoint(x: titleLabel.position.x , y: scoreLabel.position.y - 30)
+        addChild(timerLabel)
+        
+        let tapToReturn = SKLabelNode(fontNamed: "Unipix")
+        tapToReturn.fontSize = 26
+        tapToReturn.fontColor = .black
+        tapToReturn.color?.withAlphaComponent(0.7)
+        tapToReturn.text = "Tap to return to Main Menu"
+        tapToReturn.position = CGPoint(x: titleLabel.position.x , y: timerLabel.position.y - 10)
+        addChild(tapToReturn)
+        
+    }
+    
     func show() {
         self.run(showAction)
     }
