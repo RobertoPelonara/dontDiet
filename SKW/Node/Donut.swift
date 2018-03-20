@@ -192,10 +192,11 @@ class Donut: SKSpriteNode {
         updateHitBox()
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
         
-        if self.type == DonutType.smallLeft{
+      
             frameCounter+=1
-            print("FRAME \(frameCounter): velocita:\(currForce.y * CGFloat(deltaTime)) posizione:\(position.y)")
-        }
+            //print("FRAME \(frameCounter): velocita:\(currForce.y * CGFloat(deltaTime)) posizione:\(position.y)")
+            print(DonutConstants.Reflect.big)
+        
         
     }
     
