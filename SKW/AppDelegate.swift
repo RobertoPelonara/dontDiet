@@ -75,12 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationWillResignActive(_ application: UIApplication) {
-    GameManager.shared.gameScene?.lastTime = 0
     GameManager.shared.gamePaused = true
   }
 
   func applicationDidEnterBackground(_ application: UIApplication) {
-    
+    GameManager.shared.gameScene?.lastTime = 0
   }
 
   func applicationWillEnterForeground(_ application: UIApplication) {
@@ -88,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func applicationDidBecomeActive(_ application: UIApplication) {
-    GameManager.shared.gamePaused = false
+    if !GameManager.shared.gameIsOver { GameManager.shared.gamePaused = false }
   }
 
   func applicationWillTerminate(_ application: UIApplication) {
