@@ -140,8 +140,8 @@ class InfoPanel: SKSpriteNode {
         legLNode!.setScale(1.3)
         legRNode!.setScale(1.3)
         
-        legRNode2 = legRNode!.copy() as! SKSpriteNode
-        legLNode2 = legLNode!.copy() as! SKSpriteNode
+        legRNode2 = legRNode!.copy() as? SKSpriteNode
+        legLNode2 = legLNode!.copy() as? SKSpriteNode
         
         //big donut
         let indexBig = Int(arc4random_uniform(UInt32(GameManager.shared.allBigDonutsTextures.count)))
