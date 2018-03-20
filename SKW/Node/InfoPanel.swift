@@ -59,6 +59,7 @@ class InfoPanel: SKSpriteNode {
     var recordLabel = SKLabelNode(fontNamed: "Unipix")
     var timerLabel = SKLabelNode(fontNamed: "Unipix")
     var tapToReturn = SKLabelNode(fontNamed: "Unipix")
+    var titleShadow = SKLabelNode(fontNamed: "Unipix")
     
     init(sceneFrame: CGRect ) {
         
@@ -240,9 +241,7 @@ class InfoPanel: SKSpriteNode {
         
         //GAMEOVER LABELS
         
-        titleLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 59 : 40
         titleLabel.fontColor = .white
-        titleLabel.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
         titleLabel.position = CGPoint(x: 0, y: 70)
         
         scoreLabel.fontSize = 36
@@ -266,6 +265,9 @@ class InfoPanel: SKSpriteNode {
         tapToReturn.text = "Tap to return to Main Menu"
         tapToReturn.position = CGPoint(x: titleLabel.position.x , y: timerLabel.position.y - 10)
         
+        titleShadow.fontColor = .black
+        titleShadow.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
+        
     }
     
     func setupTutorial() {
@@ -286,22 +288,24 @@ class InfoPanel: SKSpriteNode {
         
     }
     
-    func setupEndPanel () {
+    func setupEndPanel() {
         
         removeAllChildren()
         
+        //setup death reason
+        titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
+        titleShadow.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
+        
+        titleLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 59 : 40
+        titleLabel.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
+        
+        //add nodes in panel
         addChild(titleLabel)
         addChild(scoreLabel)
         addChild(recordLabel)
         addChild(timerLabel)
         addChild(tapToReturn)
-        
-        //        let titleShadow = SKLabelNode(fontNamed: "Unipix")
-        //        titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
-        //        titleShadow.fontColor = .black
-        //        titleShadow.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
-        //        titleShadow.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
-        //        addChild(titleShadow)
+        addChild(titleShadow)
         
     }
     
