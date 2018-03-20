@@ -180,6 +180,12 @@ class Player: SKSpriteNode {
         checkCollisionWithDonuts()
         checkCollisionWithBroccoli()
         
+        
+        
+        if position.y < -SpriteSize.player.height {
+            GameManager.shared.gameOverEnd()
+        }
+        
     }
     
     func updateHitBox () {
