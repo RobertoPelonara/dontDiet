@@ -32,6 +32,7 @@ enum Z {
 }
 
 enum SpriteSize {
+    
     static let playerHitBox = CGSize(width: 19, height: 48)
     static let player = CGSize(width: 64, height: 64)
     static let playerDying = CGSize(width: 64, height: 73)
@@ -51,6 +52,7 @@ enum SpriteSize {
     static let donutAuraMid = CGSize(width: 53, height: 53)
     static let donutAuraSmall = CGSize(width: 32, height: 32)
     static let tutorialPanel = CGSize(width: 500, height: 250)
+    
 }
 
 enum Scores {
@@ -73,23 +75,32 @@ enum DeviceGravity {
 enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
-        static var big: CGFloat = 13.04
-        static var medium: CGFloat = 12
-        static var small: CGFloat = 9
+        static var big: CGFloat = 0
+        static var medium: CGFloat = 0
+        static var small: CGFloat = 0
+    }
+    
+    enum MaxHeight {
+        static let big: CGFloat = UIScreen.main.bounds.height - SpriteSize.donutBig.height / 2
+        static let medium: CGFloat = UIScreen.main.bounds.height * 0.696 - SpriteSize.donutMid.height / 2
+        static let small: CGFloat = UIScreen.main.bounds.height * 0.429 - SpriteSize.donutSmall.height / 2
     }
     //velocità sull'asse X
     enum XMovement {
-        static let big: CGFloat = 4 //5
-        static let medium: CGFloat = 3.5 //4
-        static let small: CGFloat = 2.5 //3
+        static let big: CGFloat = 240 //5
+        static let medium: CGFloat = 210 //4
+        static let small: CGFloat = 150//3
     }
+    
     enum startingForce {
-        static let medium: CGFloat = 5.5 //7
-        static let small: CGFloat = 4.75 //6
+        static let medium: CGFloat = 330 //7
+        static let small: CGFloat = 285 //6
     }
+    
     static let zRotation = Double.pi / 60
-    static let gravity = CGPoint (x: 0, y: -0.3) //-0.4
+    static let gravity = CGPoint (x: 0, y: -1080) //-0.4
     static var groundY: CGFloat = 36
+    
 }
 
 enum DeathReason {

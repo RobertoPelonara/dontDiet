@@ -52,7 +52,7 @@ struct Vector2 {
     
     mutating func reflect (vector: Vector2)  {
         
-        let n = normalized()
+       // let n = normalized()
         let dotProduct = self.dot(v: vector.normalized())
 
         self = vector * (vector.normalized() * (dotProduct)) * CGFloat(-2)

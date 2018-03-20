@@ -158,7 +158,7 @@ class Donut: SKSpriteNode {
     func update(deltaTime: TimeInterval) {
         
         guard let donutHitBox = self.hitBox else {print("Donut.update: didn't find hitBox.\n");return}
-        frameCounter+=1
+       
         
         let gravityVector = Vector2(x: DonutConstants.gravity.x, y: DonutConstants.gravity.y)
         var positionAsVector = Vector2(x: position.x, y: position.y)
@@ -170,9 +170,9 @@ class Donut: SKSpriteNode {
         if self.xParameter! <= 0 {self.zRotation += CGFloat(DonutConstants.zRotation)} else {self.zRotation -= CGFloat(DonutConstants.zRotation)}
         
         let oldForce = currForce
-        currForce.y += gravityVector.y * CGFloat(deltaTime) * velocity
-        positionAsVector.y += (oldForce.y + currForce.y) * 0.5 * CGFloat(deltaTime) * velocity
-        positionAsVector.x = positionAsVector.x + (xParameter!) * CGFloat(deltaTime) * velocity
+        currForce.y += gravityVector.y * CGFloat(deltaTime)
+        positionAsVector.y += (oldForce.y + currForce.y) * 0.5 * CGFloat(deltaTime)
+        positionAsVector.x = positionAsVector.x + (xParameter!) * CGFloat(deltaTime)
 
         if positionAsVector.y <= DonutConstants.groundY + donutHitBox.r {
             currForce.y = reflectParameter!
@@ -191,7 +191,11 @@ class Donut: SKSpriteNode {
         }
         updateHitBox()
         position = CGPoint(x: positionAsVector.x, y: positionAsVector.y)
-        print("FRAME \(frameCounter): velocita:\(currForce.y) posizione:\(position.y)")
+        
+        if self.type == DonutType.smallLeft{
+            frameCounter+=1
+            print("FRAME \(frameCounter): velocita:\(currForce.y * CGFloat(deltaTime)) posizione:\(position.y)")
+        }
         
     }
     

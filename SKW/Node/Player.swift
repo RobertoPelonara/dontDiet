@@ -24,7 +24,7 @@ class Player: SKSpriteNode {
     var textureDeath: [SKTexture] = []
     
     //game over force
-    var currentForceY: CGFloat = 8
+    var currentForceY: CGFloat = 480
     
     //Sounds
     var throwSound: SKAction?
@@ -266,6 +266,8 @@ class Player: SKSpriteNode {
     }
     
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
+        
+       
         if !GameManager.shared.gamePaused {
             
             guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}
@@ -299,8 +301,8 @@ class Player: SKSpriteNode {
             self.checkFat()
             
         } else if GameManager.shared.gameIsOver {
-            self.position.y += currentForceY * velocityGameOver * CGFloat(deltaTime)
-            currentForceY += DonutConstants.gravity.y * velocityGameOver * CGFloat(deltaTime)
+            self.position.y += currentForceY * CGFloat(deltaTime)
+            currentForceY += DonutConstants.gravity.y * CGFloat(deltaTime)
         }
     }
     
