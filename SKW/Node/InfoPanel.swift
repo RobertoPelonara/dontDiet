@@ -1,4 +1,3 @@
-
 //
 //  InfoPanel.swift
 //  SKW
@@ -24,15 +23,31 @@ class InfoPanel: SKSpriteNode {
     var bigDonutLabel = SKLabelNode(fontNamed:"Unipix")
     var smallDonutLabel = SKLabelNode(fontNamed:"Unipix")
     
+    var runningIdle = SKAction()
+    var runningMove = SKAction()
+    var shootingIdle = SKAction()
+    var legRIdle = SKAction()
+    var legLIdle = SKAction()
+    
     var playerNodeRunning: SKSpriteNode?
     var playerNodeShooting: SKSpriteNode?
+    
+    var legRNode: SKSpriteNode?
+    var legRNode2: SKSpriteNode?
+    var legLNode: SKSpriteNode?
+    var legLNode2: SKSpriteNode?
     
     var bigDonutNode: SKSpriteNode?
     var smallDonutNode: SKSpriteNode?
     
+    var rotateAction = SKAction()
+    var bigDonutColor = SKAction()
+    var smallDonutColor = SKAction()
+    
     var auraNode: SKSpriteNode?
     
     var showAction = SKAction()
+    var hideAction = SKAction()
     
     let spacing: CGFloat = 50
     let labelsSpacing: CGFloat = 75
@@ -40,49 +55,51 @@ class InfoPanel: SKSpriteNode {
     
     //GAME OVER
     
-    init(sceneSize: CGRect ) {
-        self.currentSceneFrame = sceneSize
+    init(sceneFrame: CGRect ) {
+        self.currentSceneFrame = sceneFrame
+        
+        super.init(texture: SKTexture(image: #imageLiteral(resourceName: "infoPanel")), color: .clear, size: SpriteSize.tutorialPanel)
         
         //show action
         let show = SKAction.move(to: CGPoint(x: (currentSceneFrame.width)/2, y: (currentSceneFrame.height)/2), duration: 0.60)
         showAction = show
         
-        super.init(texture: SKTexture(image: #imageLiteral(resourceName: "infoPanel")), color: .clear, size: SpriteSize.tutorialPanel)
+        //hide action
+        let hide = SKAction.sequence([SKAction.move(to: CGPoint(x: -(currentSceneFrame.width)/2, y: (currentSceneFrame.height)/2), duration: 0.60), SKAction.run {
+            self.removeAllChildren()
+            self.position.x = (sceneFrame.width) + self.frame.width/2
+            }])
+        hideAction = hide
         
-        //position
+        //self position
         self.zPosition = Z.HUD
-        self.position.y = sceneSize.height/2
-        self.position.x = (sceneSize.width) + self.frame.width/2
-    }
-    
-    func setupTutorial() {
-        //clean node
-        removeAllChildren()
+        self.position.y = sceneFrame.height/2
+        self.position.x = (sceneFrame.width) + self.frame.width/2
         
         //lables
         playerShootingLabel.text = "TAP\nTO SHOOT"
         playerShootingLabel.numberOfLines = 2
         playerShootingLabel.fontColor = SKColor.white
         playerShootingLabel.fontSize = fontSize
-//        playerShootingLabel.horizontalAlignmentMode = .left
+        //        playerShootingLabel.horizontalAlignmentMode = .left
         
         playerRunningLabel.text = "TILT\nTO MOVE"
         playerRunningLabel.numberOfLines = 2
         playerRunningLabel.fontColor = SKColor.white
         playerRunningLabel.fontSize = fontSize
-//        playerRunningLabel.horizontalAlignmentMode = .left
+        //        playerRunningLabel.horizontalAlignmentMode = .left
         
         bigDonutLabel.text = "AVOID\nBIG ONES"
         bigDonutLabel.numberOfLines = 2
         bigDonutLabel.fontColor = SKColor.white
         bigDonutLabel.fontSize = fontSize
-//        bigDonutLabel.horizontalAlignmentMode = .left
+        //        bigDonutLabel.horizontalAlignmentMode = .left
         
         smallDonutLabel.text = "EAT\nTO NOT DIET"
         smallDonutLabel.numberOfLines = 2
         smallDonutLabel.fontColor = SKColor.white
         smallDonutLabel.fontSize = fontSize
-//        smallDonutLabel.horizontalAlignmentMode = .left
+        //        smallDonutLabel.horizontalAlignmentMode = .left
         
         //textures
         self.playerRunningTextures = GameManager.shared.allTextures.filter { $0.description.contains("run_fat") }
@@ -96,39 +113,35 @@ class InfoPanel: SKSpriteNode {
         playerNodeRunning = playerRunning
         let actionRunningIdle = SKAction.repeatForever(SKAction.animate(with: playerRunningTextures, timePerFrame: 0.1))
         let actionRunningMove = SKAction.repeatForever(SKAction.sequence([SKAction.move(by: CGVector(dx: -20, dy: 0), duration: 0.75), SKAction.move(by: CGVector(dx: +20, dy: 0), duration: 0.75)]))
+        runningIdle = actionRunningIdle
+        runningMove = actionRunningMove
         playerNodeRunning?.setScale(0.75)
-        playerNodeRunning?.run(actionRunningIdle)
-        playerNodeRunning?.run(actionRunningMove)
         
         //player shooting
         let playerShooting = SKSpriteNode(texture: playerShootingTextures[0], color: .clear, size: SpriteSize.player)
         playerNodeShooting = playerShooting
         let actionShooting = SKAction.repeatForever(SKAction.sequence([SKAction.animate(with: playerShootingTextures, timePerFrame: 0.1), SKAction.wait(forDuration: 0.25)]))
+        shootingIdle = actionShooting
         playerNodeShooting?.setScale(0.75)
-        playerNodeShooting?.run(actionShooting)
         
         //legs nodes
-        let legRNode = SKSpriteNode(texture: playerLegR[0], size: SpriteSize.player)
-        let legLNode = SKSpriteNode(texture: playerLegL[0], size: SpriteSize.player)
-        legRNode.zPosition = self.zPosition + 0.01
-        legLNode.zPosition = self.zPosition - 0.01
-        legRNode.position = CGPoint(x: 8, y: -12)
-        legLNode.position = CGPoint(x: 8, y: -12)
+        let legR = SKSpriteNode(texture: playerLegR[0], size: SpriteSize.player)
+        let legL = SKSpriteNode(texture: playerLegL[0], size: SpriteSize.player)
+        legRNode = legR
+        legLNode = legL
+        legRNode!.zPosition = self.zPosition + 0.01
+        legLNode!.zPosition = self.zPosition - 0.01
+        legRNode!.position = CGPoint(x: 8, y: -12)
+        legLNode!.position = CGPoint(x: 8, y: -12)
         let animationL = SKAction.animate(with: playerLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: playerLegR, timePerFrame: 0.07)
-        legRNode.run(SKAction.repeatForever(animationR), withKey: "runAnim")
-        legLNode.run(SKAction.repeatForever(animationL), withKey: "runAnim")
-        legLNode.setScale(1.3)
-        legRNode.setScale(1.3)
+        legLIdle = animationL
+        legRIdle = animationR
+        legLNode!.setScale(1.3)
+        legRNode!.setScale(1.3)
         
-        let legRNode2: SKSpriteNode = legRNode.copy() as! SKSpriteNode
-        let legLNode2: SKSpriteNode = legLNode.copy() as! SKSpriteNode
-        
-        playerNodeRunning?.addChild(legRNode)
-        playerNodeRunning?.addChild(legLNode)
-        
-        playerNodeShooting?.addChild(legRNode2)
-        playerNodeShooting?.addChild(legLNode2)
+        legRNode2 = legRNode!.copy() as! SKSpriteNode
+        legLNode2 = legLNode!.copy() as! SKSpriteNode
         
         //big donut
         let indexBig = Int(arc4random_uniform(UInt32(GameManager.shared.allBigDonutsTextures.count)))
@@ -143,12 +156,10 @@ class InfoPanel: SKSpriteNode {
         let node = SKSpriteNode.init(texture: nil, color: .clear, size: .zero)
         auraNode = node
         auraNode!.size = SpriteSize.donutAuraSmall
-        auraNode!.run(DonutsActions.smallAuraAnim)
-        
-        smallDonutNode?.addChild(auraNode!)
         
         //donut actions
         let donutRotate = SKAction.repeatForever(SKAction.rotate(byAngle: .pi, duration: 5))
+        rotateAction = donutRotate
         
         let smallDonutChangeColor = SKAction.run {
             let index = Int(arc4random_uniform(UInt32(GameManager.shared.allSmallDonutsTextures.count)))
@@ -156,6 +167,7 @@ class InfoPanel: SKSpriteNode {
             self.smallDonutNode?.run(textureAction)
         }
         let smallDonutRandomColor = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), smallDonutChangeColor]))
+        smallDonutColor = smallDonutRandomColor
         
         let bigDonutChangeColor = SKAction.run {
             let index = Int(arc4random_uniform(UInt32(GameManager.shared.allBigDonutsTextures.count)))
@@ -163,54 +175,87 @@ class InfoPanel: SKSpriteNode {
             self.bigDonutNode?.run(textureAction)
         }
         let bigDonutRandomColor = SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), bigDonutChangeColor]))
+        bigDonutColor = bigDonutRandomColor
         
-        bigDonutNode?.run(donutRotate)
-        bigDonutNode?.run(bigDonutRandomColor)
-        
-        smallDonutNode?.run(donutRotate)
-        smallDonutNode?.run(smallDonutRandomColor)
-        
-        //placing players
+        //players positions
         playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing + (playerNodeRunning?.frame.width)!/2 + 10
         playerNodeRunning?.position.y = SpriteSize.tutorialPanel.height/2 - spacing - (playerNodeRunning?.frame.height)!/2
         
         playerNodeShooting?.position.x = (playerNodeRunning?.position.x)! - 10
         playerNodeShooting?.position.y = (playerNodeRunning?.position.y)! * -1
         
-        self.addChild(playerNodeRunning!)
-        self.addChild(playerNodeShooting!)
-        
-        //placing donuts
+        //donuts positions
         bigDonutNode?.position.x = (bigDonutNode?.frame.width)!/2
         bigDonutNode?.position.y = (playerNodeRunning?.position.y)! - 5
         
         smallDonutNode?.position.x = (bigDonutNode?.position.x)!
         smallDonutNode?.position.y = (playerNodeShooting?.position.y)! - 5
         
-        self.addChild(bigDonutNode!)
-        self.addChild(smallDonutNode!)
-        
-        //placing labels
+        //labels positions
         playerShootingLabel.position.x = (playerNodeShooting?.position.x)! + (playerNodeShooting?.frame.width)!/2 + labelsSpacing
         playerShootingLabel.position.y = (smallDonutNode?.position.y)! - playerShootingLabel.frame.height/2
-        self.addChild(playerShootingLabel)
         
         playerRunningLabel.position.x = playerShootingLabel.position.x
         playerRunningLabel.position.y = (bigDonutNode?.position.y)! - playerRunningLabel.frame.height/2
-        self.addChild(playerRunningLabel)
         
         bigDonutLabel.position.x = (bigDonutNode?.position.x)! + (bigDonutNode?.frame.width)!/2 + labelsSpacing
         bigDonutLabel.position.y = playerRunningLabel.position.y
-        self.addChild(bigDonutLabel)
         
         smallDonutLabel.position.x = bigDonutLabel.position.x
         smallDonutLabel.position.y = playerShootingLabel.position.y
-        self.addChild(smallDonutLabel)
+        
+        //run actions
+        playerNodeRunning?.run(runningIdle)
+        playerNodeRunning?.run(runningMove)
+        
+        playerNodeShooting?.run(shootingIdle)
+        
+        legRNode!.run(SKAction.repeatForever(legRIdle))
+        legLNode!.run(SKAction.repeatForever(legLIdle))
+        legRNode2!.run(SKAction.repeatForever(legRIdle))
+        legLNode2!.run(SKAction.repeatForever(legLIdle))
+        
+        auraNode!.run(DonutsActions.smallAuraAnim)
+        
+        bigDonutNode?.run(rotateAction)
+        bigDonutNode?.run(bigDonutColor)
+        
+        smallDonutNode?.run(rotateAction)
+        smallDonutNode?.run(smallDonutColor)
+        
+        //nodes final setup
+        playerNodeRunning?.addChild(legRNode!)
+        playerNodeRunning?.addChild(legLNode!)
+        
+        playerNodeShooting?.addChild(legRNode2!)
+        playerNodeShooting?.addChild(legLNode2!)
+        
+        smallDonutNode?.addChild(auraNode!)
         
     }
     
-    func show() {
+    func setupTutorial() {
+        
+        //add nodes in panel
+        self.addChild(playerNodeRunning!)
+        self.addChild(playerNodeShooting!)
+        
+        self.addChild(bigDonutNode!)
+        self.addChild(smallDonutNode!)
+        
+        self.addChild(playerShootingLabel)
+        self.addChild(playerRunningLabel)
+        self.addChild(bigDonutLabel)
+        self.addChild(smallDonutLabel)
+    }
+    
+    func showTutorial() {
+        self.setupTutorial()
         self.run(showAction)
+    }
+    
+    func hide() {
+        self.run(hideAction)
     }
     
     required init?(coder aDecoder: NSCoder) {
