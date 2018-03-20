@@ -66,7 +66,6 @@ class InfoPanel: SKSpriteNode {
         
         //hide action
         let hide = SKAction.sequence([SKAction.move(to: CGPoint(x: -(currentSceneFrame.width)/2, y: (currentSceneFrame.height)/2), duration: 0.60), SKAction.run {
-            self.removeAllChildren()
             self.position.x = (sceneFrame.width) + self.frame.width/2
             }])
         hideAction = hide
@@ -234,10 +233,25 @@ class InfoPanel: SKSpriteNode {
         
     }
     
+    func setupTutorial() {
+        removeAllChildren()
+        
+        //add nodes in panel
+        self.addChild(playerNodeRunning!)
+        self.addChild(playerNodeShooting!)
+        
+        self.addChild(bigDonutNode!)
+        self.addChild(smallDonutNode!)
+        
+        self.addChild(playerShootingLabel)
+        self.addChild(playerRunningLabel)
+        self.addChild(bigDonutLabel)
+        self.addChild(smallDonutLabel)
+    }
+
+    
     func setupEndPanel () {
         
-//        TODO: Fixare solo se il gioco avrà successo
-        setupTutorial()
         removeAllChildren()
         
         
