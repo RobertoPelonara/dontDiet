@@ -11,62 +11,94 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-  var window: UIWindow?
-
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Load TextureAtlas
-    let playerAtlas = SKTextureAtlas(named: "Sprites")
     
-    // Get the list of texture names, and sort them
-    let textureNames = playerAtlas.textureNames.sorted { (first, second) -> Bool in
-        return first < second
-    }
+    var window: UIWindow?
     
-    // Load all textures
-    GameManager.shared.allTextures = textureNames.map {
-        return playerAtlas.textureNamed($0)
-    }
-    
-    GameManager.shared.allBigDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("donut_big")
-    }
-    GameManager.shared.allMediumDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("donut_medium")
-    }
-    GameManager.shared.allSmallDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("donut_small")
-    }
-    GameManager.shared.allSmallPinkDonutsBreakTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("donut_breaks_pink")
-    }
-    GameManager.shared.allSmallDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("aura_small")
-    }
-    GameManager.shared.allMidDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("aura_mid")
-    }
-    GameManager.shared.allBigDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
-        return texture.description.contains("aura_big")
-    }
-    
-    //shared actions
-    GameManager.shared.sceneStop = SKAction.run {
-        GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
-        for donut in GameManager.shared.spawnedDonuts {
-            donut.auraNode?.removeAllActions()
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Load TextureAtlas
+        let playerAtlas = SKTextureAtlas(named: "Sprites")
+        
+        // Get the list of texture names, and sort them
+        let textureNames = playerAtlas.textureNames.sorted { (first, second) -> Bool in
+            return first < second
         }
-        GameManager.shared.gamePaused = true
-        GameManager.shared.gameScene?.perna.removeAllActions()
-        GameManager.shared.gameScene?.perna.removeAllChildren()
-        GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
-        GameManager.shared.gameScene?.perna.setScale(0.65)
-        GameManager.shared.gameScene?.perna.position.y -= 5
-        GameManager.shared.gameScene?.perna.texture = GameManager.shared.gameScene?.perna.textureDeath[0]
+        
+        // Load all textures
+        GameManager.shared.allTextures = textureNames.map {
+            return playerAtlas.textureNamed($0)
+        }
+        
+        GameManager.shared.allBigDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("donut_big")
+        }
+        GameManager.shared.allMediumDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("donut_medium")
+        }
+        GameManager.shared.allSmallDonutsTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("donut_small")
+        }
+        GameManager.shared.allSmallPinkDonutsBreakTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("donut_breaks_pink")
+        }
+        GameManager.shared.allSmallDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("aura_small")
+        }
+        GameManager.shared.allMidDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("aura_mid")
+        }
+        GameManager.shared.allBigDonutsAuraTextures = GameManager.shared.allTextures.filter { (texture) -> Bool in
+            return texture.description.contains("aura_big")
+        }
+        
+        //shared actions
+        GameManager.shared.sceneStop = SKAction.run {
+            
+            GameManager.shared.gameScene?.tapisRoulant.removeAllActions()
+            for donut in GameManager.shared.spawnedDonuts {
+                donut.auraNode?.removeAllActions()
+                
+            }
+            
+            GameManager.shared.gamePaused = true
+            GameManager.shared.gameScene?.perna.removeAllActions()
+            GameManager.shared.gameScene?.perna.removeAllChildren()
+            GameManager.shared.gameScene?.perna.size = SpriteSize.playerDying
+            GameManager.shared.gameScene?.perna.setScale(0.65)
+            GameManager.shared.gameScene?.perna.position.y -= 5
+            GameManager.shared.gameScene?.perna.texture = GameManager.shared.gameScene?.perna.textureDeath[0]
+            
+        }
+        
+        GameManager.shared.sceneResume = SKAction.run {
+            
+            GameManager.shared.gameIsOver = true
+            GameManager.shared.gameScene?.perna.run(SKAction.repeatForever(SKAction.animate(with: (GameManager.shared.gameScene?.perna.textureDeath)!, timePerFrame: 0.1)))
+            
+        }
+        
+        GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)
+        GameManager.shared.gameOverSequence = SKAction.sequence([GameManager.shared.sceneStop, GameManager.shared.wait, GameManager.shared.sceneResume])
+        
+        return true
     }
-    GameManager.shared.sceneResume = SKAction.run {
-        GameManager.shared.gameIsOver = true
-        GameManager.shared.gameScene?.perna.run(SKAction.repeatForever(SKAction.animate(with: (GameManager.shared.gameScene?.perna.textureDeath)!, timePerFrame: 0.1)))
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        
+        GameManager.shared.gameScene?.lastTime = 0
+        GameManager.shared.gamePaused = true
+        
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        GameManager.shared.gamePaused = false
     }
     GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)
     GameManager.shared.gameOverSequence = SKAction.sequence([GameManager.shared.sceneStop, GameManager.shared.wait, GameManager.shared.sceneResume])
@@ -136,5 +168,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
 }

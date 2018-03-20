@@ -208,11 +208,11 @@ class GameManager {
         score += Scores.bonus
         gameScene!.run(self.eatSound)
         if !GameManager.shared.overdoseStarted{
-        GameManager.shared.rushStarted = true
-        gameScene!.rushCount += 1
-        if gameScene!.rushCount >= gameScene!.donutToOverdose {
-            gameScene!.startOverdose()
-        }
+            GameManager.shared.rushStarted = true
+            gameScene!.rushCount += 1
+            if gameScene!.rushCount >= gameScene!.donutToOverdose {
+                gameScene!.startOverdose()
+            }
         }
     }
     
