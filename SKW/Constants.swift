@@ -73,9 +73,9 @@ enum DeviceGravity {
 enum DonutConstants {
     //modulo di rimbalzo
     enum Reflect {
-        static let big: CGFloat = 13.04
-        static let medium: CGFloat = 12
-        static let small: CGFloat = 9
+        static var big: CGFloat = 13.04
+        static var medium: CGFloat = 12
+        static var small: CGFloat = 9
     }
     //velocità sull'asse X
     enum XMovement {
