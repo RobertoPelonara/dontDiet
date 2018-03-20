@@ -21,11 +21,11 @@ class MenuScene: SKScene {
     var tLabel2 = SKLabelNode(fontNamed: "Unipix")
     var gameLabel = SKLabelNode(fontNamed: "Unipix")
     var gameLabel2 = SKLabelNode(fontNamed: "Unipix")
+    
+    
     override func didMove(to view: SKView) {
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
-        //debugPrint("view: \(view.frame)")
         backgroundColor = .white
-        
         let background = SKSpriteNode(imageNamed: "background")
         background.size = frame.size
         background.position = CGPoint(x: size.width/2 , y: size.height/2)
