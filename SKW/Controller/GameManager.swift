@@ -88,10 +88,6 @@ class GameManager {
     private var _score: Int = 0
     private var _timer: TimeInterval = FatTimer.maxValue
     
-    //Physics
-    let gravity = CGPoint (x: 0, y: -0.3)
-    var groundY = CGFloat(40)
-    
     var soundtrack: AVAudioPlayer?
     
     func initializeDonuts(){
@@ -208,11 +204,11 @@ class GameManager {
         score += Scores.bonus
         gameScene!.run(self.eatSound)
         if !GameManager.shared.overdoseStarted{
-        GameManager.shared.rushStarted = true
-        gameScene!.rushCount += 1
-        if gameScene!.rushCount >= gameScene!.donutToOverdose {
-            gameScene!.startOverdose()
-        }
+            GameManager.shared.rushStarted = true
+            gameScene!.rushCount += 1
+            if gameScene!.rushCount >= gameScene!.donutToOverdose {
+                gameScene!.startOverdose()
+            }
         }
     }
     

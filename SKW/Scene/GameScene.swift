@@ -72,15 +72,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(background!)
         
         GameManager.shared.startGameTimer = Date().timeIntervalSince1970
-            
+        
         perna.setup(view: self.view!,gameScene:self)
         
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
-
+        
         
         tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
         tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
-         self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
+        self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
         tapisRoulant.run(tapisRoulantAnimation!)
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
@@ -96,7 +96,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         overdoseEndingSequence = SKAction.sequence([self.backgroundOverdoseAction, overdoseEndingAction])
     }
     
-     
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if !GameManager.shared.gamePaused {
@@ -151,17 +151,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 broccoli.update(deltaTime: deltaTime)
             }
             
-        } else {
-            if perna.position.y < -SpriteSize.player.height {
-                GameManager.shared.gameOverEnd()
-            }
         }
         
         perna.update(deltaTime: deltaTime)
         
     }
     
-   
+    
     func startOverdose () {
         
         background?.texture = SKTexture(image: #imageLiteral(resourceName: "backgroundOverdose"))
@@ -212,7 +208,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let spawnTime = (-3.5 * Double(GameManager.shared.score) + 15000.0)/3000.0
                 
                 spawnDonutInterval = TimeInterval(Double(arc4random_uniform(301)) + (spawnTime * 100)) / 100
-            
+                
                 
             }
             
@@ -231,8 +227,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             broccoli.setup(gameScene: self)
             
             if GameManager.shared.score >= 3000 {
-    
-                  spawnBroccoliInterval = TimeInterval(Double(arc4random_uniform(1001)) + (5 * 100)) / 100
+                
+                spawnBroccoliInterval = TimeInterval(Double(arc4random_uniform(1001)) + (5 * 100)) / 100
                 
             } else{
                 
@@ -240,7 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 spawnBroccoliInterval = TimeInterval(Double(arc4random_uniform(1001)) + (spawnTime * 100)) / 100
                 
             }
-
+            
             
         }
         
