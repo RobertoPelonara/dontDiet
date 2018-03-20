@@ -87,18 +87,18 @@ enum DonutConstants {
     }
     //velocità sull'asse X
     enum XMovement {
-        static let big: CGFloat = 4 //5
-        static let medium: CGFloat = 3.5 //4
-        static let small: CGFloat = 2.5 //3
+        static let big: CGFloat = 240 //5
+        static let medium: CGFloat = 210 //4
+        static let small: CGFloat = 150//3
     }
     
     enum startingForce {
-        static let medium: CGFloat = 5.5 //7
-        static let small: CGFloat = 4.75 //6
+        static let medium: CGFloat = 330 //7
+        static let small: CGFloat = 285 //6
     }
     
     static let zRotation = Double.pi / 60
-    static let gravity = CGPoint (x: 0, y: -0.3) //-0.4
+    static let gravity = CGPoint (x: 0, y: -1080) //-0.4
     static var groundY: CGFloat = 36
     
 }

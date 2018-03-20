@@ -149,14 +149,15 @@ class MenuScene: SKScene {
     let scene = GameScene(size: size)
     GameManager.shared.gameScene = scene
     scene.scaleMode = scaleMode
-    let infoPanel = InfoPanel(sceneFrame: self.frame)
-    addChild(infoPanel)
-    infoPanel.setupEndPanel()
-    infoPanel.show()
+    //let infoPanel = InfoPanel(sceneFrame: self.frame)
+    //addChild(infoPanel)
+    //infoPanel.setupEndPanel()
+    //infoPanel.show()
+   
+    GameManager.shared.gameViewController?.loadScene(scene, self)
     velocity = 0
     bounceCounter = 0
     lastTime = 0
-    //GameManager.shared.gameViewController?.loadScene(scene, self)
   }
 
 }

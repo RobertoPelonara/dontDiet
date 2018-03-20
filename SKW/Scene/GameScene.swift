@@ -63,6 +63,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func didMove(to view: SKView) {
+        
+        DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(0.63, 2))) / 0.63
+        DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.516, 2))) / 0.516
+        DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.3999, 2))) / 0.3999
+        
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .black
         background = SKSpriteNode(imageNamed: "background")
@@ -144,9 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             lastTime = currentTime
             
             // Set the Refletc parameter of the donuts
-            DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(38, 2))) / 38
-            DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(31, 2))) / 31
-            DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(24, 2))) / 24
+            
            
             
             for donut in GameManager.shared.spawnedDonuts {
