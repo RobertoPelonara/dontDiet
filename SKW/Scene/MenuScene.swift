@@ -118,17 +118,6 @@ class MenuScene: SKScene {
         
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let _ = touches.first else { return }
-        let scene = GameScene(size: size)
-        GameManager.shared.gameScene = scene
-        scene.scaleMode = scaleMode
-        GameManager.shared.gameViewController?.loadScene(scene, self)
-        velocity = 0
-        bounceCounter = 0
-        lastTime = 0
-    }
-    
     override func update(_ currentTime: TimeInterval) {
         
         if lastTime <= 0 { lastTime = currentTime }
@@ -153,6 +142,21 @@ class MenuScene: SKScene {
         
     }
     
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    guard let _ = touches.first else { return }
+    
+//    self.run(SKAction.playSoundFileNamed("good.m4a", waitForCompletion: false))
+    let scene = GameScene(size: size)
+    GameManager.shared.gameScene = scene
+    scene.scaleMode = scaleMode
+    let infoPanel = InfoPanel(sceneFrame: self.frame)
+    addChild(infoPanel)
+    infoPanel.setupEndPanel()
+    infoPanel.show()
+    velocity = 0
+    bounceCounter = 0
+    lastTime = 0
+    //GameManager.shared.gameViewController?.loadScene(scene, self)
+  }
+
 }
-
-
