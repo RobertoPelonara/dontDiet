@@ -266,6 +266,8 @@ class Player: SKSpriteNode {
     }
     
     func updateMoveAndAnim (_ deltaTime: TimeInterval){
+        
+       
         if !GameManager.shared.gamePaused {
             
             guard let yDeviceGravity  = self.motionManager.deviceMotion?.gravity.y else {return}

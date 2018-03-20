@@ -132,6 +132,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
             
+            
+            
             GameManager.shared.timer = -deltaTime
             
             // Random spawn
@@ -140,6 +142,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             // Set last frame time to current time
             lastTime = currentTime
+            
+            // Set the Refletc parameter of the donuts
+            DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(38, 2))) / 38
+            DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(31, 2))) / 31
+            DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(24, 2))) / 24
+           
             
             for donut in GameManager.shared.spawnedDonuts {
                 donut.update(deltaTime: deltaTime)
