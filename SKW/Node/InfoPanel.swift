@@ -234,6 +234,21 @@ class InfoPanel: SKSpriteNode {
         
     }
     
+    func setupTutorial() {
+        
+        //add nodes in panel
+        self.addChild(playerNodeRunning!)
+        self.addChild(playerNodeShooting!)
+        
+        self.addChild(bigDonutNode!)
+        self.addChild(smallDonutNode!)
+        
+        self.addChild(playerShootingLabel)
+        self.addChild(playerRunningLabel)
+        self.addChild(bigDonutLabel)
+        self.addChild(smallDonutLabel)
+    }
+    
     func setupEndPanel () {
         
 //        TODO: Fixare solo se il gioco avrà successo
