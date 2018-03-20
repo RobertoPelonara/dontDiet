@@ -24,6 +24,14 @@ class MenuScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        
+        if GameManager.shared.infoPanel == nil {
+            GameManager.shared.infoPanel = InfoPanel(sceneFrame: self.frame)
+        }
+
+        
+        
+        
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .white
         let background = SKSpriteNode(imageNamed: "background")
@@ -149,10 +157,11 @@ class MenuScene: SKScene {
     let scene = GameScene(size: size)
     GameManager.shared.gameScene = scene
     scene.scaleMode = scaleMode
-    //let infoPanel = InfoPanel(sceneFrame: self.frame)
-    //addChild(infoPanel)
-    //infoPanel.setupEndPanel()
-    //infoPanel.show()
+    print(scaleMode.rawValue)
+//    let infoPanel = InfoPanel(sceneFrame: self.frame)
+//    addChild(infoPanel)
+//    infoPanel.setupEndPanel()
+//    infoPanel.show()
    
     GameManager.shared.gameViewController?.loadScene(scene, self)
     velocity = 0

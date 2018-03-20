@@ -11,6 +11,9 @@ import SpriteKit
 
 class InfoPanel: SKSpriteNode {
     var currentSceneFrame: CGRect
+    var isShown = false
+    var isEndPanel = false
+    
     
     //TUTORIAL
     var playerRunningTextures: [SKTexture] = []
@@ -60,6 +63,12 @@ class InfoPanel: SKSpriteNode {
     var timerLabel = SKLabelNode(fontNamed: "Unipix")
     var tapToReturn = SKLabelNode(fontNamed: "Unipix")
     var titleShadow = SKLabelNode(fontNamed: "Unipix")
+    var buttonHome = SKSpriteNode(imageNamed: "buttons0")
+    var buttonRestart = SKSpriteNode(imageNamed: "buttons1")
+    
+    
+    //FADE NERO
+    var fade = SKShapeNode(rectOf: (GameManager.shared.gameViewController?.view.frame.size)!)
     
     init(sceneFrame: CGRect ) {
         
@@ -185,7 +194,8 @@ class InfoPanel: SKSpriteNode {
         bigDonutColor = bigDonutRandomColor
         
         //players positions
-        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing + (playerNodeRunning?.frame.width)!/2 + 10
+        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing
+        playerNodeRunning?.position.x += (playerNodeRunning?.frame.width)!/2 + 10
         playerNodeRunning?.position.y = SpriteSize.tutorialPanel.height/2 - spacing - (playerNodeRunning?.frame.height)!/2
         
         playerNodeShooting?.position.x = (playerNodeRunning?.position.x)! - 10
@@ -261,18 +271,47 @@ class InfoPanel: SKSpriteNode {
         
         tapToReturn.fontSize = 26
         tapToReturn.fontColor = .black
-        tapToReturn.color?.withAlphaComponent(0.7)
-        tapToReturn.text = "Tap to return to Main Menu"
+        tapToReturn.color?.withAlphaComponent(0.6)
+        tapToReturn.text = "Easter Egg"
         tapToReturn.position = CGPoint(x: titleLabel.position.x , y: timerLabel.position.y - 10)
         
         titleShadow.fontColor = .black
         titleShadow.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
         
+        buttonHome.position = CGPoint(x: 0, y: -100)
+        buttonRestart.position = CGPoint(x: 0, y: -100)
+        
+        buttonHome.name = "buttonHome"
+        buttonRestart.name = "buttonRestart"
+        
+        fade.fillColor = UIColor(ciColor: .black).withAlphaComponent(0.5)
+        fade.zPosition = -1
+    }
+    
+    func goToMainMenu () {
+        hide()
+        GameManager.shared.gameViewController?.loadScene(GameManager.shared.menuScene!, GameManager.shared.gameScene)
+        GameManager.shared.gamePaused = false
+
+    }
+    
+    func restartGame () {
+        hide()
+        let scene = GameScene(size: size)
+       
+        GameManager.shared.gameViewController?.loadScene(scene, GameManager.shared.gameScene)
+        
+        GameManager.shared.gameScene = scene
+        GameManager.shared.gamePaused = false
+
     }
     
     func setupTutorial() {
         
         removeAllChildren()
+        
+        GameManager.shared.firstTime = false
+        
         
         //add nodes in panel
         self.addChild(playerNodeRunning!)
@@ -292,6 +331,10 @@ class InfoPanel: SKSpriteNode {
         
         removeAllChildren()
         
+        scoreLabel.text = "You gained \(GameManager.shared.score) calories"
+recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
+        timerLabel.text = "You fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
+        
         //setup death reason
         titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
         titleShadow.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
@@ -306,14 +349,21 @@ class InfoPanel: SKSpriteNode {
         addChild(timerLabel)
         addChild(tapToReturn)
         addChild(titleShadow)
-        
+        addChild(buttonHome)
+//        addChild(buttonRestart)
+
     }
     
     func show() {
+        isShown = true
         self.run(showAction)
+        //addChild(fade)
+
     }
     
     func hide() {
+        isShown = false
+        fade.removeFromParent()
         self.run(hideAction)
     }
     

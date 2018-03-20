@@ -64,6 +64,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        if GameManager.shared.firstTime {
+            print("Show Tutorial")
+            GameManager.shared.gamePaused = true
+
+            GameManager.shared.infoPanel?.setupTutorial()
+            addChild(GameManager.shared.infoPanel!)
+            addChild(GameManager.shared.infoPanel!.fade)
+            GameManager.shared.infoPanel!.fade.zPosition = GameManager.shared.infoPanel!.zPosition - 0.001
+            GameManager.shared.infoPanel!.fade.position = CGPoint(x: size.width/2, y: size.height/2)
+            GameManager.shared.infoPanel?.show()
+
+        }
+        
+        
         DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(0.63, 2))) / 0.63
         DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.516, 2))) / 0.516
         DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.3999, 2))) / 0.3999
@@ -107,6 +121,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !GameManager.shared.gamePaused {
             guard let _ = touches.first else {return}
             perna.throwFork()
+        }
+        else {
+            if GameManager.shared.infoPanel!.isShown {
+                if  GameManager.shared.infoPanel!.isEndPanel {
+                    let nodeFound = nodes(at: (touches.first?.location(in: self))!).first
+                    
+                    if let node = nodeFound {
+                        
+                        if node.name == "buttonHome"{
+                            GameManager.shared.infoPanel?.goToMainMenu()
+                        }
+                        else if node.name == "buttonRestart" {
+                            GameManager.shared.infoPanel?.restartGame()
+                        }
+                    }
+                    return
+                }
+                GameManager.shared.infoPanel?.hide()
+                GameManager.shared.gamePaused = false
+                
+            }
         }
     }
     

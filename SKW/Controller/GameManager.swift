@@ -90,6 +90,10 @@ class GameManager {
     
     var soundtrack: AVAudioPlayer?
     
+    var infoPanel: InfoPanel?
+    
+    var firstTime = true
+    
     func initializeDonuts(){
         
         for i in 0...39 {
@@ -174,7 +178,7 @@ class GameManager {
     }
     
     func gameOverEnd () {
-        self.gamePaused = false
+       // self.gamePaused = true
         self.gameIsOver = false
         
         guard let _gameViewController = gameViewController,
@@ -182,12 +186,20 @@ class GameManager {
             let _gameScene = gameScene else {
                 return
         }
-        
+        infoPanel?.setupEndPanel()
+        infoPanel?.show()
+        infoPanel?.isEndPanel = true
+        gameScene?.addChild(infoPanel!.fade)
+        if infoPanel?.parent != gameScene {
+            infoPanel?.removeFromParent()
+        gameScene?.addChild(GameManager.shared.infoPanel!)
+        }
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970
         totalGameTimer = self.endGameTimer - self.startGameTimer
-        _gameViewController.loadScene(_endScene, _gameScene)
+        //_gameViewController.loadScene(_endScene, _gameScene)
         
+
         availableDonuts.removeAll()
         availableForks.removeAll()
         spawnedForks.removeAll()
