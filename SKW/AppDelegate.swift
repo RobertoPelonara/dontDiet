@@ -100,8 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         GameManager.shared.gamePaused = false
     }
-    GameManager.shared.wait = SKAction.wait(forDuration: AnimationSpeeds.deathAnimationWaitTime)
-    GameManager.shared.gameOverSequence = SKAction.sequence([GameManager.shared.sceneStop, GameManager.shared.wait, GameManager.shared.sceneResume])
    
     return true
   }
