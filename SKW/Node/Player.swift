@@ -175,6 +175,11 @@ class Player: SKSpriteNode {
     }
     
     func update(deltaTime: TimeInterval) {
+        
+        
+        
+        
+        
         updateMoveAndAnim(deltaTime)
         updateHitBox()
         checkCollisionWithDonuts()
