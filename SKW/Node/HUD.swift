@@ -50,7 +50,7 @@ class HUD: SKNode {
         
         scoreLabel.text = "Calories: 0"
         scoreLabel.fontColor = SKColor(red: 0, green: 0, blue: 0.6, alpha: 1)
-        scoreLabel.fontSize = 25
+        scoreLabel.fontSize = sceneSize.height / 15
         scoreLabel.zPosition = Z.HUD
         
         statusBar.texture = SKTexture.init(imageNamed: "candy_cane.png")
@@ -66,7 +66,7 @@ class HUD: SKNode {
     
     func setup(size: CGSize) {
         
-        let spacing: CGFloat = 10
+        let spacing: CGFloat = sceneSize.height / 37.5
         
         scoreLabel.horizontalAlignmentMode = .left
         scoreLabel.position = CGPoint(x: spacing, y: size.height - scoreLabel.frame.height - spacing)

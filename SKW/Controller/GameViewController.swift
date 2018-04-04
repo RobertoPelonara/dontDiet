@@ -57,7 +57,7 @@ class GameViewController: UIViewController {
         let endScene = EndScene(size: view.frame.size)
         GameManager.shared.endScene = endScene
         
-        let scene = MenuScene(size: view.frame.size)
+        let scene = MenuScene(size: CGSize(width: view.frame.width, height: view.frame.width / 16 * 9))
         GameManager.shared.menuScene = scene
         
         let path = Bundle.main.path(forResource: "soundtrack.mp3", ofType:nil)!
@@ -93,7 +93,7 @@ class GameViewController: UIViewController {
             
             // Create Scene
             //let scene = MenuScene(size: view.frame.size)
-            scene.scaleMode = .aspectFill // Fit the window
+            scene.scaleMode = .aspectFit // Fit the window
             
             // Debug
 //            view.ignoresSiblingOrder = false

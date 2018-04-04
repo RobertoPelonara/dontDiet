@@ -34,6 +34,12 @@ class Rect {
         self.width = width
     }
     
+    init (x: CGFloat, y: CGFloat, size: CGSize){
+        self.x = x
+        self.y = y
+        self.height = size.height
+        self.width = size.width
+    }
 }
 
 func rectInCircle (rect: Rect, circle: Circle) -> Bool {

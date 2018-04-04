@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Load TextureAtlas
         let playerAtlas = SKTextureAtlas(named: "Sprites")
+        print(playerAtlas)
+        
+        
         
         // Get the list of texture names, and sort them
         let textureNames = playerAtlas.textureNames.sorted { (first, second) -> Bool in

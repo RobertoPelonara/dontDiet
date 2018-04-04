@@ -53,10 +53,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var hud = HUD()
     var background: SKSpriteNode?
     
-    // Before the Scene
     override func sceneDidLoad() {
-        self.physicsWorld.contactDelegate = self
-        self.physicsWorld.gravity = CGVector(dx:0, dy: -9.8)
         GameManager.shared.gameScene = self
         hud.setup(size: self.size)
         self.addChild(hud)
@@ -94,17 +91,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         perna.setup(view: self.view!,gameScene:self)
         
+        print(perna.size)
         GameManager.shared.soundtrack?.setVolume(0.2, fadeDuration: 0.4)
         
         
         tapisRoulant = SKSpriteNode(texture: tapisRoulantTextures[0], color: .clear, size: SpriteSize.tapisRoulant)
-        tapisRoulant.position = CGPoint(x: self.view!.frame.midX, y: tapisRoulant.size.height/2)
+        tapisRoulant.position = CGPoint(x: self.frame.midX, y: tapisRoulant.size.height/2)
         self.tapisRoulantAnimation = SKAction.repeatForever(SKAction.animate(with: tapisRoulantTextures, timePerFrame: 0.07))
         tapisRoulant.run(tapisRoulantAnimation!)
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
-        DonutConstants.groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
+        groundY = tapisRoulant.position.y + tapisRoulant.frame.height/2
         
         let overdoseEndingAction = SKAction.run {
             GameManager.shared.overdoseStarted = false
