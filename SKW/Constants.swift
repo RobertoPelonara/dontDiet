@@ -7,6 +7,9 @@
 
 import SpriteKit
 
+let sceneSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width / 16 * 9)
+var groundY: CGFloat = sceneSize.height / 10.417
+
 enum PhysicsMask {
   static let player: UInt32 = 0x1 << 1    // 2
   static let bullet: UInt32 = 0x1 << 2    // 4
@@ -33,25 +36,26 @@ enum Z {
 
 enum SpriteSize {
     
-    static let playerHitBox = CGSize(width: 19, height: 48)
-    static let player = CGSize(width: 64, height: 64)
-    static let playerDying = CGSize(width: 64, height: 73)
-    static let enemy = CGSize(width: 30, height: 30)
-    static let bullet = CGSize(width: 10, height: 10)
-    static let mushroom = CGSize(width: 20, height: 20)
-    static let button = CGSize(width: 50, height: 50)
-    static let statusBar = CGSize(width: 118, height: 31)
-    static let statusBarBackground = CGSize(width: 122, height: 35)
-    static let broccoli = CGSize(width: 45, height: 60)
-    static let fork = CGSize(width: 15, height: 777)
-    static let tapisRoulant = CGSize(width:667,height:36)
-    static let donutBig = CGSize(width: 60, height: 60)
-    static let donutMid = CGSize(width: 45, height: 45)
-    static let donutSmall = CGSize(width: 24, height: 24)
-    static let donutAuraBig = CGSize(width: 68, height: 68)
-    static let donutAuraMid = CGSize(width: 53, height: 53)
-    static let donutAuraSmall = CGSize(width: 32, height: 32)
-    static let tutorialPanel = CGSize(width: 500, height: 250)
+    static let player = CGSize(width: sceneSize.width / 10.422, height: sceneSize.height / 5.859)
+    static let playerDying = CGSize(width: sceneSize.width / 10.422, height: sceneSize.height / 5.137)
+    static let statusBar = CGSize(width: sceneSize.width / 5.652, height: sceneSize.height / 12.097)
+    static let statusBarBackground = CGSize(width: sceneSize.width / 5.467, height: sceneSize.height / 10.714)
+    static let broccoli = CGSize(width: sceneSize.width / 14.822, height: sceneSize.height / 6.25)
+    static let fork = CGSize(width: sceneSize.width / 44.467, height: sceneSize.height / 0.483)
+    static let tapisRoulant = CGSize(width:sceneSize.width,height:sceneSize.height / 10.416)
+    static let donutBig = CGSize(width: sceneSize.width / 11.117, height: sceneSize.height / 6.25)
+    static let donutMid = CGSize(width: sceneSize.width / 14.822, height: sceneSize.height / 8.333)
+    static let donutSmall = CGSize(width: sceneSize.width / 27.792, height: sceneSize.height / 15.625)
+    static let donutAuraBig = CGSize(width: sceneSize.width / 9.809, height: sceneSize.height / 5.515)
+    static let donutAuraMid = CGSize(width: sceneSize.width / 12.585, height: sceneSize.height / 7.075)
+    static let donutAuraSmall = CGSize(width: sceneSize.width / 20.844, height: sceneSize.height / 11.719)
+    static let tutorialPanel = CGSize(width: sceneSize.width / 1.334, height: sceneSize.height / 1.5)
+    
+}
+
+enum HitBox {
+    
+    static let player = CGSize(width: sceneSize.width / 35.105, height: sceneSize.height / 7.813)
     
 }
 
@@ -81,25 +85,25 @@ enum DonutConstants {
     }
     
     enum MaxHeight {
-        static let big: CGFloat = UIScreen.main.bounds.height - SpriteSize.donutBig.height / 2
-        static let medium: CGFloat = UIScreen.main.bounds.height * 0.696 - SpriteSize.donutMid.height / 2
-        static let small: CGFloat = UIScreen.main.bounds.height * 0.429 - SpriteSize.donutSmall.height / 2
+        static let big: CGFloat = sceneSize.height - SpriteSize.donutBig.height / 2
+        static let medium: CGFloat = sceneSize.height * 0.696 - SpriteSize.donutMid.height / 2
+        static let small: CGFloat = sceneSize.height * 0.429 - SpriteSize.donutSmall.height / 2
     }
     //velocità sull'asse X
     enum XMovement {
-        static let big: CGFloat = 240 //5
-        static let medium: CGFloat = 210 //4
-        static let small: CGFloat = 150//3
+        static let big: CGFloat = sceneSize.width / 2.779 //5
+        static let medium: CGFloat = sceneSize.width / 3.176 //4
+        static let small: CGFloat = sceneSize.width / 4.447//3
     }
     
     enum startingForce {
-        static let medium: CGFloat = 330 //7
-        static let small: CGFloat = 285 //6
+        static let medium: CGFloat = sceneSize.height / 1.136 //7
+        static let small: CGFloat = sceneSize.height / 1.316 //6
     }
     
     static let zRotation = Double.pi / 60
-    static let gravity = CGPoint (x: 0, y: -1080) //-0.4
-    static var groundY: CGFloat = 36
+    static let gravity = CGPoint (x: 0, y: -sceneSize.height / 0.347) //-0.4
+   
     
 }
 

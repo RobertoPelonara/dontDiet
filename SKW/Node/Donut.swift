@@ -174,9 +174,9 @@ class Donut: SKSpriteNode {
         positionAsVector.y += (oldForce.y + currForce.y) * 0.5 * CGFloat(deltaTime)
         positionAsVector.x = positionAsVector.x + (xParameter!) * CGFloat(deltaTime)
 
-        if positionAsVector.y <= DonutConstants.groundY + donutHitBox.r {
+        if positionAsVector.y <= groundY + donutHitBox.r {
             currForce.y = reflectParameter!
-            positionAsVector.y = DonutConstants.groundY + donutHitBox.r
+            positionAsVector.y = groundY + donutHitBox.r
             if self.type == .smallLeft || self.type == .smallRight {
                 if self.bounceCounter < 2 {bounceCounter += 1} else {
                     hitBox = nil

@@ -67,13 +67,13 @@ class Broccoli: SKSpriteNode {
     func updateMovement(deltaTime: TimeInterval) {
         
 //        let gravityVector = Vector2(x: GameManager.shared.gravity.x, y: GameManager.shared.gravity.y)
-         let gravityVector = Vector2(x: DonutConstants.gravity.x, y: -0.2)
+         let gravityVector = Vector2(x: DonutConstants.gravity.x, y: -sceneSize.height / 1875)
         var positionAsVector = Vector2(x: position.x, y: position.y)
 
         currForce.y += gravityVector.y * velocity * CGFloat(deltaTime)
         positionAsVector.y += currForce.y * velocity * CGFloat(deltaTime)
         
-        if positionAsVector.y <= DonutConstants.groundY + (hitBox?.r)! {
+        if positionAsVector.y <= groundY + (hitBox?.r)! {
             if debug {debugHitBox?.removeFromParent()}
             self.removeFromParent()
             

@@ -13,7 +13,7 @@ class Fork: SKSpriteNode {
     var hitBox: Rect?
     var debugHitBox: SKSpriteNode?
     var gameScene: SKScene?
-    let velocity:CGFloat = 240
+    let velocity:CGFloat = sceneSize.height / 1.563
 //    var isInGame = false
     var indexInArray: Int?
     var debug = false
@@ -38,7 +38,7 @@ class Fork: SKSpriteNode {
         self.zPosition = Z.fork
         //self.position.y -= 200
         self.position.y -= SpriteSize.fork.height/2 - SpriteSize.player.height/2
-        hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: 10)
+        hitBox =  Rect(x: position.x, y: position.y, height: SpriteSize.fork.height, width: sceneSize.width / 66.7)
         
         if debug {
             debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 8, height: SpriteSize.fork.height))

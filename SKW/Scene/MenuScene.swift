@@ -39,14 +39,14 @@ class MenuScene: SKScene {
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
-        gameLabel.fontSize = 80
+        gameLabel.fontSize = sceneSize.height / 4.687
         gameLabel.fontColor = .white
         gameLabel.text = "Don't Die"
         gameLabel.zPosition = Z.tapisRoulant
         
         addChild(gameLabel)
         
-        gameLabel2.fontSize = 80
+        gameLabel2.fontSize = sceneSize.height / 4.687
         gameLabel2.fontColor = .black
         gameLabel2.text = "Don't Die"
         gameLabel2.zPosition = Z.tapisRoulant - 0.1
@@ -71,7 +71,7 @@ class MenuScene: SKScene {
         tLabel2.position = CGPoint(x:tLabel.position.x + 3, y:size.height + tLabel2.frame.height)
         
         let tapToStartLabel2 = SKLabelNode(fontNamed: "Unipix")
-        tapToStartLabel2.fontSize = 40
+        tapToStartLabel2.fontSize = sceneSize.height / 9.375
         tapToStartLabel2.fontColor = .black
         tapToStartLabel2.text = "TAP TO START"
         tapToStartLabel2.zPosition = Z.tapisRoulant + 0.1
@@ -79,7 +79,7 @@ class MenuScene: SKScene {
         addChild(tapToStartLabel2)
         
         let tapToStartLabel = SKLabelNode(fontNamed: "Unipix")
-        tapToStartLabel.fontSize = 40
+        tapToStartLabel.fontSize = sceneSize.height / 9.375
         tapToStartLabel.fontColor = .white
         tapToStartLabel.text = "TAP TO START"
         tapToStartLabel.zPosition = Z.tapisRoulant + 0.2
@@ -97,8 +97,8 @@ class MenuScene: SKScene {
         idle.setup(view: view,gameScene: self)
         
         let positionBase = idle.position.x
-        let position1 = CGPoint(x: idle.position.x - 50, y: idle.position.y)
-        let position2 = CGPoint(x: idle.position.x + 50, y: idle.position.y)
+        let position1 = CGPoint(x: idle.position.x - sceneSize.width / 13.34, y: idle.position.y)
+        let position2 = CGPoint(x: idle.position.x + sceneSize.width / 13.34, y: idle.position.y)
         
         let action1 = SKAction.moveTo(x: position1.x, duration: 1.5)
         let action2 = SKAction.moveTo(x: positionBase, duration: 1.5)

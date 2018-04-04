@@ -185,7 +185,8 @@ class InfoPanel: SKSpriteNode {
         bigDonutColor = bigDonutRandomColor
         
         //players positions
-        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing + (playerNodeRunning?.frame.width)!/2 + 10
+        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing
+        playerNodeRunning?.position.x += (playerNodeRunning?.frame.width)!/2 + 10
         playerNodeRunning?.position.y = SpriteSize.tutorialPanel.height/2 - spacing - (playerNodeRunning?.frame.height)!/2
         
         playerNodeShooting?.position.x = (playerNodeRunning?.position.x)! - 10

@@ -24,7 +24,7 @@ class Player: SKSpriteNode {
     var textureDeath: [SKTexture] = []
     
     //game over force
-    var currentForceY: CGFloat = 480
+    var currentForceY: CGFloat = sceneSize.height / 0.781
     
     //Sounds
     var throwSound: SKAction?
@@ -107,8 +107,8 @@ class Player: SKSpriteNode {
         legRNode!.zPosition = self.zPosition + 0.01
         legLNode!.zPosition = self.zPosition - 0.01
         
-        legRNode?.position = CGPoint(x: 8, y: -12)
-        legLNode?.position = CGPoint(x: 8, y: -12)
+        legRNode?.position = CGPoint(x: sceneSize.width / 83.375, y:  -sceneSize.height / 31.25)
+        legLNode?.position = CGPoint(x: sceneSize.width / 83.375, y:  -sceneSize.height / 31.25)
         
         let animationL = SKAction.animate(with: textureWalkLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: textureWalkLegR, timePerFrame: 0.07)
@@ -133,22 +133,23 @@ class Player: SKSpriteNode {
         
         self.setScale(0.75)
         self.gameScene = gameScene
-        self.position = CGPoint(x: view.frame.midX, y: self.size.height/2 + DonutConstants.groundY + 12)
+        self.position = CGPoint(x: view.frame.midX, y: self.size.height/2 + groundY + sceneSize.height / 31.25)
         self.zPosition = Z.player
         destination = position
         self.rangeLowerLimit = 0.0 + SpriteSize.player.width / 2
         self.rangeUpperLimit = view.frame.width - SpriteSize.player.width / 2 //the boundaries of the scene
         // Physics
-        hitBox = Rect(x: position.x, y: position.y - 5, height: 48, width: 19)
+        
+        hitBox = Rect(x: position.x, y: position.y - sceneSize.height / 75, size: HitBox.player )
         
         let range = SKRange(lowerLimit: rangeLowerLimit!, upperLimit: rangeUpperLimit!)
         let stattFerm = [SKConstraint.positionX(range)]
         self.constraints = stattFerm
         
         if debug{
-            debugHitBox = SKSpriteNode(color: UIColor.white, size: CGSize(width: 19 , height: 48))
+            debugHitBox = SKSpriteNode(color: UIColor.white, size: HitBox.player)
             debugHitBox?.position = position
-            debugHitBox?.position.y -= 5
+            debugHitBox?.position.y -= sceneSize.height / 75
             debugHitBox?.zPosition = Z.HUD
             gameScene.addChild(debugHitBox!)
             
@@ -191,11 +192,11 @@ class Player: SKSpriteNode {
     func updateHitBox () {
         guard let _hitBox = hitBox else {print("Player.updateHitBox: didn't find hitBox\n");return}
         _hitBox.x = position.x
-        _hitBox.y = position.y - 5
+        _hitBox.y = position.y - sceneSize.height / 75
         if debug {
             guard let _debugHitBox = debugHitBox else {print("Player.updateHitBox: didn't find debugHitBox\n"); return}
             _debugHitBox.position.x = _hitBox.x
-            _debugHitBox.position.y = _hitBox.y - 5
+            _debugHitBox.position.y = _hitBox.y - sceneSize.height / 75
         }
         
     }
@@ -274,7 +275,7 @@ class Player: SKSpriteNode {
             let deviceOrientation: CGFloat = UIApplication.shared.statusBarOrientation == .landscapeLeft ? 1 : -1
             
             let orientation: CGFloat = yDeviceGravity >= 0 ? 1.0 : -1.0
-            let deltaMove = velocity * CGFloat(pow((fabs(yDeviceGravity) - 0.030), 1/1.5)) * CGFloat(deltaTime) * deviceOrientation
+            let deltaMove = velocity * CGFloat(pow((fabs(yDeviceGravity) - 0.030), 1/1.5)) * CGFloat(deltaTime) * deviceOrientation * sceneSize.width / 667
             
             /*
              "deltaAnim" è il coefficiente che ogni frame attribuiamo alla velocità delle animazioni del personaggio per renderla proporzionale al deltaMove. C'è bisogno di sapere se il device è orientato in landscape right o left altrimenti ruotando il device l'animazione rallenta/si velocizza "al contrario", e tutti i calcoli son stati fatti per restituire valori MAI uguali o minori di 0 (altrimenti l'animazione si ferma del tutto). La logica dietro l'if/else sta nel permettere alla velocità di cambiare inversamente a seconda dell'orientation del device.
@@ -338,20 +339,20 @@ class Player: SKSpriteNode {
         switch type {
         case .fat:
             self.run((fatIdle!), withKey: "runAnim")
-            legRNode?.position = CGPoint(x: 8, y: -12)
-            legLNode?.position = CGPoint(x: 8, y: -12)
+            legRNode?.position = CGPoint(x: sceneSize.width / 83.375, y: -sceneSize.height / 31.25)
+            legLNode?.position = CGPoint(x: sceneSize.width / 83.375, y: -sceneSize.height / 31.25)
         case .normal:
             self.run((normalIdle!), withKey: "runAnim")
-            legRNode?.position = CGPoint(x: 5, y: -12)
-            legLNode?.position = CGPoint(x: 5, y: -12)
+            legRNode?.position = CGPoint(x: sceneSize.width / 133.4, y: -sceneSize.height / 31.25)
+            legLNode?.position = CGPoint(x: sceneSize.width / 133.4, y: -sceneSize.height / 31.25)
         case .slim:
             self.run((slimIdle!), withKey: "runAnim")
-            legRNode?.position = CGPoint(x: 5, y: -12)
-            legLNode?.position = CGPoint(x: 5, y: -12)
+            legRNode?.position = CGPoint(x: sceneSize.width / 133.4, y: -sceneSize.height / 31.25)
+            legLNode?.position = CGPoint(x: sceneSize.width / 133.4, y: -sceneSize.height / 31.25)
         case .xs:
             self.run((xsIdle!), withKey: "runAnim")
-            legRNode?.position = CGPoint(x: 3, y: -12)
-            legLNode?.position = CGPoint(x: 3, y: -12)
+            legRNode?.position = CGPoint(x: sceneSize.width / 222.333, y: -sceneSize.height / 31.25)
+            legLNode?.position = CGPoint(x: sceneSize.width / 222.333, y: -sceneSize.height / 31.25)
         }
        
     }
