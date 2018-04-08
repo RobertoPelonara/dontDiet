@@ -75,9 +75,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (DonutConstants.groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(0.63, 2))) / 0.63
-        DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (DonutConstants.groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.516, 2))) / 0.516
-        DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (DonutConstants.groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.3999, 2))) / 0.3999
+        DonutConstants.Reflect.big = (DonutConstants.MaxHeight.big - (groundY + SpriteSize.donutBig.height/2) - (0.5 * DonutConstants.gravity.y * pow(0.63, 2))) / 0.63
+        DonutConstants.Reflect.medium = (DonutConstants.MaxHeight.medium - (groundY + SpriteSize.donutMid.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.516, 2))) / 0.516
+        DonutConstants.Reflect.small = (DonutConstants.MaxHeight.small - (groundY + SpriteSize.donutSmall.height / 2) - (0.5 * DonutConstants.gravity.y * pow(0.3999, 2))) / 0.3999
         
         self.tapisRoulantTextures = GameManager.shared.allTextures.filter { $0.description.contains("tappeto") }
         backgroundColor = .black
