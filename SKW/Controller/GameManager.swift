@@ -189,10 +189,10 @@ class GameManager {
         infoPanel?.setupEndPanel()
         infoPanel?.show()
         infoPanel?.isEndPanel = true
-        gameScene?.addChild(infoPanel!.fade)
+        _gameScene.addChild(infoPanel!.fade)
         if infoPanel?.parent != gameScene {
             infoPanel?.removeFromParent()
-        gameScene?.addChild(GameManager.shared.infoPanel!)
+        _gameScene.addChild(GameManager.shared.infoPanel!)
         }
         gameScene = nil
         self.endGameTimer = Date().timeIntervalSince1970
