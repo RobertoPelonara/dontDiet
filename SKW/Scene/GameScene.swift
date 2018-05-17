@@ -135,6 +135,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         }
                     }
                     return
+                } else {
+                    GameManager.shared.firstTime = false
                 }
                 GameManager.shared.infoPanel?.hide()
                 GameManager.shared.gamePaused = false

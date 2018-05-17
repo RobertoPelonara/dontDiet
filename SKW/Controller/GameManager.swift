@@ -186,9 +186,7 @@ class GameManager {
             let _gameScene = gameScene else {
                 return
         }
-        infoPanel?.setupEndPanel()
-        infoPanel?.show()
-        infoPanel?.isEndPanel = true
+       
         _gameScene.addChild(infoPanel!.fade)
         if infoPanel?.parent != gameScene {
             infoPanel?.removeFromParent()
@@ -198,7 +196,9 @@ class GameManager {
         self.endGameTimer = Date().timeIntervalSince1970
         totalGameTimer = self.endGameTimer - self.startGameTimer
         //_gameViewController.loadScene(_endScene, _gameScene)
-        
+        infoPanel?.setupEndPanel()
+        infoPanel?.show()
+        infoPanel?.isEndPanel = true
 
         availableDonuts.removeAll()
         availableForks.removeAll()

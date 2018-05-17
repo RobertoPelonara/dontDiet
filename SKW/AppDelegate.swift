@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if !GameManager.shared.gameIsOver { GameManager.shared.gamePaused = false }
+        if !GameManager.shared.gameIsOver && !GameManager.shared.firstTime { GameManager.shared.gamePaused = false }
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

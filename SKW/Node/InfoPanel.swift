@@ -52,9 +52,9 @@ class InfoPanel: SKSpriteNode {
     var showAction = SKAction()
     var hideAction = SKAction()
     
-    let spacing: CGFloat = 50
-    let labelsSpacing: CGFloat = 75
-    let fontSize: CGFloat = 30
+    let spacing: CGFloat = 13.34
+    let labelsSpacing: CGFloat = 8.89
+    let fontSize: CGFloat = 12.5
     
     //GAME OVER
     var titleLabel = SKLabelNode(fontNamed: "Unipix")
@@ -96,25 +96,25 @@ class InfoPanel: SKSpriteNode {
         playerShootingLabel.text = "TAP\nTO SHOOT"
         playerShootingLabel.numberOfLines = 2
         playerShootingLabel.fontColor = SKColor.white
-        playerShootingLabel.fontSize = fontSize
+        playerShootingLabel.fontSize = sceneSize.height /  fontSize
         //        playerShootingLabel.horizontalAlignmentMode = .left
         
         playerRunningLabel.text = "TILT\nTO MOVE"
         playerRunningLabel.numberOfLines = 2
         playerRunningLabel.fontColor = SKColor.white
-        playerRunningLabel.fontSize = fontSize
+        playerRunningLabel.fontSize = sceneSize.height / fontSize
         //        playerRunningLabel.horizontalAlignmentMode = .left
         
         bigDonutLabel.text = "AVOID\nBIG ONES"
         bigDonutLabel.numberOfLines = 2
         bigDonutLabel.fontColor = SKColor.white
-        bigDonutLabel.fontSize = fontSize
+        bigDonutLabel.fontSize = sceneSize.height / fontSize
         //        bigDonutLabel.horizontalAlignmentMode = .left
         
         smallDonutLabel.text = "EAT\nTO NOT DIET"
         smallDonutLabel.numberOfLines = 2
         smallDonutLabel.fontColor = SKColor.white
-        smallDonutLabel.fontSize = fontSize
+        smallDonutLabel.fontSize = sceneSize.height / fontSize
         //        smallDonutLabel.horizontalAlignmentMode = .left
         
         //textures
@@ -147,8 +147,12 @@ class InfoPanel: SKSpriteNode {
         legLNode = legL
         legRNode!.zPosition = self.zPosition + 0.01
         legLNode!.zPosition = self.zPosition - 0.01
-        legRNode!.position = CGPoint(x: 8, y: -12)
-        legLNode!.position = CGPoint(x: 8, y: -12)
+        
+        let legY = (sceneSize.height * -12) / 375
+        let legX = (sceneSize.width * 8) / 667
+
+        legRNode!.position = CGPoint(x: legX, y: legY)
+        legLNode!.position = CGPoint(x: legX, y: legY)
         let animationL = SKAction.animate(with: playerLegL, timePerFrame: 0.07)
         let animationR = SKAction.animate(with: playerLegR, timePerFrame: 0.07)
         legLIdle = animationL
@@ -194,11 +198,13 @@ class InfoPanel: SKSpriteNode {
         bigDonutColor = bigDonutRandomColor
         
         //players positions
-        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + spacing
-        playerNodeRunning?.position.x += (playerNodeRunning?.frame.width)!/2 + 10
-        playerNodeRunning?.position.y = SpriteSize.tutorialPanel.height/2 - spacing - (playerNodeRunning?.frame.height)!/2
+        let charSpacing = sceneSize.width * 10 / 667
+            
+        playerNodeRunning?.position.x = -SpriteSize.tutorialPanel.width/2 + (sceneSize.width / spacing)
+        playerNodeRunning?.position.x += (playerNodeRunning?.frame.width)!/2 + charSpacing
+        playerNodeRunning?.position.y = SpriteSize.tutorialPanel.height/2 - (sceneSize.width / spacing) - (playerNodeRunning?.frame.height)!/2
         
-        playerNodeShooting?.position.x = (playerNodeRunning?.position.x)! - 10
+        playerNodeShooting?.position.x = (playerNodeRunning?.position.x)! - charSpacing
         playerNodeShooting?.position.y = (playerNodeRunning?.position.y)! * -1
         
         //donuts positions
@@ -209,13 +215,13 @@ class InfoPanel: SKSpriteNode {
         smallDonutNode?.position.y = (playerNodeShooting?.position.y)! - 5
         
         //labels positions
-        playerShootingLabel.position.x = (playerNodeShooting?.position.x)! + (playerNodeShooting?.frame.width)!/2 + labelsSpacing
+        playerShootingLabel.position.x = (playerNodeShooting?.position.x)! + (playerNodeShooting?.frame.width)!/2 + (sceneSize.width / labelsSpacing)
         playerShootingLabel.position.y = (smallDonutNode?.position.y)! - playerShootingLabel.frame.height/2
         
         playerRunningLabel.position.x = playerShootingLabel.position.x
         playerRunningLabel.position.y = (bigDonutNode?.position.y)! - playerRunningLabel.frame.height/2
         
-        bigDonutLabel.position.x = (bigDonutNode?.position.x)! + (bigDonutNode?.frame.width)!/2 + labelsSpacing
+        bigDonutLabel.position.x = (bigDonutNode?.position.x)! + (bigDonutNode?.frame.width)!/2 + (sceneSize.width / labelsSpacing)
         bigDonutLabel.position.y = playerRunningLabel.position.y
         
         smallDonutLabel.position.x = bigDonutLabel.position.x
@@ -252,33 +258,33 @@ class InfoPanel: SKSpriteNode {
         //GAMEOVER LABELS
         
         titleLabel.fontColor = .white
-        titleLabel.position = CGPoint(x: 0, y: 70)
+        titleLabel.position = CGPoint(x: 0, y: sceneSize.width / 9.52)
         
-        scoreLabel.fontSize = 36
+        scoreLabel.fontSize = sceneSize.width / 18.52
         scoreLabel.fontColor = .white
         scoreLabel.text = "You gained \(GameManager.shared.score) calories"
-        scoreLabel.position = CGPoint(x: titleLabel.position.x , y: titleLabel.position.y - 60)
+        scoreLabel.position = CGPoint(x: titleLabel.position.x , y: titleLabel.position.y - (sceneSize.width / 11.11))
         
-        recordLabel.fontSize = 28
+        recordLabel.fontSize = sceneSize.width / 23.82
         recordLabel.fontColor = .white
         recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
-        recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - 50)
+        recordLabel.position = CGPoint(x: scoreLabel.position.x , y: scoreLabel.position.y - (sceneSize.width / 13.34))
         
-        timerLabel.fontSize = 28
+        timerLabel.fontSize = sceneSize.width / 23.82
         timerLabel.fontColor = .white
         timerLabel.text = "You fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
-        timerLabel.position = CGPoint(x: titleLabel.position.x , y: scoreLabel.position.y - 30)
+        timerLabel.position = CGPoint(x: titleLabel.position.x , y: scoreLabel.position.y - (sceneSize.width / 22.23))
         
-        tapToReturn.fontSize = 26
+        tapToReturn.fontSize = sceneSize.width / 25.65
         tapToReturn.fontColor = .black
         tapToReturn.color?.withAlphaComponent(0.6)
         tapToReturn.text = "Easter Egg"
-        tapToReturn.position = CGPoint(x: titleLabel.position.x , y: timerLabel.position.y - 10)
+        tapToReturn.position = CGPoint(x: titleLabel.position.x , y: timerLabel.position.y - (sceneSize.width / 66.7))
         
         titleShadow.fontColor = .black
         titleShadow.position = CGPoint(x: (size.width / 2)+1, y: size.height / 1.2)
         
-        buttonHome.position = CGPoint(x: 0, y: -100)
+        buttonHome.position = CGPoint(x: 0, y: -(sceneSize.width / 6.67))
         buttonRestart.position = CGPoint(x: 0, y: -100)
         
         buttonHome.name = "buttonHome"
@@ -292,26 +298,23 @@ class InfoPanel: SKSpriteNode {
         hide()
         GameManager.shared.gameViewController?.loadScene(GameManager.shared.menuScene!, GameManager.shared.gameScene)
         GameManager.shared.gamePaused = false
-
+        
     }
     
     func restartGame () {
         hide()
         let scene = GameScene(size: size)
-       
+        
         GameManager.shared.gameViewController?.loadScene(scene, GameManager.shared.gameScene)
         
         GameManager.shared.gameScene = scene
         GameManager.shared.gamePaused = false
-
+        
     }
     
     func setupTutorial() {
         
         removeAllChildren()
-        
-        GameManager.shared.firstTime = false
-        
         
         //add nodes in panel
         self.addChild(playerNodeRunning!)
@@ -332,14 +335,14 @@ class InfoPanel: SKSpriteNode {
         removeAllChildren()
         
         scoreLabel.text = "You gained \(GameManager.shared.score) calories"
-recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
+        recordLabel.text = "Your highest score was \((GameManager.shared.gameViewController?.highestScore)!) calories"
         timerLabel.text = "You fought for \(Int(GameManager.shared.totalGameTimer)) seconds against the diet"
         
         //setup death reason
-        titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 82 : 51
+        titleShadow.fontSize = (GameManager.shared.deathReason == .outOfTime) ? (sceneSize.width / 8.13) : (sceneSize.width / 13.08)
         titleShadow.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
         
-        titleLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? 59 : 40
+        titleLabel.fontSize = (GameManager.shared.deathReason == .outOfTime) ? (sceneSize.width / 11.3) : (sceneSize.width / 16.67)
         titleLabel.text = (GameManager.shared.deathReason == .outOfTime) ? "The Diet win" : "That donut was too heavy"
         
         //add nodes in panel
@@ -350,15 +353,15 @@ recordLabel.text = "Your highest score was \((GameManager.shared.gameViewControl
         addChild(tapToReturn)
         addChild(titleShadow)
         addChild(buttonHome)
-//        addChild(buttonRestart)
-
+        //        addChild(buttonRestart)
+        
     }
     
     func show() {
         isShown = true
         self.run(showAction)
         //addChild(fade)
-
+        
     }
     
     func hide() {

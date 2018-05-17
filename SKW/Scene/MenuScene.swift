@@ -47,6 +47,8 @@ class MenuScene: SKScene {
         tapisRoulant.zPosition = Z.tapisRoulant
         addChild(tapisRoulant)
         
+        // ALtezza scena / (altezza scena / altezza font)
+        
         gameLabel.fontSize = sceneSize.height / 4.687
         gameLabel.fontColor = .white
         gameLabel.text = "Don't Die"
